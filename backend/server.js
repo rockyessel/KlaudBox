@@ -49,7 +49,7 @@ app.post('/upload', upload.single('testImage'), async (request, response) => {
 });
 
 app.get('/data', async (request, response) => {
-  const getAllData = await ImgSchema.find({})
+  const getAllData = await ImgSchema.find({});
   response.status(200).json(getAllData);
 });
 

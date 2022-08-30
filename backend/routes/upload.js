@@ -1,9 +1,14 @@
 
 const express = require('express')
 const router = express.Router()
-const { uploadImage } = require('../controllers/upload')
+const { uploadImage,getAllUploads,validateImage } = require('../controllers/upload')
+const { upload } = require('../config/multer')
 
-router.post('/single-upload', uploadImage)
+router.route('/single-upload').post(upload.single('images'), uploadImage).get(getAllUploads)
+
+router.post('/download', validateImage)
+
+
 
 
 

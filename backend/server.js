@@ -1,45 +1,24 @@
 const express = require('express')
-const multer = require('multer')
 const cors = require('cors')
+const connectDatabase = require('./config/database')
+const dotenv = require('dotenv')
+const PORT = 5000 || process.env.PORT
+
+
+
+dotenv.config({ path: '.env'})
 
 const app = express()
 
+connectDatabase()
+
 
 app.use(cors())
+app.use(express.json())
+app.use(express.urlencoded({extended: true}))
 
-const storageEn = multer.diskStorage({
-    destination: (request, file, callback) => {
-        callback(null, './uploads')
-    },
-    filename: (request, file, callback) => {
-        callback(null, Date.now() + '--' + file.originalname)
-    }
+app.use('/', (require('./routes/upload')))
+
+app.listen(PORT, ()=>{
+    console.log(`Server running on http//localhost:${PORT}`)
 })
-
-
-const upload = multer({storage: storageEn})
-
-
-app.post('/single-upload', upload.single('images'), (request, response) => {
-
-    console.log('files:', request.file)
-    response.status(200).json(request.file)
-})
-
-app.get('/single-upload', (request, response) => {
-    response.status(200).json({})
-})
-
-
-app.post('/multiple-uploads', upload.array('images', 5), (request, response) => {
-
-    const {files,body:{images}} = request
-
-    console.log('body',images[4])
-
-    console.log('multiples files:',files)
-    response.status(200).json(files)
-})
-
-
-app.listen(5000)

@@ -6,25 +6,27 @@ function App() {
 
     console.log(file)
 
-    // useEffect(() => {
-    //   const getData = async () => {
-    //     const response = await fetch('http://localhost:5000/single-images', {
-    //       method: 'GET',
-    //       headers: {
-    //         'Content-Type': 'application/json',
-    //         'Access-Control-Allow-Methods': '*',
-    //       },
-    //     });
-    //
-    //     const data = await response.json();
-    //     setGetFile(data);
-    //   };
-    //
-    //   getData();
-    // }, []);
+    useEffect(() => {
+      const getData = async () => {
+        const response = await fetch('http://localhost:5000/single-upload', {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+            'Access-Control-Allow-Methods': '*',
+          },
+        });
+
+        const data = await response.json();
+        setGetFile(data);
+      };
+
+      getData().then(()=> {
+          console.log('request made successfully')
+      })
+    }, []);
 
     const fileUpdates = (event) => {
-        setFile(event.target.files)
+        setFile(event.target.files[0])
     }
 
 
@@ -39,7 +41,7 @@ function App() {
             data.append('images', file)
 
 
-             await fetch('http://localhost:5000/multiple-uploads', {
+             await fetch('http://localhost:5000/single-upload', {
                 method: 'POST',
                 body: data
             });

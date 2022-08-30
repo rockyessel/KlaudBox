@@ -1,58 +1,45 @@
-const express = require('express');
-const cors = require('cors');
-const dotenv = require('dotenv');
-const morgan = require('morgan');
-const multer = require('multer');
-const ImgSchema = require('./models/files');
-const fs = require('fs');
-const connectDatabase = require('./config/database');
-const PORT = process.env.PORT || 4000;
+const express = require('express')
+const multer = require('multer')
+const cors = require('cors')
 
-dotenv.config({ path: '.env' });
+const app = express()
 
-const app = express();
 
-// @desc connection to MONGO DB
-connectDatabase();
+app.use(cors())
 
-// @desc middleware
-app.use(cors());
-app.use(morgan('tiny'));
-app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
+const storageEn = multer.diskStorage({
+    destination: (request, file, callback) => {
+        callback(null, './uploads')
+    },
+    filename: (request, file, callback) => {
+        callback(null, Date.now() + '--' + file.originalname)
+    }
+})
 
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, 'uploads');
-  },
-  filename: (req, file, cb) => {
-    cb(null, file.originalname);
-  },
-});
 
-const upload = multer({ storage: storage });
+const upload = multer({storage: storageEn})
 
-app.post('/upload', upload.single('testImage'), async (request, response) => {
-  try {
-    const saveImage = new ImgSchema({
-      name: request.body.name,
-      image: {
-        data: fs.readFileSync('uploads/' + request.file.filename),
-        contentType: 'image/png',
-      },
-    });
-    saveImage.save();
-    response.status(201).json({ status: 'image save' });
-  } catch (error) {
-    console.log(error);
-  }
-});
 
-app.get('/data', async (request, response) => {
-  const getAllData = await ImgSchema.find({});
-  response.status(200).json(getAllData);
-});
+app.post('/single-upload', upload.single('images'), (request, response) => {
 
-app.listen(PORT, () => {
-  console.log(`Server running at http://localhost:${PORT}`);
-});
+    console.log('files:', request.file)
+    response.status(200).json(request.file)
+})
+
+app.get('/single-upload', (request, response) => {
+    response.status(200).json({})
+})
+
+
+app.post('/multiple-uploads', upload.array('images', 5), (request, response) => {
+
+    const {files,body:{images}} = request
+
+    console.log('body',images[4])
+
+    console.log('multiples files:',files)
+    response.status(200).json(files)
+})
+
+
+app.listen(5000)

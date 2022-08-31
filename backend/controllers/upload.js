@@ -1,13 +1,19 @@
 const ImgSchema = require('../models/files');
+const CharacterGeneration = require('../config/random')
 const fs = require('fs');
+
+
+
 
 const uploadImage = async (request, response) => {
   try {
+    const numberString = CharacterGeneration()
+    console.log('numberString',numberString)
     const {code, name} = request.body
 
     const saveImage = await  ImgSchema.create({
       name,
-      code,
+      code: numberString,
       image: {
         data: fs.readFileSync('./uploads/' + request.file.filename),
         contentType: 'image/png',

@@ -20,9 +20,7 @@ function App() {
         setGetFile(data);
       };
 
-      getData().then(()=> {
-          console.log('request made successfully')
-      })
+      getData()
     }, []);
 
     const fileUpdates = (event) => {
@@ -56,7 +54,7 @@ function App() {
 
     return (
         <div className='container mx-auto py-10'>
-            <h1>EerviFile</h1>
+            {/*<h1>EerviFile</h1>*/}
             {getFile?.map((image) => {
                 const base64String = btoa(
                     String.fromCharCode(...new Uint8Array(image.image.data.data))
@@ -78,6 +76,10 @@ function App() {
                         >
                             Download
                         </a>
+
+                        <p>
+                            {image.code}
+                        </p>
 
 
                     </div>

@@ -60,10 +60,9 @@ const storageEngine = multer.diskStorage({
     }
   },
   filename: (req, file, cb) => {
-    const name = `${Date.now()}-${file.originalname}`;
-    name.replace(' ', '_');
-    cb(null, name);
+    cb(null, `${Date.now()}-${file.originalname}`);
   },
 });
 
 export const upload = multer({ storage: storageEngine });
+

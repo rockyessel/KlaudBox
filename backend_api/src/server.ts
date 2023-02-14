@@ -8,16 +8,17 @@ import morgan from 'morgan';
 import GuestFile from './routes/guest-file';
 
 // @desc PORT
-const PORT = process.env.PORT || 6000;
+const PORT = process.env.PORT || 7000;
+export const baseURL = `http://localhost:${PORT}`
 
 const app: Express.Application = Express();
 
 dotenv.config({ path: '.env' });
 
-app.use(cors());
+app.use(cors({ origin: '*' }));
 app.use(morgan('tiny'));
 app.use(Express.json());
-app.use(Express.urlencoded({ extended: true }));
+app.use(Express.urlencoded({ extended: false }));
 app.use('/uploads', Express.static(__dirname + '/uploads'));
 
 app.use('/v1/', GuestFile);

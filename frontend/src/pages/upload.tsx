@@ -4,9 +4,11 @@ import { GuestFileUploadPost } from '../utils/api';
 import { RiArrowDownSFill } from 'react-icons/ri';
 import { MdPublic, MdVpnLock, MdPictureAsPdf } from 'react-icons/md';
 import { SelectedFileInfoProps } from '../interface';
+import { ImSpinner9 } from 'react-icons/im';
 
 const Upload = () => {
-  const [file, setFile] = React.useState<any>();
+  const [file, setFile] = React.useState<any>({});
+  const [fileExist, setFileExist] = React.useState<boolean>(false);
   const [getFile, setGetFile] = React.useState<any>({});
   const [showDropdown, setShowDropdown] = React.useState<boolean>(false);
   const [deleteAfterState, setDeleteAfterState] =
@@ -23,7 +25,7 @@ const Upload = () => {
     setFile(selectedFile?.[0]);
   };
 
-  console.log('selectedFileInfo', selectedFileInfo);
+  console.log(file);
 
   const handleDelete = () => {
     setSelectedFileInfo({ name: '', size: '', type: '' });
@@ -70,50 +72,38 @@ const Upload = () => {
           </p>
         </div>
 
-        <div className=' border-dashed rounded-xl border-4 border-gray-200 flex flex-col justify-center items-center  outline-none mt-10 w-full p-10 cursor-pointer hover:border-black hover:bg-gray-100'>
-          <form onSubmit={handleSubmission}>
-            <label className='cursor-pointer'>
-              <div className='flex flex-col items-center justify-center h-full'>
-                <div className='flex flex-col justify-center items-center'>
-                  <p className='font-bold text-xl'>
-                    <FaCloudUploadAlt className='text-gray-300 text-6xl' />
-                  </p>
-                  <p className='text-xl font-semibold'>
-                    Upload and share without limits
-                  </p>
-                </div>
+        {!file.length && (
+          <div className=' border-dashed rounded-xl border-4 border-gray-200 flex flex-col justify-center items-center  outline-none mt-10 w-full p-10 cursor-pointer hover:border-black hover:bg-gray-100'>
+            <form onSubmit={handleSubmission}>
+              <label className='cursor-pointer'>
+                <div className='flex flex-col items-center justify-center h-full'>
+                  <div className='flex flex-col justify-center items-center'>
+                    <p className='font-bold text-xl'>
+                      <FaCloudUploadAlt className='text-gray-300 text-6xl' />
+                    </p>
+                    <p className='text-xl font-semibold'>
+                      Upload and share without limits
+                    </p>
+                  </div>
 
-                <p className='text-gray-400 text-center mt-10 text-sm leading-none inline-flex flex-col font-medium'>
-                  <span> Audio, Docs, PDF, Applications, CSV and more</span>
-                  <span>Less than 2 GB</span>
-                </p>
-                {file ? (
-                  <button
-                    type='submit'
-                    className='bg-black mt-8 text-center rounded text-white text-md font-medium p-2 w-52 outline-none'
-                  >
-                    Upload file
-                  </button>
-                ) : (
+                  <p className='text-gray-400 text-center mt-10 text-sm leading-none inline-flex flex-col font-medium'>
+                    <span> Audio, Docs, PDF, Applications, CSV and more</span>
+                    <span>Less than 2 GB</span>
+                  </p>
+
                   <p className='bg-black text-center mt-8 rounded text-white text-md font-medium p-2 w-52 outline-none'>
                     Select file
                   </p>
-                )}
-              </div>
-              {file ? null : (
-                <input
-                  type='file'
-                  onChange={fileUpdates}
-                  name='file'
-                  className='w-0 h-0'
-                />
-              )}
-            </label>
-          </form>
-        </div>
+                </div>
+
+                <input type='file' onChange={fileUpdates} className='w-0 h-0' />
+              </label>
+            </form>
+          </div>
+        )}
       </section>
 
-      {file && (
+      {file.length && (
         <section className='w-full bg-white p-10 flex flex-col gap-10'>
           <div className='flex w-full items-center'>
             {/* Sub Navbar */}

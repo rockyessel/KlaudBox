@@ -8,15 +8,12 @@ export const GuestFileUploadPost = async (file_object: any, fn:any) => {
     url: API_URL,
     data: file_object,
     onUploadProgress: (data) => {
-      fn(Math.round((100 * data?.loaded) / data?.total));
+      const total: number = data?.total || 0
+      fn(Math.round((100 * data?.loaded) / total));
     },
   });
 
-  //   const response = await fetch('http://localhost:7789/v1/guest', {
-  //     method: 'POST',
-  //     // headers: { 'Content-Type': 'application/json' },
-  //     body: data,
-  //   });
+
   const data_ = await response.data;
 
   return data_;

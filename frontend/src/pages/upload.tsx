@@ -5,7 +5,9 @@ import {
   AiFillQuestionCircle,
   AiOutlineDownload,
 } from 'react-icons/ai';
-import { MdPublic, MdContentCopy } from 'react-icons/md';
+import { MdPublic, MdContentCopy, MdPictureAsPdf } from 'react-icons/md';
+import { BsImage, BsFillCloudUploadFill } from 'react-icons/bs';
+import { FaCloudUploadAlt } from 'react-icons/fa';
 
 const file_url = `https://cdn...file-dd679aeaa5c9d4bcdf2852041b230e6852-webm`;
 
@@ -21,481 +23,167 @@ const Upload = () => {
           </button>
         </section>
 
-        <section id='table' className='w-full h-[25rem]'>
-          <table className='divide-y divide-[#515151]'>
-            <thead className='sticky top-0 bg-[#2c2c2c] '>
-              <tr className='pb-10'>
-                <th className='py-4'>Name</th>
-                <th className='py-4'>Download</th>
-                <th className='py-4'>Privacy Status</th>
-                <th className='py-4'>Deletion Date</th>
-              </tr>
-            </thead>
-            <tbody className='divide-y divide-[#515151]'>
-              <tr>
-                <td className='inline-flex flex-col'>
-                  <span className='font-bold text-lg text-rose-500'>
-                    bg.webp
-                  </span>
-                  <span className='font-semibold inline-flex gap-2 text-sm'>
-                    <span>2/17/2023</span>
-                    <span>38.67 KB </span>
-                  </span>
-                </td>
+        <section className='flex flex-wrap items-center gap-10'>
+          <div>
+            <BsImage className='text-[10rem] text-[#212121]' />
 
-                <td>
-                  <span className='inline-flex flex-col'>
-                    <span className='font-bold text-rose-500 inline-flex items-center gap-1'>
-                      {file_url} <MdContentCopy className='text-xl' />
-                      <AiOutlineDownload />
-                    </span>
-                    <span className='inline-flex items-center gap-1 font-semibold'>
-                      Download <AiOutlineDownload className='text-xl' />
-                    </span>
-                  </span>
-                </td>
+            <div>
+              <p className='text-rose-500 font-bold'>Nicepage-5.4.4.exe</p>
+            </div>
+          </div>
+          <div>
+            <BsImage className='text-[10rem] text-[#212121]' />
 
-                <td>
-                  <span className='inline-flex items-center gap-4'>
-                    <span className='text-green-500 inline-flex items-center gap-1'>
-                      Everyone
-                      <MdPublic />
-                    </span>
-                    <span>
-                      <AiFillQuestionCircle className='' />
-                    </span>
-                  </span>
-                </td>
+            <div>
+              <p className='text-rose-500 font-bold'>Nicepage-5.4.4.exe</p>
+            </div>
+          </div>
+          <div>
+            <BsImage className='text-[10rem] text-[#212121]' />
 
-                <td>
-                  <span className='inline-flex items-center gap-1'>
-                    2/17/2023
-                    <AiOutlineFieldTime className='text-xl text-rose-500' />
-                  </span>
-                </td>
-              </tr>
+            <div>
+              <p className='text-rose-500 font-bold'>Nicepage-5.4.4.exe</p>
+            </div>
+          </div>
+          <div>
+            <BsImage className='text-[10rem] text-[#212121]' />
 
-              {/* <tr>
-                <td className='inline-flex flex-col'>
-                  <span className='font-bold text-lg text-rose-500'>
-                    bg.webp
-                  </span>
-                  <span className='font-semibold inline-flex gap-2 text-sm'>
-                    <span>2/17/2023</span>
-                    <span>38.67 KB </span>
-                  </span>
-                </td>
+            <div>
+              <p className='text-rose-500 font-bold'>Nicepage-5.4.4.exe</p>
+            </div>
+          </div>
+          <div>
+            <BsImage className='text-[10rem] text-[#212121]' />
 
-                <td>
-                  <span className='inline-flex flex-col'>
-                    <span className='font-bold text-rose-500 inline-flex items-center gap-1'>
-                      {file_url} <MdContentCopy className='text-xl' />
-                    </span>
-                    <span className='inline-flex items-center gap-1 font-semibold'>
-                      Download <AiOutlineDownload />
-                    </span>
-                  </span>
-                </td>
+            <div>
+              <p className='text-rose-500 font-bold'>Nicepage-5.4.4.exe</p>
+            </div>
+          </div>
+          <div>
+            <BsImage className='text-[10rem] text-[#212121]' />
 
-                <td>
-                  <span className='inline-flex items-center gap-4'>
-                    <span className='text-green-500 inline-flex items-center gap-1'>
-                      Everyone
-                      <MdPublic />
-                    </span>
-                    <span>
-                      <AiFillQuestionCircle className='' />
-                    </span>
-                  </span>
-                </td>
+            <div>
+              <p className='text-rose-500 font-bold'>Nicepage-5.4.4.exe</p>
+            </div>
+          </div>
+          <div>
+            <BsImage className='text-[10rem] text-[#212121]' />
 
-                <td>
-                  <span className='inline-flex items-center gap-1'>
-                    2/17/2023
-                    <AiOutlineFieldTime className='text-xl text-rose-500' />
-                  </span>
-                </td>
-              </tr>
+            <div>
+              <p className='text-rose-500 font-bold'>Nicepage-5.4.4.exe</p>
+            </div>
+          </div>
+          <div>
+            <BsImage className='text-[10rem] text-[#212121]' />
 
-              <tr>
-                <td className='inline-flex flex-col'>
-                  <span className='font-bold text-lg text-rose-500'>
-                    bg.webp
-                  </span>
-                  <span className='font-semibold inline-flex gap-2 text-sm'>
-                    <span>2/17/2023</span>
-                    <span>38.67 KB </span>
-                  </span>
-                </td>
+            <div>
+              <p className='text-rose-500 font-bold'>Nicepage-5.4.4.exe</p>
+            </div>
+          </div>
+          <div>
+            <BsImage className='text-[10rem] text-[#212121]' />
 
-                <td>
-                  <span className='inline-flex flex-col'>
-                    <span className='font-bold text-rose-500 inline-flex items-center gap-1'>
-                      {file_url} <MdContentCopy className='text-xl' />
-                    </span>
-                    <span className='inline-flex items-center gap-1 font-semibold'>
-                      Download <AiOutlineDownload />
-                    </span>
-                  </span>
-                </td>
+            <div>
+              <p className='text-rose-500 font-bold'>Nicepage-5.4.4.exe</p>
+            </div>
+          </div>
+          <div>
+            <BsImage className='text-[10rem] text-[#212121]' />
 
-                <td>
-                  <span className='inline-flex items-center gap-4'>
-                    <span className='text-green-500 inline-flex items-center gap-1'>
-                      Everyone
-                      <MdPublic />
-                    </span>
-                    <span>
-                      <AiFillQuestionCircle className='' />
-                    </span>
-                  </span>
-                </td>
+            <div>
+              <p className='text-rose-500 font-bold'>Nicepage-5.4.4.exe</p>
+            </div>
+          </div>
+          <div>
+            <BsImage className='text-[10rem] text-[#212121]' />
 
-                <td>
-                  <span className='inline-flex items-center gap-1'>
-                    2/17/2023
-                    <AiOutlineFieldTime className='text-xl text-rose-500' />
-                  </span>
-                </td>
-              </tr>
+            <div>
+              <p className='text-rose-500 font-bold'>Nicepage-5.4.4.exe</p>
+            </div>
+          </div>
+          <div>
+            <BsImage className='text-[10rem] text-[#212121]' />
 
-              <tr>
-                <td className='inline-flex flex-col'>
-                  <span className='font-bold text-lg text-rose-500'>
-                    bg.webp
-                  </span>
-                  <span className='font-semibold inline-flex gap-2 text-sm'>
-                    <span>2/17/2023</span>
-                    <span>38.67 KB </span>
-                  </span>
-                </td>
+            <div>
+              <p className='text-rose-500 font-bold'>Nicepage-5.4.4.exe</p>
+            </div>
+          </div>
+        </section>
 
-                <td>
-                  <span className='inline-flex flex-col'>
-                    <span className='font-bold text-rose-500 inline-flex items-center gap-1'>
-                      {file_url} <MdContentCopy className='text-xl' />
-                    </span>
-                    <span className='inline-flex items-center gap-1 font-semibold'>
-                      Download <AiOutlineDownload />
-                    </span>
-                  </span>
-                </td>
+        <section className='w-[40rem] px-3 py-4 flex flex-col gap-5'>
+          <div className=' border-dashed  h-40 rounded-xl border-4 border-gray-200 flex flex-col justify-center items-center  outline-none mt-10 w-full p-10 cursor-pointer hover:border-black'>
+            <form>
+              <label className='cursor-pointer'>
+                <div className='flex flex-col items-center justify-center h-full'>
+                  <div className='flex flex-col justify-center items-center'>
+                    <p className='font-bold text-xl'>
+                      <BsFillCloudUploadFill className='text-gray-300 text-6xl' />
+                    </p>
+                  </div>
 
-                <td>
-                  <span className='inline-flex items-center gap-4'>
-                    <span className='text-green-500 inline-flex items-center gap-1'>
-                      Everyone
-                      <MdPublic />
-                    </span>
-                    <span>
-                      <AiFillQuestionCircle className='' />
-                    </span>
-                  </span>
-                </td>
+                  <p className='text-gray-400 text-center text-sm leading-none inline-flex flex-col font-medium'>
+                    <span className='underline'>Click to upload</span>
+                    <span>Maximum file size 2 GB</span>
+                  </p>
+                </div>
 
-                <td>
-                  <span className='inline-flex items-center gap-1'>
-                    2/17/2023
-                    <AiOutlineFieldTime className='text-xl text-rose-500' />
-                  </span>
-                </td>
-              </tr>
+                <input type='file' className='w-0 h-0' />
+              </label>
+            </form>
+          </div>
 
-              <tr>
-                <td className='inline-flex flex-col'>
-                  <span className='font-bold text-lg text-rose-500'>
-                    bg.webp
-                  </span>
-                  <span className='font-semibold inline-flex gap-2 text-sm'>
-                    <span>2/17/2023</span>
-                    <span>38.67 KB </span>
-                  </span>
-                </td>
+          <div className='flex flex-col gap-5'>
+            <div className='border border-[#515151] rounded-lg w-auto p-5 flex flex-col gap-5'>
+              <div className='w-full flex justify-between'>
+                <div className='flex items-center gap-2.5'>
+                  <MdPictureAsPdf className='text-5xl' />
+                  <div className='flex flex-col'>
+                    <p className='font-medium'>Nicepage-5.4.4.exe</p>
+                    <p className='font-medium text-black/60'>
+                      <span>323.3MB</span>・<span>1 minutes left</span>
+                    </p>
+                  </div>
+                </div>
 
-                <td>
-                  <span className='inline-flex flex-col'>
-                    <span className='font-bold text-rose-500 inline-flex items-center gap-1'>
-                      {file_url} <MdContentCopy className='text-xl' />
-                    </span>
-                    <span className='inline-flex items-center gap-1 font-semibold'>
-                      Download <AiOutlineDownload />
-                    </span>
-                  </span>
-                </td>
+                <div className='flex flex-col items-stretch justify-center'>
+                  <p>X</p>
+                  <p>100%</p>
+                </div>
+              </div>
 
-                <td>
-                  <span className='inline-flex items-center gap-4'>
-                    <span className='text-green-500 inline-flex items-center gap-1'>
-                      Everyone
-                      <MdPublic />
-                    </span>
-                    <span>
-                      <AiFillQuestionCircle className='' />
-                    </span>
-                  </span>
-                </td>
+              <div className='w-full h-1 bg-zinc-900'>
+                <div
+                  className='bg-black h-full transition duration-200 rounded-md'
+                  style={{ width: `${100}%` }}
+                ></div>
+              </div>
+            </div>
+            <div className='border border-[#515151] rounded-lg w-auto p-5 flex flex-col gap-5'>
+              <div className='w-full flex justify-between'>
+                <div className='flex items-center gap-2.5'>
+                  <MdPictureAsPdf className='text-5xl' />
+                  <div className='flex flex-col'>
+                    <p className='font-medium'>Nicepage-5.4.4.exe</p>
+                    <p className='font-medium text-black/60'>
+                      <span>323.3MB</span>・<span>1 minutes left</span>
+                    </p>
+                  </div>
+                </div>
 
-                <td>
-                  <span className='inline-flex items-center gap-1'>
-                    2/17/2023
-                    <AiOutlineFieldTime className='text-xl text-rose-500' />
-                  </span>
-                </td>
-              </tr>
+                <div className='flex flex-col items-stretch justify-center'>
+                  <p>X</p>
+                  <p>100%</p>
+                </div>
+              </div>
 
-              <tr>
-                <td className='inline-flex flex-col'>
-                  <span className='font-bold text-lg text-rose-500'>
-                    bg.webp
-                  </span>
-                  <span className='font-semibold inline-flex gap-2 text-sm'>
-                    <span>2/17/2023</span>
-                    <span>38.67 KB </span>
-                  </span>
-                </td>
-
-                <td>
-                  <span className='inline-flex flex-col'>
-                    <span className='font-bold text-rose-500 inline-flex items-center gap-1'>
-                      {file_url} <MdContentCopy className='text-xl' />
-                    </span>
-                    <span className='inline-flex items-center gap-1 font-semibold'>
-                      Download <AiOutlineDownload />
-                    </span>
-                  </span>
-                </td>
-
-                <td>
-                  <span className='inline-flex items-center gap-4'>
-                    <span className='text-green-500 inline-flex items-center gap-1'>
-                      Everyone
-                      <MdPublic />
-                    </span>
-                    <span>
-                      <AiFillQuestionCircle className='' />
-                    </span>
-                  </span>
-                </td>
-
-                <td>
-                  <span className='inline-flex items-center gap-1'>
-                    2/17/2023
-                    <AiOutlineFieldTime className='text-xl text-rose-500' />
-                  </span>
-                </td>
-              </tr>
-
-              <tr>
-                <td className='inline-flex flex-col'>
-                  <span className='font-bold text-lg text-rose-500'>
-                    bg.webp
-                  </span>
-                  <span className='font-semibold inline-flex gap-2 text-sm'>
-                    <span>2/17/2023</span>
-                    <span>38.67 KB </span>
-                  </span>
-                </td>
-
-                <td>
-                  <span className='inline-flex flex-col'>
-                    <span className='font-bold text-rose-500 inline-flex items-center gap-1'>
-                      {file_url} <MdContentCopy className='text-xl' />
-                    </span>
-                    <span className='inline-flex items-center gap-1 font-semibold'>
-                      Download <AiOutlineDownload />
-                    </span>
-                  </span>
-                </td>
-
-                <td>
-                  <span className='inline-flex items-center gap-4'>
-                    <span className='text-green-500 inline-flex items-center gap-1'>
-                      Everyone
-                      <MdPublic />
-                    </span>
-                    <span>
-                      <AiFillQuestionCircle className='' />
-                    </span>
-                  </span>
-                </td>
-
-                <td>
-                  <span className='inline-flex items-center gap-1'>
-                    2/17/2023
-                    <AiOutlineFieldTime className='text-xl text-rose-500' />
-                  </span>
-                </td>
-              </tr>
-
-              <tr>
-                <td className='inline-flex flex-col'>
-                  <span className='font-bold text-lg text-rose-500'>
-                    bg.webp
-                  </span>
-                  <span className='font-semibold inline-flex gap-2 text-sm'>
-                    <span>2/17/2023</span>
-                    <span>38.67 KB </span>
-                  </span>
-                </td>
-
-                <td>
-                  <span className='inline-flex flex-col'>
-                    <span className='font-bold text-rose-500 inline-flex items-center gap-1'>
-                      {file_url} <MdContentCopy className='text-xl' />
-                    </span>
-                    <span className='inline-flex items-center gap-1 font-semibold'>
-                      Download <AiOutlineDownload />
-                    </span>
-                  </span>
-                </td>
-
-                <td>
-                  <span className='inline-flex items-center gap-4'>
-                    <span className='text-green-500 inline-flex items-center gap-1'>
-                      Everyone
-                      <MdPublic />
-                    </span>
-                    <span>
-                      <AiFillQuestionCircle className='' />
-                    </span>
-                  </span>
-                </td>
-
-                <td>
-                  <span className='inline-flex items-center gap-1'>
-                    2/17/2023
-                    <AiOutlineFieldTime className='text-xl text-rose-500' />
-                  </span>
-                </td>
-              </tr>
-
-              <tr>
-                <td className='inline-flex flex-col'>
-                  <span className='font-bold text-lg text-rose-500'>
-                    bg.webp
-                  </span>
-                  <span className='font-semibold inline-flex gap-2 text-sm'>
-                    <span>2/17/2023</span>
-                    <span>38.67 KB </span>
-                  </span>
-                </td>
-
-                <td>
-                  <span className='inline-flex flex-col'>
-                    <span className='font-bold text-rose-500 inline-flex items-center gap-1'>
-                      {file_url} <MdContentCopy className='text-xl' />
-                    </span>
-                    <span className='inline-flex items-center gap-1 font-semibold'>
-                      Download <AiOutlineDownload />
-                    </span>
-                  </span>
-                </td>
-
-                <td>
-                  <span className='inline-flex items-center gap-4'>
-                    <span className='text-green-500 inline-flex items-center gap-1'>
-                      Everyone
-                      <MdPublic />
-                    </span>
-                    <span>
-                      <AiFillQuestionCircle className='' />
-                    </span>
-                  </span>
-                </td>
-
-                <td>
-                  <span className='inline-flex items-center gap-1'>
-                    2/17/2023
-                    <AiOutlineFieldTime className='text-xl text-rose-500' />
-                  </span>
-                </td>
-              </tr>
-
-              <tr>
-                <td className='inline-flex flex-col'>
-                  <span className='font-bold text-lg text-rose-500'>
-                    bg.webp
-                  </span>
-                  <span className='font-semibold inline-flex gap-2 text-sm'>
-                    <span>2/17/2023</span>
-                    <span>38.67 KB </span>
-                  </span>
-                </td>
-
-                <td>
-                  <span className='inline-flex flex-col'>
-                    <span className='font-bold text-rose-500 inline-flex items-center gap-1'>
-                      {file_url} <MdContentCopy className='text-xl' />
-                    </span>
-                    <span className='inline-flex items-center gap-1 font-semibold'>
-                      Download <AiOutlineDownload />
-                    </span>
-                  </span>
-                </td>
-
-                <td>
-                  <span className='inline-flex items-center gap-4'>
-                    <span className='text-green-500 inline-flex items-center gap-1'>
-                      Everyone
-                      <MdPublic />
-                    </span>
-                    <span>
-                      <AiFillQuestionCircle className='' />
-                    </span>
-                  </span>
-                </td>
-
-                <td>
-                  <span className='inline-flex items-center gap-1'>
-                    2/17/2023
-                    <AiOutlineFieldTime className='text-xl text-rose-500' />
-                  </span>
-                </td>
-              </tr>
-
-              <tr>
-                <td className='inline-flex flex-col'>
-                  <span className='font-bold text-lg text-rose-500'>
-                    bg.webp
-                  </span>
-                  <span className='font-semibold inline-flex gap-2 text-sm'>
-                    <span>2/17/2023</span>
-                    <span>38.67 KB </span>
-                  </span>
-                </td>
-
-                <td>
-                  <span className='inline-flex flex-col'>
-                    <span className='font-bold text-rose-500 inline-flex items-center gap-1'>
-                      {file_url} <MdContentCopy className='text-xl' />
-                    </span>
-                    <span className='inline-flex items-center gap-1 font-semibold'>
-                      Download <AiOutlineDownload />
-                    </span>
-                  </span>
-                </td>
-
-                <td>
-                  <span className='inline-flex items-center gap-4'>
-                    <span className='text-green-500 inline-flex items-center gap-1'>
-                      Everyone
-                      <MdPublic />
-                    </span>
-                    <span>
-                      <AiFillQuestionCircle className='' />
-                    </span>
-                  </span>
-                </td>
-
-                <td>
-                  <span className='inline-flex items-center gap-1'>
-                    2/17/2023
-                    <AiOutlineFieldTime className='text-xl text-rose-500' />
-                  </span>
-                </td>
-              </tr> */}
-            </tbody>
-          </table>
+              <div className='w-full h-1 bg-zinc-900'>
+                <div
+                  className='bg-black h-full transition duration-200 rounded-md'
+                  style={{ width: `${100}%` }}
+                ></div>
+              </div>
+            </div>
+          </div>
         </section>
       </section>
     </main>

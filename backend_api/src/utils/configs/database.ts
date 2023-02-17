@@ -1,6 +1,10 @@
 import mongoose from 'mongoose';
+import dotenv from 'dotenv';
+import path from 'path';
 
-const url = `mongodb+srv://everfile:everfile@everfile.nuopw6d.mongodb.net/?retryWrites=true&w=majority`;
+dotenv.config({ path: path.resolve(process.cwd(), '.env') });
+
+const url = `${process.env.MONGODB_URI}`;
 
 export const connectDatabase = async () => {
   try {

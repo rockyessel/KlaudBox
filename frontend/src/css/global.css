@@ -18,3 +18,50 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+
+/* thead {
+  border-bottom: solid 0.1px white;
+  padding: 0 0 10rem 0;
+} */
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background-color: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #888;
+  -webkit-border-radius: 0.167rem;
+  -moz-border-radius: 0.167rem;
+  -ms-border-radius: 0.167rem;
+  -o-border-radius: 0.167rem;
+  border-radius: 0.167rem;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+#table {
+  overflow: scroll;
+}
+
+table {
+  width: 100%;
+}
+
+th {
+  text-align: start;
+}
+
+td {
+  text-align: start;
+  padding: 10px 0px;
+}
+
+tr {
+  /* padding: 100rem 0; */
+}

@@ -1,63 +1,90 @@
-import Express from 'express';
+import Express, { Request, Response } from 'express';
 import { baseURL } from '..';
 import path from 'path';
 import { generateString, handleFileDeletion } from '../utils/services';
 import { GuestFile } from '../models/guest-file';
+import { Client } from '../utils/configs/sanity';
+import fs from 'fs';
 
-export const GuestPost = async (request: Express.Request, response: Express.Response) => {
+export const GuestPost = async (request: Request, response: Response) => {
   try {
-    const mime_type = request.file?.mimetype?.split('/')[0];
-    
-    const image_path = `/uploads${request?.file?.path?.replaceAll('\\', '/').split('uploads').pop()}`;
+    const SanityCMS = await Client.assets.upload(
+      'file',
+      fs.createReadStream(`${request.file?.path}`),
+      { filename: `${request.file?.originalname.replaceAll(' ', '-')}` }
+    );
 
     const create_guest_file = await GuestFile.create({
-      file_url: `${baseURL}${image_path}`,
-      file_name: request.file?.filename,
+      url: SanityCMS?.url,
+      size: SanityCMS?.size,
       identifier: generateString(),
-      type: mime_type,
+      originalFilename: SanityCMS?.originalFilename,
+      mimeType: SanityCMS?.mimeType,
+      extension: SanityCMS?.extension,
+      cms_id: SanityCMS?._id,
+      createdAt: SanityCMS?._createdAt,
+      updatedAt: SanityCMS?._updatedAt,
+      uploadId: SanityCMS?.uploadId,
+      title: SanityCMS?.title,
+      description: SanityCMS?.description,
     });
 
-    response.status(201).json({ file: create_guest_file, success: true, type: mime_type });
+    handleFileDeletion(
+      `${request.file?.destination}`,
+      `${request.file?.filename}`
+    );
+
+    response.status(201).json({ file: create_guest_file, success: true });
   } catch (error) {
-    response.status(500).json({ error: 'Internal Error from server.', success: false, path: 'Guest upload' });
+    response.status(500).json({
+      error: 'Internal Error from server.',
+      success: false,
+      path: 'Guest upload',
+    });
   }
 };
 
-export const GuestGet = async (request: Express.Request, response: Express.Response) => {
+export const GuestGet = async (request: Request, response: Response) => {
   const { identifier } = request.params;
 
   const find_guest_file = await GuestFile.findOne({ identifier });
 
-  response.status(200).json({ file: find_guest_file, success: true, type: 'image' });
+  response.status(200).json({ file: find_guest_file, success: true });
 };
 
-export const GuestGetAll = async (request: Express.Request, response: Express.Response) => {
+export const GuestGetAll = async (request: Request, response: Response) => {
   const all_guest_files = await GuestFile.find({});
 
   response.status(200).json({ all_file: all_guest_files, success: true });
 };
 
-export const GuestDelete = async (request: Express.Request, response: Express.Response) => {
-  const { identifier } = request.params;
+export const GuestDelete = async (request: Request, response: Response) => {
+  try {
+    const { identifier } = request.params;
 
-  const find_file = await GuestFile.findOne({ identifier });
+    const find_file = await GuestFile.findOne({ identifier });
 
-  if (!find_file) {
-    return response.status(404).json({ error: 'File not found', success: false });
+    if (!find_file) {
+      return response
+        .status(404)
+        .json({ error: 'File not found', success: false });
+    }
+
+    const deleted_file_cms = await Client.delete(`${find_file?.cms_id}`);
+
+    const deleted_file = await find_file.delete();
+
+    response
+      .status(204)
+      .json({ success: true, db: identifier, cms: deleted_file_cms });
+
+    if (!response.headersSent) {
+      response.status(204).json({ success: true, deleted_file });
+    }
+  } catch (error) {
+    console.error(error);
+    response
+      .status(500)
+      .json({ error: 'Internal server error', success: false });
   }
-
-  const local_file_path = find_file.file_url?.split(`${baseURL}`).pop();
-  const file_type_path: string | undefined = find_file.file_url?.split('uploads/').pop();
-  const type = file_type_path?.split('/').shift();
-
-  const file_name = local_file_path?.split('/')?.splice(-1)[0];
-  const directory = path.join(__dirname, '..', 'uploads', `${type}`);
-
-  handleFileDeletion(directory, `${file_name}`);
-
-  const deleted_file = await find_file.delete();
-
-  console.log(deleted_file);
-
-  response.status(204).json({ success: true, identifier });
 };

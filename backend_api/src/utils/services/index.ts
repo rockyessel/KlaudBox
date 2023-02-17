@@ -3,6 +3,7 @@ import path from 'path';
 import fs from 'fs';
 import axios from 'axios';
 import { baseURL } from '../..';
+import { Client } from '../configs/sanity';
 
 export const shuffleString = (input: string): string => {
   let characters = input.split('');
@@ -11,7 +12,9 @@ export const shuffleString = (input: string): string => {
 };
 
 export const generateString = (): string => {
-  let characters = shuffleString('abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789');
+  let characters = shuffleString(
+    'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$&?'
+  );
   let result = '';
   const used_chars: string[] = [];
   let index: number;
@@ -82,7 +85,10 @@ const storageEngine = multer.diskStorage({
 
 export const upload = multer({ storage: storageEngine });
 
-export const next_day = (createdAt_date: Date, number_of_days: number): Date => {
+export const next_day = (
+  createdAt_date: Date,
+  number_of_days: number
+): Date => {
   const day_in_ms = 24 * 60 * 60 * 1000 * number_of_days;
   const createdAt_in_ms = createdAt_date.getTime();
 
@@ -97,13 +103,16 @@ export const next_day = (createdAt_date: Date, number_of_days: number): Date => 
     0,
     0,
     0,
-    time_in_ms,
+    time_in_ms
   );
 
   return nextDay;
 };
 
-export const handleFileDeletion = (directory: string, file_to_delete: string) => {
+export const handleFileDeletion = (
+  directory: string,
+  file_to_delete: string
+) => {
   fs.readdir(directory, (error, files) => {
     if (error) {
       console.log(error);
@@ -137,38 +146,39 @@ export const handleFileDeletion = (directory: string, file_to_delete: string) =>
 };
 
 export const GuestScheduleDeletion = async () => {
-  const { data: all_guest_files } = await axios.get(`${baseURL}/v1/guest/all`);
+  const { data: endpoints } = await axios.get(`${baseURL}/v1/guest/all`);
 
-  all_guest_files.all_file?.map(async (file: any) => {
-    const createdAt_ms = new Date(file.createdAt).getTime();
+  Promise.all(
+    endpoints.all_file?.map(async (endpoint: any) => {
+      const createdAt_ms = new Date(endpoint.createdAt).getTime();
 
-    const expire_date = next_day(new Date(file.createdAt), 1).toISOString();
+      const expire_date = next_day(
+        new Date(endpoint.createdAt),
+        1
+      ).toISOString();
 
-    const today_in_ms = new Date().getTime();
+      const today_in_ms = new Date().getTime();
 
-    const expire_date_ms = new Date(expire_date).getTime();
-    // console.log('expire_date_ms', expire_date_ms);
+      const expire_date_ms = new Date(expire_date).getTime();
+      // console.log('expire_date_ms', expire_date_ms);
 
-    const expect_expire_date = expire_date_ms - createdAt_ms;
-    // console.log('expect_expire_date', expect_expire_date);
+      const expect_expire_date = expire_date_ms - createdAt_ms;
+      // console.log('expect_expire_date', expect_expire_date);
 
-    const difference_in_ms = today_in_ms - createdAt_ms;
-    // console.log('difference_in_ms', difference_in_ms);
+      const difference_in_ms = today_in_ms - createdAt_ms;
+      // console.log('difference_in_ms', difference_in_ms);
 
-    const difference_in_days = Math.floor(difference_in_ms / expect_expire_date);
-    // console.log('difference_in_days', difference_in_days);
+      const difference_in_days = Math.floor(
+        difference_in_ms / expect_expire_date
+      );
+      // console.log('difference_in_days', difference_in_days);
 
-    if (difference_in_days >= 1) {
-      const local_file_path = file.file_url?.split(`${baseURL}`).pop();
-      const file_type_path: string | undefined = file.file_url?.split('uploads/').pop();
-      const type = file_type_path?.split('/').shift();
-
-      const file_name = local_file_path?.split('/')?.splice(-1)[0];
-      const directory = path.join(__dirname, '..', 'uploads', `${type}`);
-
-      handleFileDeletion(directory, `${file_name}`);
-
-      await axios.delete(`${baseURL}/v1/guest/${file.identifier}`);
-    }
-  });
+      if (difference_in_days >= 1) {
+        await axios.delete(`${baseURL}/v1/guest/${endpoint.identifier}`);
+        console.log('deleted', `${endpoint.identifier}`);
+      }
+    })
+  );
 };
+
+// const directory = path.join(__dirname, '..', 'uploads', `${type}`);

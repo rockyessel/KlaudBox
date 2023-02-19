@@ -9,7 +9,7 @@ const Navbar = () => {
     setShowMenu((previous_state) => !previous_state);
   };
   return (
-    <header className='bg-black text-white flex justify-between items-center py-3 px-3 md:px-6 lg:px-20 xl:px-60 fixed w-full top-0'>
+    <header className='bg-black text-white flex justify-between items-center py-3 px-3 md:px-6 lg:px-20 xl:px-60 sticky w-full top-0'>
       <div className='font-bold uppercase'>Everfile</div>
 
       <nav className='hidden w-full  lg:flex gap-5 justify-center items-center'>

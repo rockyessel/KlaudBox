@@ -1,23 +1,76 @@
 import React from 'react';
+import {
+  BsImageFill,
+  BsFillCameraVideoFill,
+  BsFillFilePdfFill,
+  BsFileZipFill,
+} from 'react-icons/bs';
+import { MdAudiotrack } from 'react-icons/md';
+import { SiBlender } from 'react-icons/si';
+import {
+  SiMicrosoftword,
+  SiMicrosoftexcel,
+  SiMicrosoftpowerpoint,
+  SiMicrosoftaccess,
+  SiMicrosoftonenote,
+} from 'react-icons/si';
+import { GoFile } from 'react-icons/go';
 
-const TypeSwitcher = () => {
-  const mime_type = 'image' || 'video' || 'audio' || 'pdf';
-
-  switch (mime_type) {
+const TypeSwitcher = (props: any): JSX.Element => {
+  switch (props.extension) {
     case 'image':
-      return <h1>Image</h1>;
+      return <BsImageFill className={props.class} />;
 
     case 'video':
-      return <h1>Video</h1>;
+      return <BsFillCameraVideoFill className={props.class} />;
 
     case 'audio':
-      return <h1>Audio</h1>;
+      return <MdAudiotrac k className={props.class} />;
 
     case 'pdf':
-      return <h1>PDF</h1>;
+      return <BsFillFilePdfFill className={props.class} />;
+
+    case 'zip':
+    case 'rar':
+      return <BsFileZipFill className={props.class} />;
+
+    case 'blender':
+      return <SiBlender className={props.class} />;
+
+    case 'docx':
+    case 'doc':
+    case 'dot':
+    case 'dotx':
+    case 'docm':
+    case 'dotm':
+      return <SiMicrosoftword className={props.class} />;
+
+    case 'xls':
+    case 'xlsx':
+    case 'xlt':
+    case 'xltx':
+    case 'xlsm':
+    case 'xlam':
+      return <SiMicrosoftexcel className={props.class} />;
+
+    case 'ppt':
+    case 'pptx':
+    case 'pot':
+    case 'potx':
+    case 'pptm':
+    case 'potm':
+      return <SiMicrosoftpowerpoint className={props.class} />;
+
+    case 'mdb':
+    case 'accdb':
+    case 'accde':
+      return <SiMicrosoftaccess className={props.class} />;
+
+    case 'one':
+      return <SiMicrosoftonenote className={props.class} />;
 
     default:
-      return <h1>Default</h1>;
+      return <GoFile className={props.class} />;
   }
 };
 

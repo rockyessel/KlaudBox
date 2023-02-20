@@ -2,7 +2,7 @@ import mongoose from 'mongoose';
 import dotenv from 'dotenv';
 import path from 'path';
 
-dotenv.config({ path: path.resolve(process.cwd(), '.env') });
+dotenv.config();
 
 const url = `${process.env.MONGODB_URI}`;
 console.log('url', url);

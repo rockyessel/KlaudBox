@@ -23,8 +23,6 @@ export const baseURL = `http://localhost:${PORT}`;
 const app: Express.Application = Express();
 const server = http.createServer(app);
 
-console.log('index', process.env.MONGODB_URI);
-
 app.use(cors({ origin: '*' }));
 app.use(morgan('tiny'));
 app.use(Express.json());

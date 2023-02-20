@@ -4,7 +4,7 @@ import cors from 'cors';
 import dotenv from 'dotenv';
 import morgan from 'morgan';
 import http from 'http';
-import mkdirp from 'mkdirp';
+import fs from 'fs-extra';
 import { connectDatabase } from './utils/configs/database';
 
 dotenv.config();
@@ -33,11 +33,11 @@ app.get('/', (request, response) => {
   response.status(200).json('Success');
 });
 
-mkdirp('./build/uploads/audio');
-mkdirp('./build/uploads/images');
-mkdirp('./build/uploads/others');
-mkdirp('./build/uploads/pdf');
-mkdirp('./build/uploads/videos');
+fs.ensureDir('./uploads/audio');
+fs.ensureDir('./uploads/images');
+fs.ensureDir('./uploads/others');
+fs.ensureDir('./uploads/pdf');
+fs.ensureDir('./uploads/videos');
 
 app.use('/v1/', GuestFile);
 

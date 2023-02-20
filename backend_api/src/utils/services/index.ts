@@ -37,45 +37,7 @@ export const generateString = (): string => {
 
 const storageEngine = multer.diskStorage({
   destination: (_req, file, cb) => {
-    switch (file.mimetype) {
-      case 'image/jpeg':
-      case 'image/png':
-      case 'image/gif':
-      case 'image/bmp':
-      case 'image/webp':
-      case 'image/tiff':
-      case 'image/x-icon':
-      case 'image/svg+xml':
-        cb(null, path.join(__dirname, '../../uploads/images'));
-        break;
-      case 'application/pdf':
-        cb(null, path.join(__dirname, '../../uploads/pdf/'));
-        break;
-      case 'video/mp4':
-      case 'video/quicktime':
-      case 'video/x-msvideo':
-      case 'video/3gpp':
-      case 'video/x-ms-wmv':
-      case 'video/x-flv':
-      case 'video/x-matroska':
-      case 'video/webm':
-      case 'video/ogg':
-        cb(null, path.join(__dirname, '../../uploads/videos/'));
-        break;
-      case 'audio/mpeg':
-      case 'audio/basic':
-      case 'audio/mid':
-      case 'audio/x-wav':
-      case 'audio/webm':
-      case 'audio/ogg':
-      case 'audio/x-aiff':
-      case 'audio/x-pn-realaudio':
-        cb(null, path.join(__dirname, '../../uploads/audio/'));
-        break;
-      default:
-        cb(null, path.join(__dirname, '../../uploads/others/'));
-        break;
-    }
+    cb(null, path.join(__dirname, '../../uploads'));
   },
   filename: (_req, file, cb) => {
     cb(null, `${Date.now()}-${file.originalname.replaceAll(' ', '-')}`);
@@ -182,16 +144,66 @@ export const GuestScheduleDeletion = async () => {
   );
 };
 
-export const CreatedDirectory = (path: string, sub_path: string) => {
+export const CreatedDirectory = (path: string) => {
   // Create the root directory
+  // const subDirPath = `${path}/${sub_path}`;
+
+  // if(fs.stat)
+
   fs.mkdirSync(path, { recursive: true });
 
   // Create a sub-directory
-  const subDirPath = `${path}/${sub_path}`;
-  fs.mkdirSync(subDirPath, { recursive: true });
+  // fs.mkdirSync(subDirPath, { recursive: true });
 
   // Log the success message
-  console.log(`Directories created successfully at ${path} and ${subDirPath}.`);
+  console.log(`Directories created`);
 };
 
 // const directory = path.join(__dirname, '..', 'uploads', `${type}`);
+
+// const storageEngine = multer.diskStorage({
+//   destination: (_req, file, cb) => {
+//     switch (file.mimetype) {
+//       case 'image/jpeg':
+//       case 'image/png':
+//       case 'image/gif':
+//       case 'image/bmp':
+//       case 'image/webp':
+//       case 'image/tiff':
+//       case 'image/x-icon':
+//       case 'image/svg+xml':
+//         cb(null, path.join(__dirname, '../../uploads/images'));
+//         break;
+//       case 'application/pdf':
+//         cb(null, path.join(__dirname, '../../uploads/pdf/'));
+//         break;
+//       case 'video/mp4':
+//       case 'video/quicktime':
+//       case 'video/x-msvideo':
+//       case 'video/3gpp':
+//       case 'video/x-ms-wmv':
+//       case 'video/x-flv':
+//       case 'video/x-matroska':
+//       case 'video/webm':
+//       case 'video/ogg':
+//         cb(null, path.join(__dirname, '../../uploads/videos/'));
+//         break;
+//       case 'audio/mpeg':
+//       case 'audio/basic':
+//       case 'audio/mid':
+//       case 'audio/x-wav':
+//       case 'audio/webm':
+//       case 'audio/ogg':
+//       case 'audio/x-aiff':
+//       case 'audio/x-pn-realaudio':
+//         cb(null, path.join(__dirname, '../../uploads/audio/'));
+//         break;
+//       default:
+//         cb(null, path.join(__dirname, '../../uploads/others/'));
+//         break;
+//     }
+//   },
+//   filename: (_req, file, cb) => {
+//     cb(null, `${Date.now()}-${file.originalname.replaceAll(' ', '-')}`);
+//   },
+// });

@@ -3,8 +3,7 @@ import Express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
 import morgan from 'morgan';
-import path from 'path';
-import http, { request } from 'http';
+import http from 'http';
 import { connectDatabase } from './utils/configs/database';
 
 dotenv.config();

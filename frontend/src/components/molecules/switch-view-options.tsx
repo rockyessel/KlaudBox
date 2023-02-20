@@ -1,5 +1,5 @@
 import React from 'react';
-import { TableList, Tiles } from '..';
+import { CompactList, TableList, Tiles } from '..';
 
 const SwitchViewOptions = ({ viewOptions }: any): JSX.Element => {
   switch (viewOptions) {
@@ -7,13 +7,13 @@ const SwitchViewOptions = ({ viewOptions }: any): JSX.Element => {
       return <TableList />;
 
     case 'Compact List':
-      return <h1>hello</h1>;
+      return <CompactList />;
 
     case 'Tiles':
       return <Tiles />;
 
     default:
-      return <h1>hello</h1>;
+        return <TableList />;
   }
 };
 

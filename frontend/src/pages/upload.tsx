@@ -12,11 +12,20 @@ import { SwitchViewOptions } from '../components';
 const file_url = `https://cdn...file-dd679aeaa5c9d4bcdf2852041b230e6852-webm`;
 
 const Upload = () => {
-  const [viewOption, setViewOption] = React.useState('List');
+  const [viewOption, setViewOption] = React.useState<string>(
+    `${window.localStorage.getItem('viewOption')}`
+  );
+
   const [viewOptionState, setViewOptionState] = React.useState(false);
 
+  React.useEffect(() => {
+    window.localStorage.setItem('viewOption', viewOption);
+    const option = window.localStorage.getItem('viewOption');
+    setViewOption(`${option}`);
+  }, [viewOption]);
+
   return (
-    <main className='bg-[#212121] text-white h-screen px-6 xl:px-20 pt-5 flex flex-col gap-5'>
+    <main className='bg-[#212121] text-white h-screen px-6 xl:px-60 pt-5 flex flex-col gap-5'>
       <section className=' flex flex-col gap-5'>
         <p className='font-extrabold text-4xl'>Hey, Guest</p>
         <div className='w-full p-6 bg-[#2c2c2c] rounded-lg flex flex-col gap-5'>
@@ -65,7 +74,7 @@ const Upload = () => {
         </div>
       </section>
 
-      <section className='p-6 w-full bg-[#2c2c2c] rounded-lg flex flex-col gap-5 overflow-visible'>
+      <section className='p-6 w-full bg-[#2c2c2c] rounded-lg flex flex-col gap-5 overflow-y-visible'>
         <SwitchViewOptions viewOptions={viewOption} />
       </section>
     </main>

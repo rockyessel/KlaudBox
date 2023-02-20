@@ -45,23 +45,20 @@ body {
   background: #555;
 }
 
-#table {
-  overflow: scroll;
-}
-
 table {
+  /* border-collapse: collapse; */
   width: 100%;
 }
 
+#table {
+  display: block;
+  white-space: nowrap;
+  overflow: auto;
+}
+
+td,
 th {
-  text-align: start;
-}
-
-td {
-  text-align: start;
-  padding: 10px 0px;
-}
-
-tr {
-  /* padding: 100rem 0; */
+  /* border: 1px solid #dddddd00; */
+  text-align: left;
+  padding: 1rem;
 }

@@ -18,14 +18,29 @@ import { GoFile } from 'react-icons/go';
 
 const TypeSwitcher = (props: any): JSX.Element => {
   switch (props.extension) {
-    case 'image':
+    case 'png':
       return <BsImageFill className={props.class} />;
 
-    case 'video':
+    case 'mp4':
+    case 'swf':
+    case 'mkv':
+    case 'flv':
+    case 'vob':
+    case 'avi':
+    case 'ogg':
+    case 'mpeg':
+    case 'rm':
+    case '3gp':
+    case 'm4v':
+    case '3g2':
+    case 'mov':
+    case 'mpg':
+    case 'asf':
+    case 'wmv':
       return <BsFillCameraVideoFill className={props.class} />;
 
-    case 'audio':
-      return <MdAudiotrac k className={props.class} />;
+    case 'mp3':
+      return <MdAudiotrack className={props.class} />;
 
     case 'pdf':
       return <BsFillFilePdfFill className={props.class} />;

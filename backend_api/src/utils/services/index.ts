@@ -3,7 +3,6 @@ import path from 'path';
 import fs from 'fs';
 import axios from 'axios';
 import { baseURL } from '../..';
-import { Client } from '../configs/sanity';
 
 export const shuffleString = (input: string): string => {
   let characters = input.split('');
@@ -13,7 +12,7 @@ export const shuffleString = (input: string): string => {
 
 export const generateString = (): string => {
   let characters = shuffleString(
-    'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$&?'
+    'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'
   );
   let result = '';
   const used_chars: string[] = [];
@@ -148,8 +147,10 @@ export const handleFileDeletion = (
 export const GuestScheduleDeletion = async () => {
   const { data: endpoints } = await axios.get(`${baseURL}/v1/guest/all`);
 
+  console.log(endpoints);
+
   Promise.all(
-    endpoints.all_file?.map(async (endpoint: any) => {
+    endpoints?.all_file?.map(async (endpoint: any) => {
       const createdAt_ms = new Date(endpoint.createdAt).getTime();
 
       const expire_date = next_day(
@@ -174,8 +175,8 @@ export const GuestScheduleDeletion = async () => {
       // console.log('difference_in_days', difference_in_days);
 
       if (difference_in_days >= 1) {
-        await axios.delete(`${baseURL}/v1/guest/${endpoint.identifier}`);
-        console.log('deleted', `${endpoint.identifier}`);
+        await axios.delete(`${baseURL}/v1/guest/${endpoint?.identifier}`);
+        console.log('deleted', `${endpoint?.identifier}`);
       }
     })
   );

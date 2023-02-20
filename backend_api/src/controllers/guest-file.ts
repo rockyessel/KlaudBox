@@ -70,8 +70,9 @@ export const GuestDelete = async (request: Request, response: Response) => {
         .json({ error: 'File not found', success: false });
     }
 
+    // Delete from CMS
     const deleted_file_cms = await Client.delete(`${find_file?.cms_id}`);
-
+    // Delete from MongoDB
     const deleted_file = await find_file.delete();
 
     response

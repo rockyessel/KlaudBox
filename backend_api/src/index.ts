@@ -33,11 +33,19 @@ app.get('/', (request, response) => {
   response.status(200).json('Success');
 });
 
+// For Production
 fs.ensureDir('./build/uploads/audio');
 fs.ensureDir('./build/uploads/images');
 fs.ensureDir('./build/uploads/others');
 fs.ensureDir('./build/uploads/pdf');
 fs.ensureDir('./build/uploads/videos');
+
+// For Development
+fs.ensureDir('./src/uploads/audio');
+fs.ensureDir('./src/uploads/images');
+fs.ensureDir('./src/uploads/others');
+fs.ensureDir('./src/uploads/pdf');
+fs.ensureDir('./src/uploads/videos');
 
 app.use('/v1/', GuestFile);
 

@@ -4,7 +4,7 @@ import cors from 'cors';
 import dotenv from 'dotenv';
 import morgan from 'morgan';
 import path from 'path';
-import http from 'http';
+import http, { request } from 'http';
 import { connectDatabase } from './utils/configs/database';
 
 dotenv.config();
@@ -28,6 +28,10 @@ app.use(morgan('tiny'));
 app.use(Express.json());
 app.use(Express.urlencoded({ extended: false }));
 app.use('/uploads', Express.static(__dirname + '/uploads'));
+
+app.get('/', (request, response) => {
+  response.status(200).json('Success');
+});
 
 app.use('/v1/', GuestFile);
 

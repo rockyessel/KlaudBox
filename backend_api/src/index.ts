@@ -33,11 +33,11 @@ app.get('/', (request, response) => {
   response.status(200).json('Success');
 });
 
-fs.ensureDir('./uploads/audio');
-fs.ensureDir('./uploads/images');
-fs.ensureDir('./uploads/others');
-fs.ensureDir('./uploads/pdf');
-fs.ensureDir('./uploads/videos');
+fs.ensureDir('./build/uploads/audio');
+fs.ensureDir('./build/uploads/images');
+fs.ensureDir('./build/uploads/others');
+fs.ensureDir('./build/uploads/pdf');
+fs.ensureDir('./build/uploads/videos');
 
 app.use('/v1/', GuestFile);
 

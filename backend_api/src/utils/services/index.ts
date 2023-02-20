@@ -182,4 +182,16 @@ export const GuestScheduleDeletion = async () => {
   );
 };
 
+export const CreatedDirectory = (path: string, sub_path: string) => {
+  // Create the root directory
+  fs.mkdirSync(path, { recursive: true });
+
+  // Create a sub-directory
+  const subDirPath = `${path}/${sub_path}`;
+  fs.mkdirSync(subDirPath, { recursive: true });
+
+  // Log the success message
+  console.log(`Directories created successfully at ${path} and ${subDirPath}.`);
+};
+
 // const directory = path.join(__dirname, '..', 'uploads', `${type}`);

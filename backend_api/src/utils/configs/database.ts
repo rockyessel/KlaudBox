@@ -5,7 +5,6 @@ import path from 'path';
 dotenv.config();
 
 const url = `${process.env.MONGODB_URI}`;
-console.log('url', url);
 export const connectDatabase = async () => {
   try {
     await mongoose.connect(url);

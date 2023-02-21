@@ -2,18 +2,26 @@ import React from 'react';
 import { CompactList, TableList, Tiles } from '..';
 
 const SwitchViewOptions = ({ viewOptions }: any): JSX.Element => {
+  const [guestData, setGuestData] = React.useState([]);
+
+  React.useEffect(() => {
+    const guest_localCollection = window.localStorage.getItem('guestCollection');
+    setGuestData(JSON.parse(`${guest_localCollection}`));
+  }, []);
+
+  console.log('guestData', guestData);
   switch (viewOptions) {
     case 'List':
-      return <TableList />;
+      return <TableList guestData={guestData} />;
 
     case 'Compact List':
       return <CompactList />;
 
     case 'Tiles':
-      return <Tiles />;
+      return <Tiles guestData={guestData} />;
 
     default:
-        return <TableList />;
+      return <TableList guestData={guestData} />;
   }
 };
 

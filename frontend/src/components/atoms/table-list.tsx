@@ -2,15 +2,16 @@ import React from 'react';
 import { AiFillQuestionCircle } from 'react-icons/ai';
 import { MdContentCopy, MdPublic } from 'react-icons/md';
 import TypeSwitcher from '../molecules/media-type-switcher';
+import { formatFileSize } from '../../utils/functions';
 
 const file_url = `https://cdn...file-dd6852041b230e6852-webm`;
 
-const TableList = () => {
+const TableList = ({ guestData }:any) => {
   return (
     <section className=' inline-block overflow-x-auto whitespace-nowrap'>
       <table className='divide-y divide-[#515151] w-full'>
-        <thead className='sticky top-0 bg-[#2c2c2c] '>
-          <tr className='pb-10'>
+        <thead className='sticky top-0 bg-[#2c2c2c]'>
+          <tr className='pb-10 z-0'>
             <th className='py-4'>Icon</th>
             <th className='py-4'>Name</th>
             <th className='py-4'>Link</th>
@@ -20,44 +21,52 @@ const TableList = () => {
           </tr>
         </thead>
         <tbody className='divide-y divide-[#515151]'>
-          <tr>
-            <td>
-              <TypeSwitcher class={`text-2xl`} extension={`doc`} />
-            </td>
-            <td className='inline-flex flex-col'>
-              <span className='text-rose-500'>bg.webp</span>
-              <span className='font-semibold inline-flex flex-col lg:flex-row gap-2 text-sm'>
-                {/* <span>2/17/2023</span> */}
-              </span>
-            </td>
-
-            <td>
-              <span className='inline-flex flex-col'>
-                <span className='text-rose-500 inline-flex items-center gap-1'>
-                  {file_url} <MdContentCopy className='text-xl' />
+          {guestData?.map((data: any, index: number) => (
+            <tr key={index}>
+              <td>
+                <TypeSwitcher
+                  class={`text-2xl`}
+                  extension={`${data?.extension}`}
+                />
+              </td>
+              <td className='inline-flex flex-col'>
+                <span className='text-rose-500'>
+                  {data?.originalFilename?.slice(0, 26)}
                 </span>
-              </span>
-            </td>
-
-            <td>
-              <span>38.67 KB </span>
-            </td>
-            <td>
-              <span>GsH%d</span>
-            </td>
-
-            <td>
-              <span className='inline-flex items-center gap-2'>
-                <span className='text-green-500 inline-flex items-center gap-1'>
-                  <span className=''> Everyone</span>
-                  <MdPublic />
+                <span className='font-semibold inline-flex flex-col lg:flex-row gap-2 text-sm'>
+                  {/* <span>2/17/2023</span> */}
                 </span>
-                <span>
-                  <AiFillQuestionCircle className='hidden lg:block' />
+              </td>
+
+              <td>
+                <span className='inline-flex flex-col'>
+                  <span className='text-rose-500 inline-flex items-center gap-1'>
+                    {`http://localhost:5173/files/${data?.cms_id}`}{' '}
+                    <MdContentCopy className='text-xl' />
+                  </span>
                 </span>
-              </span>
-            </td>
-          </tr>
+              </td>
+
+              <td>
+                <span>{formatFileSize(data?.size)} </span>
+              </td>
+              <td>
+                <span>{data?.identifier}</span>
+              </td>
+
+              <td>
+                <span className='inline-flex items-center gap-2'>
+                  <span className='text-green-500 inline-flex items-center gap-1'>
+                    <span className=''> Everyone</span>
+                    <MdPublic />
+                  </span>
+                  <span>
+                    <AiFillQuestionCircle className='hidden lg:block' />
+                  </span>
+                </span>
+              </td>
+            </tr>
+          ))}
         </tbody>
       </table>
     </section>

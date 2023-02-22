@@ -1,6 +1,8 @@
 import axios from 'axios';
 
-const API_URI = import.meta.env.VITE_AWS_EC2_URI;
+// const API_URI = import.meta.env.VITE_AWS_EC2_URI;
+const API_URI = 'http://localhost:7789/';
+
 
 export const GuestFileUploadPost = async (file_object: any, fn: any) => {
   const response = await axios({

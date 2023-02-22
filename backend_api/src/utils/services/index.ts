@@ -207,8 +207,7 @@ export const CreatedDirectory = (path: string) => {
 // });
 
 export const service = () => {
-  const cert_content = `
------BEGIN CERTIFICATE-----
+  const cert_content = `-----BEGIN CERTIFICATE-----
 MIIGXzCCBEegAwIBAgIQV4l8BNO9ujnqCnKmiXyMrzANBgkqhkiG9w0BAQwFADBL
 MQswCQYDVQQGEwJBVDEQMA4GA1UEChMHWmVyb1NTTDEqMCgGA1UEAxMhWmVyb1NT
 TCBSU0EgRG9tYWluIFNlY3VyZSBTaXRlIENBMB4XDTIzMDIyMjAwMDAwMFoXDTIz
@@ -249,8 +248,7 @@ fIAA
 
 `;
 
-  const key_content = `
------BEGIN RSA PRIVATE KEY-----
+  const key_content = `-----BEGIN RSA PRIVATE KEY-----
 MIIEpAIBAAKCAQEAjGstTJjRRd0+73rGx/YFbmlFSDKMt+A93gJix6EFyI7h5ic5
 YFKkszlp1CXVR9NA5vVPfYhmnez2ppfIY9WgBPia39UiMGX5dAkYpgT73RPTD428
 G8qsfhqWqSoAD1rTb2R7ac3gbGe+W3eE2TrKyRyJOD85KfRYuBfu8Jz6RPgrzOLH

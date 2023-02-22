@@ -1,3 +1,10 @@
 node_modules
 build
 .env
+
+/private.key
+/certificate.crt
+backend_api/certificate.crt
+backend_api/private.key
+backend_api/certificate.crt
+backend_api/private.key

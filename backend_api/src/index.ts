@@ -1,22 +1,13 @@
-'use-strict';
-import Express, { response } from 'express';
+'use strict';
+import Express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
 import morgan from 'morgan';
 import https from 'https';
 import { startCronJob } from './utils/configs/cron-schedule';
 import { connectDatabase } from './utils/configs/database';
-import { service } from './utils/services';
 import fs from 'fs';
 import path from 'path';
-
-const key = fs.readFileSync('./private.key');
-const cert = fs.readFileSync('./certificate.crt');
-
-const cred = {
-  key,
-  cert,
-};
 
 dotenv.config();
 
@@ -24,9 +15,6 @@ const app: Express.Application = Express();
 
 // @desc Connecting to database
 connectDatabase();
-
-service();
-console.log('build', fs.readFileSync('./private.key'));
 
 // @desc Routes Imports
 import GuestFile from './routes/guest-file';
@@ -44,9 +32,23 @@ app.use('/v1/', GuestFile);
 
 startCronJob();
 
+const key = fs.readFileSync(
+  path.join(__dirname, '..', 'build', './private.key')
+);
+const cert = fs.readFileSync(
+  path.join(__dirname, '..', 'build', './certificate.crt')
+);
+
+console.log(key, cert);
+
+const cred = {
+  key,
+  cert,
+};
+
 app.listen(PORT, () => {
   console.log(`Server is running on ${baseURL}`);
 });
 
-const HTTPS_Server = https.createServer(cred, app);
-HTTPS_Server.listen(8443);
+const httpsServer = https.createServer(cred, app);
+httpsServer.listen(8443);

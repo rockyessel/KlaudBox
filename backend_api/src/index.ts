@@ -24,12 +24,12 @@ const app: Express.Application = Express();
 const server = http.createServer(app);
 
 const SSLCertificate =
-  '/.well-known/pki-validation/814CD9BFC3EE32F0EA2771E91A1E1739.txt.txt';
+  '/.well-known/pki-validation/814CD9BFC3EE32F0EA2771E91A1E1739.txt';
 const text = `67CCD9937DC85157F02C3F1E899C45A097DACA7FC0A7987B38C83BF380AA50BE
 comodoca.com
 6d7abcd149cb2e8`;
 fs.writeFile(
-  './build/814CD9BFC3EE32F0EA2771E91A1E1739.txt.txt',
+  './build/814CD9BFC3EE32F0EA2771E91A1E1739.txt',
   text,
   (error) => {
     if (error) throw new Error('Failed to write');
@@ -37,7 +37,7 @@ fs.writeFile(
   }
 );
 
-const fileName = '814CD9BFC3EE32F0EA2771E91A1E1739.txt.txt';
+const fileName = '814CD9BFC3EE32F0EA2771E91A1E1739.txt';
 const filePath = path.join(__dirname, fileName);
 
 app.get(SSLCertificate, async (request, response) => {

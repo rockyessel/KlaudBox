@@ -15,7 +15,6 @@ connectDatabase();
 
 // @desc Routes Imports
 import GuestFile from './routes/guest-file';
-console.log('hostname', os.userInfo());
 // @desc PORT
 const PORT = process.env.PORT || 7789;
 export const baseURL = `http://localhost:${PORT}`;

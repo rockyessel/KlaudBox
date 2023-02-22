@@ -109,8 +109,6 @@ export const handleFileDeletion = (
 export const GuestScheduleDeletion = async () => {
   const { data: endpoints } = await axios.get(`${baseURL}/v1/guest/all`);
 
-  console.log(endpoints);
-
   Promise.all(
     endpoints?.all_file?.map(async (endpoint: any) => {
       const createdAt_ms = new Date(endpoint.createdAt).getTime();

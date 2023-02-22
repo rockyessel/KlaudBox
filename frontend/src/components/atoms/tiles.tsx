@@ -1,7 +1,8 @@
 import React from 'react';
-import { BsImage } from 'react-icons/bs';
 import TypeSwitcher from '../molecules/media-type-switcher';
-import moment from 'moment';
+
+import { format } from 'date-fns';
+import { Link } from 'react-router-dom';
 
 const Tiles = ({ guestData }: any) => {
   return (
@@ -18,9 +19,13 @@ const Tiles = ({ guestData }: any) => {
 
           <div className='text-center'>
             <p className='text-gray-300 text-[14px] hover:underline cursor-pointer'>
-              {data?.originalFilename?.slice(0, 26)}
+              <Link to={`/files/${data?.cms_id}`}>
+                {data?.originalFilename?.slice(0, 26)}
+              </Link>
             </p>
-            <p className='text-[0.8rem]'>{data?.createdAt}</p>
+            <time className='text-[0.8rem]'>
+              {format(new Date(data?.createdAt), 'MMM d, yyyy')}
+            </time>
           </div>
         </li>
       ))}

@@ -4,7 +4,7 @@ import { MdContentCopy, MdPublic } from 'react-icons/md';
 import TypeSwitcher from '../molecules/media-type-switcher';
 import { formatFileSize } from '../../utils/functions';
 
-const file_url = `https://cdn...file-dd6852041b230e6852-webm`;
+const file_url = `://localhost:5173/files/file`;
 
 const TableList = ({ guestData }:any) => {
   return (
@@ -41,7 +41,7 @@ const TableList = ({ guestData }:any) => {
               <td>
                 <span className='inline-flex flex-col'>
                   <span className='text-rose-500 inline-flex items-center gap-1'>
-                    {`http://localhost:5173/files/${data?.cms_id}`}{' '}
+                    { data?.isPublic ? `ht.../${data?.cms_id}?identifier=data?.identifier` : `ht...${data?.cms_id}` }
                     <MdContentCopy className='text-xl' />
                   </span>
                 </span>

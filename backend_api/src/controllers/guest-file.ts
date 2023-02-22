@@ -14,6 +14,8 @@ export const GuestPost = async (request: Request, response: Response) => {
       { filename: `${request.file?.originalname.replaceAll(' ', '-')}` }
     );
 
+    console.log('body', request.body);
+
     const create_guest_file = await GuestFile.create({
       url: SanityCMS?.url,
       size: SanityCMS?.size,
@@ -25,8 +27,9 @@ export const GuestPost = async (request: Request, response: Response) => {
       createdAt: SanityCMS?._createdAt,
       updatedAt: SanityCMS?._updatedAt,
       uploadId: SanityCMS?.uploadId,
-      title: SanityCMS?.title,
-      description: SanityCMS?.description,
+      title: request.body?.title,
+      description: request.body?.description,
+      isPublic: true,
     });
 
     handleFileDeletion(

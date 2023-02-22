@@ -1,6 +1,7 @@
 import React from 'react';
 import { FaBars, FaTimes } from 'react-icons/fa';
 import { Menu } from '..';
+import { Link } from 'react-router-dom';
 
 const Navbar = () => {
   const [showMenu, setShowMenu] = React.useState(false);
@@ -23,9 +24,11 @@ const Navbar = () => {
 
       <nav className='hidden lg:block'>
         <ul className='flex gap-5'>
-          <li className='bg-white text-black rounded-md px-2 py-1 font-medium'>
-            Upload
-          </li>
+          <Link to='/uploads'>
+            <li className='bg-white text-black rounded-md px-2 py-1 font-medium'>
+              Upload
+            </li>
+          </Link>
           <li className='border border-white/60 rounded-md px-2 py-1 font-medium'>
             Login
           </li>

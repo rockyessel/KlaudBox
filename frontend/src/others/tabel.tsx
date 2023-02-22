@@ -1,7 +1,13 @@
-import React from 'react'
-import { AiOutlineFieldTime } from 'react-icons/ai';
+import React from 'react';
+import {
+  AiFillQuestionCircle,
+  AiOutlineDownload,
+  AiOutlineFieldTime,
+} from 'react-icons/ai';
+import { MdContentCopy, MdPublic } from 'react-icons/md';
 
 const tabel = () => {
+  const file_url = `https://cdn...file-dd679aeaa5c9d4bcdf2852041b230e6852-webm`;
   return (
     <div>
       <section id='table' className='w-full'>
@@ -54,12 +60,11 @@ const tabel = () => {
                 </span>
               </td>
             </tr>
-
           </tbody>
         </table>
       </section>
     </div>
   );
-}
+};
 
-export default tabel
+export default tabel;

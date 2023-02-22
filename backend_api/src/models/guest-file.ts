@@ -20,6 +20,7 @@ const GuestFileModel = new Mongoose.Schema({
   // Options
   title: { type: String, require: false },
   description: { type: String, require: false },
+  isPublic: { type: Boolean, require: false },
 });
 
 export const GuestFile = Mongoose.model('GuestFile', GuestFileModel);

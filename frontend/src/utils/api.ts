@@ -17,3 +17,14 @@ export const GuestFileUploadPost = async (file_object: any, fn: any) => {
 
   return data_;
 };
+
+export const GetAllFiles = async () => {
+  const response = await axios({
+    method: 'GET',
+    url: `${API_URI}v1/guest/all`,
+  });
+
+  const data_ = await response.data;
+
+  return data_;
+};

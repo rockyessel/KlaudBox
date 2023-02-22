@@ -24,11 +24,9 @@ const Navbar = () => {
 
       <nav className='hidden lg:block'>
         <ul className='flex gap-5'>
-          <Link to='/uploads'>
-            <li className='bg-white text-black rounded-md px-2 py-1 font-medium'>
-              Upload
-            </li>
-          </Link>
+          <li className='bg-white text-black rounded-md px-2 py-1 font-medium'>
+            <Link to='/uploads'>Upload</Link>
+          </li>
           <li className='border border-white/60 rounded-md px-2 py-1 font-medium'>
             Login
           </li>
@@ -39,9 +37,11 @@ const Navbar = () => {
       </nav>
 
       <section className='flex items-center gap-5 lg:hidden'>
-        <button className='bg-white lg:hidden block text-black rounded-md px-2 py-1 font-medium'>
-          Upload
-        </button>
+        <Link to='/uploads'>
+          <button className='bg-white lg:hidden block text-black rounded-md px-2 py-1 font-medium'>
+            Upload
+          </button>
+        </Link>
 
         <div className='lg:hidden block'>
           <button

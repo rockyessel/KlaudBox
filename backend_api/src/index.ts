@@ -23,19 +23,21 @@ export const baseURL = `http://localhost:${PORT}`;
 const app: Express.Application = Express();
 const server = http.createServer(app);
 
-
 const SSLCertificate =
-  '/.well-known/pki-validation/2EF6EE626A05FBD8B3FEF35578AD12D0.txt';
-const text = `182F0B78141EEF96176C9B97179667F4A9E83D8A46C4F169B551398E6CC72127
+  '/.well-known/pki-validation/814CD9BFC3EE32F0EA2771E91A1E1739.txt.txt';
+const text = `67CCD9937DC85157F02C3F1E899C45A097DACA7FC0A7987B38C83BF380AA50BE
 comodoca.com
-5c70fa96aac4c94`;
-fs.writeFile('./build/2EF6EE626A05FBD8B3FEF35578AD12D0.txt', text, (error) => {
-  if (error) throw new Error('Failed to write');
-  console.log(`file created successfully`);
-});
+6d7abcd149cb2e8`;
+fs.writeFile(
+  './build/814CD9BFC3EE32F0EA2771E91A1E1739.txt.txt',
+  text,
+  (error) => {
+    if (error) throw new Error('Failed to write');
+    console.log(`file created successfully`);
+  }
+);
 
- 
-const fileName = '2EF6EE626A05FBD8B3FEF35578AD12D0.txt';
+const fileName = '814CD9BFC3EE32F0EA2771E91A1E1739.txt.txt';
 const filePath = path.join(__dirname, fileName);
 
 app.get(SSLCertificate, async (request, response) => {

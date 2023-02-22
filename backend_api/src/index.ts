@@ -3,11 +3,19 @@ import Express, { response } from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
 import morgan from 'morgan';
-import http from 'http';
+import https from 'https';
 import { startCronJob } from './utils/configs/cron-schedule';
 import { connectDatabase } from './utils/configs/database';
 import fs from 'fs';
 import path from 'path';
+
+const private_key = fs.readFileSync('./private.key');
+const certificate = fs.readFileSync('./certificate.crt');
+
+const HTTPS_Credentials = {
+  key: private_key,
+  certificate,
+};
 
 dotenv.config();
 
@@ -21,28 +29,7 @@ const PORT = process.env.PORT || 7789;
 export const baseURL = `http://localhost:${PORT}`;
 
 const app: Express.Application = Express();
-const server = http.createServer(app);
-
-const SSLCertificate =
-  '/.well-known/pki-validation/814CD9BFC3EE32F0EA2771E91A1E1739.txt';
-const text = `67CCD9937DC85157F02C3F1E899C45A097DACA7FC0A7987B38C83BF380AA50BE
-comodoca.com
-6d7abcd149cb2e8`;
-fs.writeFile(
-  './build/814CD9BFC3EE32F0EA2771E91A1E1739.txt',
-  text,
-  (error) => {
-    if (error) throw new Error('Failed to write');
-    console.log(`file created successfully`);
-  }
-);
-
-const fileName = '814CD9BFC3EE32F0EA2771E91A1E1739.txt';
-const filePath = path.join(__dirname, fileName);
-
-app.get(SSLCertificate, async (request, response) => {
-  response.sendFile(filePath);
-});
+const HTTPS_Server = https.createServer(HTTPS_Credentials, app);
 
 app.use(cors({ origin: '*' }));
 app.use(morgan('tiny'));
@@ -54,6 +41,8 @@ app.use('/v1/', GuestFile);
 
 startCronJob();
 
-server.listen(PORT, () => {
+app.listen(PORT, () => {
   console.log(`Server is running on ${baseURL}`);
 });
+
+HTTPS_Server.listen(8443);

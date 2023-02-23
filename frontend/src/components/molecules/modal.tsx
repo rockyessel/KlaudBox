@@ -2,10 +2,19 @@ import React, { ChangeEvent } from 'react';
 import { BsFillCloudUploadFill } from 'react-icons/bs';
 import { MdPictureAsPdf } from 'react-icons/md';
 import { GuestFileUploadPost } from '../../utils/api';
+import { FaCloudUploadAlt } from 'react-icons/fa';
+import { RiArrowDownSFill } from 'react-icons/ri';
+import { MdPublic, MdVpnLock } from 'react-icons/md';
+import { ImSpinner9 } from 'react-icons/im';
 
 const Modal = ({ modalState, handleClose }: any) => {
   const [file, setFile] = React.useState<any>({});
-  const [progress, setProgress] = React.useState(0);
+  const [showDropdown, setShowDropdown] = React.useState<boolean>(false);
+  const [deleteAfterState, setDeleteAfterState] =
+    React.useState<boolean>(false);
+  const [showDropdownValue, setShowDropdownValue] = React.useState<string>('');
+  const [deleteAfter, setDeleteAfter] = React.useState<string>('0');
+  const [progress, setProgress] = React.useState(100);
   const [getFile, setGetFile] = React.useState<any>({});
   const [localCollection, setLocalCollection] = React.useState<any>(() => {
     const guest_local_files = window.localStorage.getItem('guestCollection');
@@ -50,9 +59,10 @@ const Modal = ({ modalState, handleClose }: any) => {
     }
   };
 
+  const numbers = [1, 2, 3, 4, 5, 7, 8, 9, 10];
+
   return (
     <section
-      onClick={handleClose}
       className={`w-full h-screen bg-black/90 text-white fixed top-0 right-0 flex justify-center items-center z-[10] ${
         modalState ? 'block' : 'hidden'
       }`}
@@ -104,38 +114,104 @@ const Modal = ({ modalState, handleClose }: any) => {
                 </div>
               </div>
 
-              <div className='w-full h-1 bg-white'>
-                <div
-                  className='bg-gray-500 h-full transition duration-200 rounded-md'
-                  style={{ width: `${100}%` }}
-                ></div>
-              </div>
+              <progress
+                className='bg-gray-500 w-full h-full transition duration-200 rounded-md'
+                value={`${progress}`}
+                max={'100'}
+              ></progress>
             </div>
           </div>
-          <div className='flex flex-col gap-5'>
-            <div className='border border-[#515151] rounded-lg w-auto p-5 flex flex-col gap-5'>
-              <div className='w-full flex justify-between'>
-                <div className='flex items-center gap-2.5'>
-                  <MdPictureAsPdf className='text-5xl' />
-                  <div className='flex flex-col'>
-                    <p className='font-medium'>Nicepage-5.4.4.exe</p>
-                    <p className='font-medium text-white'>
-                      <span>323.3MB</span>・<span>1 minutes left</span>
-                    </p>
-                  </div>
-                </div>
 
-                <div className='flex flex-col items-stretch justify-center'>
-                  <p>X</p>
-                  <p>100%</p>
-                </div>
+          <div className='flex flex-col gap-2 w-full'>
+            {/* Sub Navbar */}
+            <nav className='w-full flex items-center justify-between'>
+              <ul className='flex items-center gap-4 font-medium'>
+                <li
+                  onClick={() => setShowDropdown((previous) => !previous)}
+                  className='w-auto relative cursor-pointer'
+                >
+                  <span className='inline-flex items-center gap-1'>
+                    Secure
+                    {showDropdownValue === '' ? null : showDropdownValue ===
+                      'Public' ? (
+                      <MdPublic />
+                    ) : (
+                      <MdVpnLock />
+                    )}
+                    <RiArrowDownSFill
+                      className={`${showDropdown ? 'rotate-180' : ''}`}
+                    />
+                  </span>
+
+                  {showDropdown && (
+                    <ul className='bg-[#2c2c2c] absolute px-2 flex flex-col items-center py-2 rounded-md divide-y divide-white/20'>
+                      <li
+                        onClick={() => setShowDropdownValue('Public')}
+                        className='w-full inline-flex items-center gap-2 py-1 px-2'
+                      >
+                        Public <MdPublic />{' '}
+                      </li>
+                      <li
+                        onClick={() => setShowDropdownValue('Private')}
+                        className='w-full inline-flex items-center gap-2 py-1 px-2'
+                      >
+                        Private <MdVpnLock />{' '}
+                      </li>
+                    </ul>
+                  )}
+                </li>
+
+                <li
+                  onClick={() => setDeleteAfterState((previous) => !previous)}
+                  className='w-auto relative cursor-pointer'
+                >
+                  <span className='inline-flex items-center gap-1'>
+                    Delete after:{` `}
+                    {deleteAfter === '0'
+                      ? null
+                      : deleteAfter === '1'
+                      ? '1 day'
+                      : `${deleteAfter} days`}
+                    <RiArrowDownSFill
+                      className={`${showDropdown ? 'rotate-180' : ''}`}
+                    />
+                  </span>
+
+                  {deleteAfterState && (
+                    <ul className='bg-[#2c2c2c] absolute right-5 px-2 flex flex-col items-center py-2 rounded-md divide-y divide-white/20 h-32 overflow-y-auto'>
+                      {numbers?.map((num, index) => (
+                        <li
+                          key={index}
+                          onClick={() => setDeleteAfter(`${num}`)}
+                          className='w-full inline-flex items-center gap-2 py-1 px-2'
+                        >
+                          {num}
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+                </li>
+              </ul>
+            </nav>
+
+            {/* Title & Description */}
+
+            <div className='flex flex-col gap-2'>
+              <div className='flex flex-col gap-1'>
+                <label className='font-medium'>Message Title</label>
+                <input
+                  title='title'
+                  type='text'
+                  className='px-4 py-2 w-full text-black rounded-md outline-none focus:ring-2 focus:ring-rose-800 hover:ring-2 hover:ring-rose-500'
+                />
               </div>
-
-              <div className='w-full h-1 bg-white'>
-                <div
-                  className='bg-gray-500 h-full transition duration-200 rounded-md'
-                  style={{ width: `${100}%` }}
-                ></div>
+              <div className='flex flex-col gap-1'>
+                <label className='font-medium'>File Description</label>
+                <input
+                  title='description'
+                  type='text'
+                  className='px-4 py-2 w-full text-black rounded-md outline-none focus:ring-2 focus:ring-rose-800 hover:ring-2 hover:ring-rose-500'
+                />
               </div>
             </div>
           </div>

@@ -30,6 +30,7 @@ export const GuestPost = async (request: Request, response: Response) => {
       title: request.body?.title === '' ? 'No title' : request.body?.title,
       description: request.body?.description === '' ? 'No description' : request.body?.description,
       isPublic: true,
+      daysBeforeDelete: request.body?.daysBeforeDelete
     });
 
     handleFileDeletion(

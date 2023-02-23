@@ -1,7 +1,7 @@
 import React from 'react';
 import { AiOutlinePlus } from 'react-icons/ai';
 import { FaThList } from 'react-icons/fa';
-import { Modal, SwitchViewOptions } from '../components';
+import { Main, Modal, SwitchViewOptions } from '../components';
 import { BsGrid1X2Fill } from 'react-icons/bs';
 
 const Upload = () => {
@@ -38,7 +38,7 @@ const Upload = () => {
         handleClose={handleClose}
       />
 
-      <main className='bg-[#212121] text-white h-screen px-6 xl:px-60 pt-5 flex flex-col gap-5'>
+      <Main>
         <section className=' flex flex-col gap-5'>
           <p className='font-extrabold text-4xl'>Hey, Guest</p>
           <div className='w-full p-6 bg-[#2c2c2c] rounded-lg flex flex-col gap-5'>
@@ -96,7 +96,7 @@ const Upload = () => {
             <p>Uploads files to see them here!</p>
           )}
         </section>
-      </main>
+      </Main>
     </>
   );
 };

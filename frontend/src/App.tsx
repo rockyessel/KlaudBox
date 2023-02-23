@@ -1,6 +1,6 @@
 import React from 'react';
 import { Routes, Route } from 'react-router-dom';
-import { FileDetails, HomePage, UploadPage } from './pages';
+import { DownloadPage, FileDetails, HomePage, UploadPage } from './pages';
 import { Navbar } from './components';
 
 const App = () => {
@@ -10,6 +10,7 @@ const App = () => {
       <Routes>
         <Route path='/' element={<HomePage />} />
         <Route path='/uploads' element={<UploadPage />} />
+        <Route path='/find-file' element={<DownloadPage />} />
         <Route path='/files/:filename' element={<FileDetails />} />
       </Routes>
     </React.Fragment>

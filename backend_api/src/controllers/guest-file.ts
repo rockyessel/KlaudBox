@@ -27,8 +27,8 @@ export const GuestPost = async (request: Request, response: Response) => {
       createdAt: SanityCMS?._createdAt,
       updatedAt: SanityCMS?._updatedAt,
       uploadId: SanityCMS?.uploadId,
-      title: request.body?.title,
-      description: request.body?.description,
+      title: request.body?.title === '' ? 'No title' : request.body?.title,
+      description: request.body?.description === '' ? 'No description' : request.body?.description,
       isPublic: true,
     });
 
@@ -52,7 +52,13 @@ export const GuestGet = async (request: Request, response: Response) => {
 
   const find_guest_file = await GuestFile.findOne({ identifier });
 
-  response.status(200).json({ file: find_guest_file, success: true });
+  if (!find_guest_file){
+
+    response.status(404).json({ message: 'File not found or deleted', success: false });
+  }else{
+    response.status(200).json({ file: find_guest_file, success: true });
+
+  }
 };
 
 export const GuestGetAll = async (request: Request, response: Response) => {

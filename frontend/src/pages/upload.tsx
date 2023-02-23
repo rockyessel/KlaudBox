@@ -1,18 +1,11 @@
 import React from 'react';
-import {
-  AiOutlinePlus,
-  AiOutlineFieldTime,
-  AiFillQuestionCircle,
-  AiOutlineDownload,
-} from 'react-icons/ai';
-import { BsFillCloudUploadFill, BsGrid1X2Fill, BsImage } from 'react-icons/bs';
+import { AiOutlinePlus } from 'react-icons/ai';
 import { FaThList } from 'react-icons/fa';
 import { Modal, SwitchViewOptions } from '../components';
-import { MdPictureAsPdf } from 'react-icons/md';
-
-const file_url = `https://cdn...file-dd679aeaa5c9d4bcdf2852041b230e6852-webm`;
+import { BsGrid1X2Fill } from 'react-icons/bs';
 
 const Upload = () => {
+  const [fileLength, setFileLength] = React.useState<number>(0);
   const [viewOption, setViewOption] = React.useState<string>(() => {
     const view = window.localStorage.getItem('viewOption');
     return view ? view : 'List';
@@ -30,6 +23,11 @@ const Upload = () => {
     window.localStorage.setItem('viewOption', viewOption);
     const option = window.localStorage.getItem('viewOption');
     setViewOption(`${option}`);
+
+    const localFiles = window.localStorage.getItem('guestCollection');
+    const files = JSON.parse(`${localFiles}`);
+
+    setFileLength(files.length);
   }, [viewOption]);
 
   return (
@@ -92,7 +90,11 @@ const Upload = () => {
           </div>
         </section>
         <section className='p-6 w-full bg-[#2c2c2c] rounded-lg flex flex-col gap-5 overflow-y-visible'>
-          <SwitchViewOptions viewOptions={viewOption} />
+          {fileLength ? (
+            <SwitchViewOptions viewOptions={viewOption} />
+          ) : (
+            <p>Uploads files to see them here!</p>
+          )}
         </section>
       </main>
     </>

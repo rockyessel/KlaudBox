@@ -6,12 +6,43 @@ import { formatFileSize } from '../../utils/functions';
 
 const file_url = `://localhost:5173/files/file`;
 
-const TableList = ({ guestData }:any) => {
+const TableList = ({ guestData }: any) => {
+  const [fileLength, setFileLength] = React.useState<number>(0);
+  const [selectedItems, setSelectedItems] = React.useState<any>([]);
+
+  React.useEffect(() => {
+    const localFiles = window.localStorage.getItem('guestCollection');
+    const files = JSON.parse(`${localFiles}`);
+
+    setFileLength(files?.length);
+  }, []);
+
+  const handleCheckboxChange = (event: any) => {
+    const item = event.target.value;
+    const isChecked = event.target.checked;
+    if (isChecked) {
+      setSelectedItems([...selectedItems, item]);
+    } else {
+      setSelectedItems(selectedItems.filter((i: any) => i !== item));
+    }
+
+    console.log(selectedItems);
+    console.log('item', item[0]);
+    console.log('isChecked', isChecked);
+  };
+
   return (
-    <section className=' inline-block overflow-x-auto whitespace-nowrap'>
+    <section
+      className={`inline-block overflow-x-auto whitespace-nowrap  ${
+        fileLength > 6 ? 'h-[30rem]' : 'h-auto'
+      }`}
+    >
       <table className='divide-y divide-[#515151] w-full'>
         <thead className='sticky top-0 bg-[#2c2c2c]'>
           <tr className='pb-10 z-0'>
+            <th className='py-4'>
+              <input title='checkbox' type='checkbox' />
+            </th>
             <th className='py-4'>Icon</th>
             <th className='py-4'>Name</th>
             <th className='py-4'>Link</th>
@@ -23,6 +54,15 @@ const TableList = ({ guestData }:any) => {
         <tbody className='divide-y divide-[#515151]'>
           {guestData?.map((data: any, index: number) => (
             <tr key={index}>
+              <td>
+                <input
+                  onChange={handleCheckboxChange}
+                  title='checkbox'
+                  type='checkbox'
+                  value={data}
+                />
+              </td>
+
               <td>
                 <TypeSwitcher
                   class={`text-2xl`}
@@ -41,7 +81,9 @@ const TableList = ({ guestData }:any) => {
               <td>
                 <span className='inline-flex flex-col'>
                   <span className='text-rose-500 inline-flex items-center gap-1'>
-                    { data?.isPublic ? `ht.../${data?.cms_id}?identifier=data?.identifier` : `ht...${data?.cms_id}` }
+                    {data?.isPublic
+                      ? `ht.../${data?.cms_id}?identifier=data?.identifier`
+                      : `ht...${data?.cms_id}`}
                     <MdContentCopy className='text-xl' />
                   </span>
                 </span>

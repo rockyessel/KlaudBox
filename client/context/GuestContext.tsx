@@ -1,5 +1,4 @@
 import React from 'react';
-import Cookies from 'js-cookie';
 
 interface GuestContextProps {
   code: string;
@@ -31,10 +30,21 @@ type Props = {
 
 export const GuestContextProvider = ({ children }: Props) => {
   // @desc Upload-File
-  const [viewOption, setViewOption] = React.useState<string>(() => {
-    const myCookieValue = Cookies.get('myCookie');
-    return myCookieValue ? myCookieValue.replaceAll('"', '') : 'List';
+  const [op, setOp] = React.useState((): string => {
+    if (typeof window !== 'undefined') {
+      const view = window.localStorage.getItem('viewOption');
+      console.log('view', view);
+      if (view === null || view === undefined) {
+        // we set it to default
+        return 'List';
+      }
+      // we return view
+      return `${view}` ? view : 'List';
+    }
+    return '';
   });
+  const [viewOption, setViewOption] = React.useState<string>(op);
+  const [selectedOption, setSelectedOption] = React.useState<string>();
   const [fileLength, setFileLength] = React.useState<number>(0);
   const [modalState, setModalState] = React.useState(false);
   const [viewOptionState, setViewOptionState] = React.useState(false);
@@ -42,15 +52,26 @@ export const GuestContextProvider = ({ children }: Props) => {
   // @desc Find-File
   const [code, setCode] = React.useState('');
 
+  //   if (typeof window !== 'undefined') {
+  //     console.log('Initial viewOption:', view);
+  //     if (view) {
+  //       setViewOption(view);
+  //     }
+  //   }
+
+  // }, []);
+
+  console.log('selectedOption', op);
+  React.useEffect(() => {
+    // console.log('Updated viewOption:', viewOption);
+    window.localStorage.setItem('viewOption', viewOption);
+
+    setSelectedOption(op);
+  }, [op, viewOption]);
+
   const handleClose = () => {
     setModalState((prevState: boolean) => !prevState);
   };
-
-  React.useEffect(() => {
-    if (typeof window !== 'undefined') {
-      Cookies.set('myCookie', JSON.stringify(viewOption), { expires: 7 });
-    }
-  }, [viewOption]);
 
   const value = {
     // @desc Find-File
@@ -71,19 +92,32 @@ export const GuestContextProvider = ({ children }: Props) => {
   );
 };
 
+export const getStaticProps = async () => {};
 export const getInitialProps = async () => {};
 
 export const useGuestContext = () => React.useContext(GuestContext);
-  // const [op, setOp] = React.useState((): string => {
-  //   if (typeof window !== 'undefined') {
-  //     const view = window.localStorage.getItem('viewOption');
-  //     console.log('view', view);
-  //     if (view === null || view === undefined) {
-  //       // we set it to default
-  //       return 'List';
-  //     }
-  //     // we return view
-  //     return `${view}` ? view : 'List';
-  //   }
-  //   return '';
-  // });
+
+
+//  const [selected, setSelected] = React.useState<string>();
+//  const [viewOption, setViewOption] = React.useState<string>(() => {
+//    const myCookieValue = Cookies.get('myCookie');
+//    return myCookieValue ? myCookieValue.replaceAll('"', '') : 'List';
+//  });
+//  const [fileLength, setFileLength] = React.useState<number>(0);
+//  const [modalState, setModalState] = React.useState(false);
+//  const [viewOptionState, setViewOptionState] = React.useState(false);//
+
+//  // @desc Find-File
+//  const [code, setCode] = React.useState('');//
+
+//  const handleClose = () => {
+//    setModalState((prevState: boolean) => !prevState);
+//  };//
+
+//  React.useEffect(() => {
+//    if (typeof window !== 'undefined') {
+//      Cookies.set('myCookie', JSON.stringify(viewOption));
+//    }//
+
+//    setSelected(viewOption);
+//  }, [viewOption]);

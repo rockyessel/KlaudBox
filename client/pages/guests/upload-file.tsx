@@ -15,6 +15,7 @@ const UploadFilePage = () => {
     setViewOption,
     setViewOptionState,
     viewOptionState,
+    selected,
   } = useGuestContext();
 
   return (
@@ -43,8 +44,8 @@ const UploadFilePage = () => {
                     onClick={() => setViewOptionState((pre) => !pre)}
                     className='bg-rose-700 relative rounded-lg w-fit px-4 py-2 inline-flex items-center gap-1 text-xl font-medium'
                   >
-                    {viewOption !== 'Tiles' ? <FaThList /> : <BsGrid1X2Fill />}
-                    <span className='hidden sm:block'>{viewOption}</span>
+                    {selected !== 'Tiles' ? <FaThList /> : <BsGrid1X2Fill />}
+                    <span className='hidden sm:block'>{selected}</span>
                     {viewOptionState && (
                       <ul className='bg-[#3d3d3d] text-[1rem] w-[10rem] z-[1] drop-shadow-lg absolute top-12 left-0 px-2 flex flex-col items-center py-2 rounded-md divide-y divide-black/20'>
                         <li
@@ -78,7 +79,7 @@ const UploadFilePage = () => {
         </section>
         <section className='p-6 w-full bg-[#2c2c2c] rounded-lg flex flex-col gap-5 overflow-y-visible'>
           {fileLength ? (
-            <SwitchViewOptions viewOption={viewOption} />
+            <SwitchViewOptions viewOption={selected} />
           ) : (
             <p>Uploads files to see them here!</p>
           )}

@@ -1,6 +1,4 @@
-import Express, { Request, Response } from 'express';
-import { baseURL } from '..';
-import path from 'path';
+import { Request, Response } from 'express';
 import { generateString, handleFileDeletion } from '../utils/services';
 import { GuestFile } from '../models/guest-file';
 import { Client } from '../utils/configs/sanity';
@@ -28,9 +26,12 @@ export const GuestPost = async (request: Request, response: Response) => {
       updatedAt: SanityCMS?._updatedAt,
       uploadId: SanityCMS?.uploadId,
       title: request.body?.title === '' ? 'No title' : request.body?.title,
-      description: request.body?.description === '' ? 'No description' : request.body?.description,
+      description:
+        request.body?.description === ''
+          ? 'No description'
+          : request.body?.description,
       isPublic: true,
-      daysBeforeDelete: request.body?.daysBeforeDelete
+      daysBeforeDelete: request.body?.daysBeforeDelete,
     });
 
     handleFileDeletion(
@@ -41,40 +42,71 @@ export const GuestPost = async (request: Request, response: Response) => {
     response.status(201).json({ file: create_guest_file, success: true });
   } catch (error) {
     response.status(500).json({
-      error: 'Internal Error from server.',
+      error: 'Internal server error',
       success: false,
-      path: 'Guest upload',
+      error_msg: error,
+      handler: 'Post Handler',
     });
   }
 };
 
 export const GuestGet = async (request: Request, response: Response) => {
-  const { identifier } = request.params;
+  try {
+    const { identifier } = request.params;
 
-  const find_guest_file = await GuestFile.findOne({ identifier });
+    if (identifier === '' || !identifier) {
+      response
+        .status(404)
+        .json({ message: 'File no was not entered', success: false });
+    }
 
-  if (!find_guest_file){
+    const find_guest_file = await GuestFile.findOne({ identifier });
 
-    response.status(404).json({ message: 'File not found or deleted', success: false });
-  }else{
-    response.status(200).json({ file: find_guest_file, success: true });
-
+    if (!find_guest_file) {
+      response
+        .status(404)
+        .json({ message: 'File not found or deleted', success: false });
+    } else {
+      response.status(200).json({ file: find_guest_file, success: true });
+    }
+  } catch (error) {
+    response.status(500).json({
+      error: 'Internal server error',
+      success: false,
+      error_msg: error,
+      handler: 'SingleGet Handler',
+    });
   }
 };
 
 export const GuestGetAll = async (request: Request, response: Response) => {
-  const all_guest_files = await GuestFile.find({});
-
-  response.status(200).json({ all_file: all_guest_files, success: true });
+  try {
+    const all_guest_files = await GuestFile.find({});
+    response.status(200).json({ all_file: all_guest_files, success: true });
+  } catch (error) {
+    response.status(500).json({
+      error: 'Internal server error',
+      success: false,
+      error_msg: error,
+      handler: 'GetAll Handler',
+    });
+  }
 };
 
 export const GuestDelete = async (request: Request, response: Response) => {
   try {
     const { identifier } = request.params;
 
+    if (identifier === '' || !identifier) {
+      response.status(404).json({
+        message: 'File code/value no was not entered',
+        success: false,
+      });
+    }
+
     const find_file = await GuestFile.findOne({ identifier });
 
-    if (!find_file) {
+    if (!find_file || find_file === undefined || null) {
       return response
         .status(404)
         .json({ error: 'File not found', success: false });
@@ -93,9 +125,11 @@ export const GuestDelete = async (request: Request, response: Response) => {
       response.status(204).json({ success: true, deleted_file });
     }
   } catch (error) {
-    console.error(error);
-    response
-      .status(500)
-      .json({ error: 'Internal server error', success: false });
+    response.status(500).json({
+      error: 'Internal server error',
+      success: false,
+      error_msg: error,
+      handler: 'Delete Handler',
+    });
   }
 };

@@ -3,11 +3,8 @@ import Express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
 import morgan from 'morgan';
-import https from 'https';
 import { startCronJob } from './utils/configs/cron-schedule';
 import { connectDatabase } from './utils/configs/database';
-import fs from 'fs';
-import path from 'path';
 
 dotenv.config();
 
@@ -28,27 +25,13 @@ app.use(Express.json());
 app.use(Express.urlencoded({ extended: false }));
 app.use('/uploads', Express.static(__dirname + '/uploads'));
 
+// @desc Guest Route
 app.use('/v1/', GuestFile);
+// @desc user Route
+// app.use('/v1/', UserFile);
 
 startCronJob();
-
-const key = fs.readFileSync(
-  path.join(__dirname, '..', 'build', './private.key')
-);
-const cert = fs.readFileSync(
-  path.join(__dirname, '..', 'build', './certificate.crt')
-);
-
-console.log(key, cert);
-
-const cred = {
-  key,
-  cert,
-};
 
 app.listen(PORT, () => {
   console.log(`Server is running on ${baseURL}`);
 });
-
-const httpsServer = https.createServer(cred, app);
-httpsServer.listen(8443);

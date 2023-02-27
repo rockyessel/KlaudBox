@@ -10,3 +10,7 @@ export const formatFileSize = (size: number): string => {
 
   return `${formattedSize.toFixed(2)}${units[unitIndex]}`;
 };
+
+export const isEqual = (obj1: any, obj2: any) => {
+  return JSON.stringify(obj1) === JSON.stringify(obj2);
+};

@@ -1,7 +1,9 @@
 import axios from 'axios';
 
-const API_URI = process.env.NEXT_APP_AWS_EC2_URI;
+const API_URI = process.env.NEXT_PUBLIC_API_URI;
 // const API_URI = 'http://localhost:7789/';
+
+console.log('API_URI', API_URI);
 
 export const GuestFileUploadPost = async (file_object: any, fn: any) => {
   const response = await axios({

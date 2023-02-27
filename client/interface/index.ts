@@ -14,3 +14,12 @@ export interface GuestFileModelProps {
   description: string;
   isPublic: string;
 }
+
+export interface SelectedFileProps {
+  lastModified: number;
+  lastModifiedDate: string;
+  name: string;
+  size: number;
+  type: string;
+  webkitRelativePath: string;
+}

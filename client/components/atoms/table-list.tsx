@@ -3,19 +3,17 @@ import { AiFillQuestionCircle } from 'react-icons/ai';
 import { MdContentCopy, MdPublic } from 'react-icons/md';
 import TypeSwitcher from '../molecules/media-type-switcher';
 import { formatFileSize } from '../../utils/functions';
+import { GuestFileModelProps } from '@/interface';
+import { useGuestContext } from '@/context/GuestContext';
 
 const file_url = `://localhost:5173/files/file`;
 
-const TableList = ({ guestData }: any) => {
-  const [fileLength, setFileLength] = React.useState<number>(0);
+const TableList = ({ guestData }: { guestData: GuestFileModelProps[] }) => {
   const [selectedItems, setSelectedItems] = React.useState<any>([]);
 
-  React.useEffect(() => {
-    const localFiles = window.localStorage.getItem('guestCollection');
-    const files = JSON.parse(`${localFiles}`);
+  const { fileLength } = useGuestContext();
 
-    setFileLength(files?.length);
-  }, []);
+
 
   const handleCheckboxChange = (event: any) => {
     const item = event.target.value;
@@ -52,14 +50,14 @@ const TableList = ({ guestData }: any) => {
           </tr>
         </thead>
         <tbody className='divide-y divide-[#515151]'>
-          {guestData?.map((data: any, index: number) => (
+          {guestData?.map((data, index) => (
             <tr key={index}>
               <td>
                 <input
                   onChange={handleCheckboxChange}
                   title='checkbox'
                   type='checkbox'
-                  value={data}
+                  // value={data}
                 />
               </td>
 

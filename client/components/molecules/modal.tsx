@@ -1,67 +1,18 @@
-import React, { ChangeEvent } from 'react';
+import React from 'react';
 import { BsFillCloudUploadFill } from 'react-icons/bs';
 import { MdPictureAsPdf } from 'react-icons/md';
-import { GuestFileUploadPost } from '@/utils/api-request';
-import { FaCloudUploadAlt } from 'react-icons/fa';
 import { RiArrowDownSFill } from 'react-icons/ri';
 import { MdPublic, MdVpnLock } from 'react-icons/md';
-import { ImSpinner9 } from 'react-icons/im';
+import { useGuestContext } from '@/context/GuestContext';
 
 const Modal = ({ modalState, handleClose }: any) => {
-  const [file, setFile] = React.useState<any>({});
   const [showDropdown, setShowDropdown] = React.useState<boolean>(false);
   const [deleteAfterState, setDeleteAfterState] =
     React.useState<boolean>(false);
   const [showDropdownValue, setShowDropdownValue] = React.useState<string>('');
   const [deleteAfter, setDeleteAfter] = React.useState<string>('0');
-  const [progress, setProgress] = React.useState(100);
-  const [getFile, setGetFile] = React.useState<any>({});
-  const [localCollection, setLocalCollection] = React.useState<any>();
 
-  const memoizedLocalCollection = React.useMemo(() => {
-    return localCollection;
-  }, [localCollection]);
-
-  // React.useEffect(() => {
-  //   setLocalCollection(() => {
-  //     const guest_local_files = window.localStorage.getItem('guestCollection');
-  //     return guest_local_files ? JSON.parse(guest_local_files) : [];
-  //   });
-  // }, []);
-
-  React.useEffect(() => {
-    window.localStorage.setItem(
-      'guestCollection',
-      JSON.stringify(localCollection)
-    );
-  }, [memoizedLocalCollection]);
-
-  const fileUpdates = (event: ChangeEvent<HTMLInputElement>) => {
-    const { files } = event.target;
-    const selectedFile: any = files as FileList;
-    setFile(selectedFile?.[0]);
-  };
-
-  const handleSubmission = async (event: { preventDefault: () => void }) => {
-    event.preventDefault();
-
-    try {
-      const data = new FormData();
-
-      data.set('file', file);
-
-      const data_ = await GuestFileUploadPost(data, setProgress);
-
-      const new_localCollection = [...localCollection, data_.file];
-      setLocalCollection(new_localCollection);
-
-      setGetFile(data_);
-
-      console.log('getFile in', getFile);
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  const { handleSubmission, fileUpdates, progress } = useGuestContext();
 
   const numbers = [1, 2, 3, 4, 5, 7, 8, 9, 10];
 

@@ -13,8 +13,6 @@ const TableList = ({ guestData }: { guestData: GuestFileModelProps[] }) => {
 
   const { fileLength } = useGuestContext();
 
-
-
   const handleCheckboxChange = (event: any) => {
     const item = event.target.value;
     const isChecked = event.target.checked;
@@ -23,10 +21,6 @@ const TableList = ({ guestData }: { guestData: GuestFileModelProps[] }) => {
     } else {
       setSelectedItems(selectedItems.filter((i: any) => i !== item));
     }
-
-    console.log(selectedItems);
-    console.log('item', item[0]);
-    console.log('isChecked', isChecked);
   };
 
   return (
@@ -80,7 +74,7 @@ const TableList = ({ guestData }: { guestData: GuestFileModelProps[] }) => {
                 <span className='inline-flex flex-col'>
                   <span className='text-rose-500 inline-flex items-center gap-1'>
                     {data?.isPublic
-                      ? `ht.../${data?.cms_id}?identifier=data?.identifier`
+                      ? `ht.../${data?.cms_id}?identifier=${data?.identifier}`
                       : `ht...${data?.cms_id}`}
                     <MdContentCopy className='text-xl' />
                   </span>
@@ -88,7 +82,7 @@ const TableList = ({ guestData }: { guestData: GuestFileModelProps[] }) => {
               </td>
 
               <td>
-                <span>{formatFileSize(data?.size)} </span>
+                <span>{formatFileSize(Number(data?.size))} </span>
               </td>
               <td>
                 <span>{data?.identifier}</span>

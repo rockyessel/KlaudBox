@@ -4,12 +4,12 @@ import { Main, TypeSwitcher } from '@/components';
 
 const FindFilePage = () => {
   const [code, setCode] = React.useState('');
-  
+
   return (
     <Main>
       <section className='flex flex-col gap-4'>
         <p className='text-5xl text-center font-bold capitalize'>
-          Everfile File download page
+          KloudBox File download page
         </p>
         <p className='text-lg text-center'>
           Use your generated 5 alphanumeric code to download your file.

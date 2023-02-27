@@ -11,7 +11,7 @@ const Navbar = () => {
   };
   return (
     <header className='bg-black text-white flex justify-between items-center py-3 px-3 md:px-6 lg:px-20 xl:px-60 fixed w-full top-0'>
-      <div className='font-bold uppercase'>Everfile</div>
+      <div className='font-bold uppercase'>KloudBox</div>
 
       <nav className='hidden w-full  lg:flex gap-5 justify-center items-center'>
         <ul className='flex gap-5 justify-center items-center'>

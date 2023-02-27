@@ -18,8 +18,8 @@ interface GuestContextProps {
   setViewOption: React.Dispatch<React.SetStateAction<string>>;
   setModalState: React.Dispatch<React.SetStateAction<boolean>>;
   handleClose: () => void;
-  handleSubmission: () => void;
-  fileUpdates: () => void;
+  handleSubmission: (event: React.SyntheticEvent) => Promise<void>;
+  fileUpdates: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
 const GuestContext = React.createContext<GuestContextProps>({
@@ -35,8 +35,8 @@ const GuestContext = React.createContext<GuestContextProps>({
   setViewOption: () => 'List',
   setModalState: () => false,
   handleClose: () => {},
-  handleSubmission: () => {},
-  fileUpdates: () => {},
+  handleSubmission: (event: React.SyntheticEvent) => Promise.resolve(),
+  fileUpdates: (event: React.ChangeEvent<HTMLInputElement>) => {},
 });
 
 type Props = {
@@ -56,7 +56,7 @@ export const GuestContextProvider = ({ children }: Props) => {
     return '';
   });
   const [viewOption, setViewOption] = React.useState<string>(option);
-  const [selectedOption, setSelectedOption] = React.useState<string>();
+  const [selectedOption, setSelectedOption] = React.useState<string>('');
   const [fileLength, setFileLength] = React.useState<number>(0);
   const [modalState, setModalState] = React.useState(false);
   const [viewOptionState, setViewOptionState] = React.useState(false);
@@ -71,7 +71,7 @@ export const GuestContextProvider = ({ children }: Props) => {
   const [localCollection, setLocalCollection] = React.useState<any>(() => {
     if (typeof window !== 'undefined') {
       const user_files = window.localStorage.getItem('guestCollection');
-      const files = !user_files ? [] :  JSON?.parse(`${user_files}`);
+      const files = !user_files ? [] : JSON?.parse(`${user_files}`);
       if (files === null || files === undefined) {
         return [];
       }
@@ -116,7 +116,9 @@ export const GuestContextProvider = ({ children }: Props) => {
     setModalState((prevState: boolean) => !prevState);
   };
 
-  const handleSubmission = async (event: { preventDefault: () => void }) => {
+  const handleSubmission = async (
+    event: React.SyntheticEvent
+  ): Promise<void> => {
     try {
       event.preventDefault();
 

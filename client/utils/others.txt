@@ -1,0 +1,23 @@
+//  const [selected, setSelected] = React.useState<string>();
+//  const [viewOption, setViewOption] = React.useState<string>(() => {
+//    const myCookieValue = Cookies.get('myCookie');
+//    return myCookieValue ? myCookieValue.replaceAll('"', '') : 'List';
+//  });
+//  const [fileLength, setFileLength] = React.useState<number>(0);
+//  const [modalState, setModalState] = React.useState(false);
+//  const [viewOptionState, setViewOptionState] = React.useState(false);//
+
+//  // @desc Find-File
+//  const [code, setCode] = React.useState('');//
+
+//  const handleClose = () => {
+//    setModalState((prevState: boolean) => !prevState);
+//  };//
+
+//  React.useEffect(() => {
+//    if (typeof window !== 'undefined') {
+//      Cookies.set('myCookie', JSON.stringify(viewOption));
+//    }//
+
+//    setSelected(viewOption);
+//  }, [viewOption]);

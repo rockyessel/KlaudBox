@@ -2,10 +2,10 @@ import React from 'react';
 import { CompactList, TableList, Tiles } from '..';
 import { useGuestContext } from '@/context/GuestContext';
 
-const SwitchViewOptions = ({ op }: any): JSX.Element => {
-  const { localCollection } = useGuestContext();
+const SwitchViewOptions = (): JSX.Element => {
+  const { localCollection, selectedOption } = useGuestContext();
 
-  switch (op) {
+  switch (selectedOption) {
     case 'List':
       return <TableList guestData={localCollection} />;
 

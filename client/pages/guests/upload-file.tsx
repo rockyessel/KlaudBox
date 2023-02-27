@@ -17,6 +17,17 @@ const UploadFilePage = () => {
     selectedOption,
   } = useGuestContext();
 
+  React.useEffect(() => {
+    const a = async () => {
+      const s = await fetch('/api/hello');
+
+      const d = s.json();
+
+      console.log(d);
+    };
+    a();
+  }, []);
+
   return (
     <>
       <Modal
@@ -82,7 +93,7 @@ const UploadFilePage = () => {
         </section>
         <section className='p-6 w-full bg-[#2c2c2c] rounded-lg flex flex-col gap-5 overflow-y-visible'>
           {fileLength ? (
-            <SwitchViewOptions viewOption={selectedOption} />
+            <SwitchViewOptions />
           ) : (
             <p>Uploads files to see them here!</p>
           )}

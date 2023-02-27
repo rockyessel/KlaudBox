@@ -1,9 +1,13 @@
 import React from 'react';
 import { BsFillCloudUploadFill } from 'react-icons/bs';
-import { MdPictureAsPdf } from 'react-icons/md';
+import { FaTimes } from 'react-icons/fa';
 import { RiArrowDownSFill } from 'react-icons/ri';
 import { MdPublic, MdVpnLock } from 'react-icons/md';
 import { useGuestContext } from '@/context/GuestContext';
+import { formatFileSize } from '@/utils/functions';
+import TypeSwitcher from './media-type-switcher';
+import { InitialFileUpload } from '@/utils/initial-values';
+import { PostFile } from '@/utils/api-request';
 
 const Modal = ({ modalState, handleClose }: any) => {
   const [showDropdown, setShowDropdown] = React.useState<boolean>(false);
@@ -11,10 +15,30 @@ const Modal = ({ modalState, handleClose }: any) => {
     React.useState<boolean>(false);
   const [showDropdownValue, setShowDropdownValue] = React.useState<string>('');
   const [deleteAfter, setDeleteAfter] = React.useState<string>('0');
+  const [formData, setFormData] = React.useState({
+    title: '',
+    description: '',
+  });
 
-  const { handleSubmission, fileUpdates, progress } = useGuestContext();
+  const { handleSubmission, fileUpdates, progress, file } = useGuestContext();
+
+  const isFileSelected: boolean = file === InitialFileUpload || file === undefined || file === null;
 
   const numbers = [1, 2, 3, 4, 5, 7, 8, 9, 10];
+
+  const extension: string = file && `${file?.name?.split('.').pop()}`;
+
+  const handleFormModalData = async (event: React.SyntheticEvent) => {
+    try {
+      event.preventDefault();
+      const {title, description} = formData;
+      if(!title || title === '' || description === '' || !description) return
+
+      const data = await PostFile(formData);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <section
@@ -49,128 +73,157 @@ const Modal = ({ modalState, handleClose }: any) => {
           </form>
         </div>
 
-        <div className='flex flex-col gap-3'>
-          <div className='flex flex-col gap-5'>
-            <div className='border border-[#515151] rounded-lg w-auto p-5 flex flex-col gap-5'>
-              <div className='w-full flex justify-between'>
-                <div className='flex items-center gap-2.5'>
-                  <MdPictureAsPdf className='text-5xl' />
-                  <div className='flex flex-col'>
-                    <p className='font-medium'>Nicepage-5.4.4.exe</p>
-                    <p className='font-medium text-white'>
-                      <span>323.3MB</span>・<span>1 minutes left</span>
+        {!isFileSelected && (
+          <div className='flex flex-col gap-3'>
+            <div className='flex flex-col gap-5'>
+              <div className='border border-[#515151] rounded-lg w-auto p-5 flex flex-col gap-5'>
+                <div className='w-full flex justify-between'>
+                  <div className='flex items-center gap-2.5'>
+                    <TypeSwitcher class='text-7xl' extension={extension} />
+                    <div className='flex flex-col'>
+                      <p className='font-medium'>{file?.name}</p>
+                      <p className='font-medium text-white flex items-center'>
+                        <span>{formatFileSize(file?.size)}</span>・
+                        <div className='animate-pulse flex gap-1 items-center'>
+                          <div className='w-2 h-2 bg-slate-400 rounded-full'></div>
+                          <div className='w-2 h-2 bg-slate-400 rounded-full'></div>
+                          <div className='w-2 h-2 bg-slate-400 rounded-full'></div>
+                        </div>
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className='flex flex-col items-stretch justify-between'>
+                    <p>
+                      <FaTimes className='text-xl' />
                     </p>
                   </div>
                 </div>
 
-                <div className='flex flex-col items-stretch justify-center'>
-                  <p>X</p>
-                  <p>100%</p>
+                <div className='relative pt-1'>
+                  <div className='flex mb-2 items-center justify-between'>
+                    <div>
+                      <span className='animate-pulse text-xs font-semibold inline-block py-1 px-2 uppercase rounded-full text-pink-600 bg-pink-200'>
+                        {progress === 100
+                          ? 'Upload completed'
+                          : progress === 0
+                          ? 'Start Upload'
+                          : 'Upload in progress...'}
+                      </span>
+                    </div>
+                    <div className='text-right'>
+                      <span className='text-xs font-semibold inline-block text-pink-600'>
+                        {progress}%
+                      </span>
+                    </div>
+                  </div>
+                  <div className='overflow-hidden h-2 mb-4 text-xs flex rounded bg-pink-200'>
+                    <div
+                      style={{ width: `${progress}%` }}
+                      className='shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-pink-500'
+                    ></div>
+                  </div>
                 </div>
               </div>
-
-              <progress
-                className='bg-gray-500 w-full h-full transition duration-200 rounded-md'
-                value={`${progress}`}
-                max={'100'}
-              ></progress>
             </div>
-          </div>
 
-          <div className='flex flex-col gap-2 w-full'>
-            {/* Sub Navbar */}
-            <nav className='w-full flex items-center justify-between'>
-              <ul className='flex items-center gap-4 font-medium'>
-                <li
-                  onClick={() => setShowDropdown((previous) => !previous)}
-                  className='w-auto relative cursor-pointer'
-                >
-                  <span className='inline-flex items-center gap-1'>
-                    Secure
-                    {showDropdownValue === '' ? null : showDropdownValue ===
-                      'Public' ? (
-                      <MdPublic />
-                    ) : (
-                      <MdVpnLock />
-                    )}
-                    <RiArrowDownSFill
-                      className={`${showDropdown ? 'rotate-180' : ''}`}
-                    />
-                  </span>
+            <div className='flex flex-col gap-2 w-full'>
+              {/* Sub Navbar */}
+              <nav className='w-full flex items-center justify-between'>
+                <ul className='flex items-center gap-4 font-medium'>
+                  <li
+                    onClick={() => setShowDropdown((previous) => !previous)}
+                    className='w-auto relative cursor-pointer'
+                  >
+                    <span className='inline-flex items-center gap-1'>
+                      Secure
+                      {showDropdownValue === '' ? null : showDropdownValue ===
+                        'Public' ? (
+                        <MdPublic />
+                      ) : (
+                        <MdVpnLock />
+                      )}
+                      <RiArrowDownSFill
+                        className={`${showDropdown ? 'rotate-180' : ''}`}
+                      />
+                    </span>
 
-                  {showDropdown && (
-                    <ul className='bg-[#2c2c2c] absolute px-2 flex flex-col items-center py-2 rounded-md divide-y divide-white/20'>
-                      <li
-                        onClick={() => setShowDropdownValue('Public')}
-                        className='w-full inline-flex items-center gap-2 py-1 px-2'
-                      >
-                        Public <MdPublic />{' '}
-                      </li>
-                      <li
-                        onClick={() => setShowDropdownValue('Private')}
-                        className='w-full inline-flex items-center gap-2 py-1 px-2'
-                      >
-                        Private <MdVpnLock />{' '}
-                      </li>
-                    </ul>
-                  )}
-                </li>
-
-                <li
-                  onClick={() => setDeleteAfterState((previous) => !previous)}
-                  className='w-auto relative cursor-pointer'
-                >
-                  <span className='inline-flex items-center gap-1'>
-                    Delete after:{` `}
-                    {deleteAfter === '0'
-                      ? null
-                      : deleteAfter === '1'
-                      ? '1 day'
-                      : `${deleteAfter} days`}
-                    <RiArrowDownSFill
-                      className={`${showDropdown ? 'rotate-180' : ''}`}
-                    />
-                  </span>
-
-                  {deleteAfterState && (
-                    <ul className='bg-[#2c2c2c] absolute right-5 px-2 flex flex-col items-center py-2 rounded-md divide-y divide-white/20 h-32 overflow-y-auto'>
-                      {numbers?.map((num, index) => (
+                    {showDropdown && (
+                      <ul className='bg-[#2c2c2c] absolute px-2 flex flex-col items-center py-2 rounded-md divide-y divide-white/20'>
                         <li
-                          key={index}
-                          onClick={() => setDeleteAfter(`${num}`)}
+                          onClick={() => setShowDropdownValue('Public')}
                           className='w-full inline-flex items-center gap-2 py-1 px-2'
                         >
-                          {num}
+                          Public <MdPublic />{' '}
                         </li>
-                      ))}
-                    </ul>
-                  )}
-                </li>
-              </ul>
-            </nav>
+                        <li
+                          onClick={() => setShowDropdownValue('Private')}
+                          className='w-full inline-flex items-center gap-2 py-1 px-2'
+                        >
+                          Private <MdVpnLock />{' '}
+                        </li>
+                      </ul>
+                    )}
+                  </li>
 
-            {/* Title & Description */}
+                  <li
+                    onClick={() => setDeleteAfterState((previous) => !previous)}
+                    className='w-auto relative cursor-pointer'
+                  >
+                    <span className='inline-flex items-center gap-1'>
+                      Delete after:{` `}
+                      {deleteAfter === '0'
+                        ? null
+                        : deleteAfter === '1'
+                        ? '1 day'
+                        : `${deleteAfter} days`}
+                      <RiArrowDownSFill
+                        className={`${showDropdown ? 'rotate-180' : ''}`}
+                      />
+                    </span>
 
-            <div className='flex flex-col gap-2'>
-              <div className='flex flex-col gap-1'>
-                <label className='font-medium'>Message Title</label>
-                <input
-                  title='title'
-                  type='text'
-                  className='px-4 py-2 w-full text-black rounded-md outline-none focus:ring-2 focus:ring-rose-800 hover:ring-2 hover:ring-rose-500'
-                />
-              </div>
-              <div className='flex flex-col gap-1'>
-                <label className='font-medium'>File Description</label>
-                <input
-                  title='description'
-                  type='text'
-                  className='px-4 py-2 w-full text-black rounded-md outline-none focus:ring-2 focus:ring-rose-800 hover:ring-2 hover:ring-rose-500'
-                />
+                    {deleteAfterState && (
+                      <ul className='bg-[#2c2c2c] absolute right-5 px-2 flex flex-col items-center py-2 rounded-md divide-y divide-white/20 h-32 overflow-y-auto'>
+                        {numbers?.map((num, index) => (
+                          <li
+                            key={index}
+                            onClick={() => setDeleteAfter(`${num}`)}
+                            className='w-full inline-flex items-center gap-2 py-1 px-2'
+                          >
+                            {num}
+                          </li>
+                        ))}
+                      </ul>
+                    )}
+                  </li>
+                </ul>
+              </nav>
+
+              {/* Title & Description */}
+
+              <div className='flex flex-col gap-2'>
+                <div className='flex flex-col gap-1'>
+                  <label className='font-medium'>Message Title</label>
+                  <input
+                    value={formData.title}
+                    title='title'
+                    type='text'
+                    className='px-4 py-2 w-full text-black rounded-md outline-none focus:ring-2 focus:ring-rose-800 hover:ring-2 hover:ring-rose-500'
+                  />
+                </div>
+                <div className='flex flex-col gap-1'>
+                  <label className='font-medium'>File Description</label>
+                  <input
+                    value={formData.description}
+                    title='description'
+                    type='text'
+                    className='px-4 py-2 w-full text-black rounded-md outline-none focus:ring-2 focus:ring-rose-800 hover:ring-2 hover:ring-rose-500'
+                  />
+                </div>
               </div>
             </div>
           </div>
-        </div>
+        )}
 
         <div className='w-full flex justify-between gap-10'>
           <button
@@ -181,9 +234,12 @@ const Modal = ({ modalState, handleClose }: any) => {
             Close
           </button>
           <button
+            disabled={isFileSelected}
             type='submit'
             onClick={handleSubmission}
-            className='bg-blue-500 px-6 py-2 rounded-md w-full'
+            className={`bg-blue-500 px-6 py-2 rounded-md w-full ${
+              isFileSelected ? 'cursor-not-allowed' : ''
+            }`}
           >
             Upload
           </button>

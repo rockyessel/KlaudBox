@@ -1,9 +1,7 @@
 import axios from 'axios';
 
-const API_URI = process.env.NEXT_PUBLIC_API_URI;
-// const API_URI = 'http://localhost:7789/';
-
-console.log('API_URI', API_URI);
+// const API_URI = process.env.NEXT_PUBLIC_API_URI;
+const API_URI = 'http://localhost:7789/';
 
 export const GuestFileUploadPost = async (file_object: any, fn: any) => {
   const response = await axios({
@@ -29,10 +27,32 @@ export const singleGuestFile = async (file_code: string) => {
   return data_;
 };
 
+export const GuestFileSlug = async (path: string) => {
+  const response = await fetch(`${API_URI}v1/guest/path/${path}`);
+
+  const data_ = await response.json();
+
+  return data_;
+};
+
 export const GetAllFiles = async () => {
   const response = await fetch(`${API_URI}v1/guest/all`);
 
   const data_ = await response.json();
 
   return data_;
+};
+
+export const PostFile = async (file_object: any) => {
+  const response = await fetch(`${API_URI}v1/guest`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(file_object),
+  });
+
+  const data = await response.json();
+
+  return data;
 };

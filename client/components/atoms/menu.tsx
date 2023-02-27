@@ -11,6 +11,7 @@ import { GiProcessor } from 'react-icons/gi';
 import { BiLogInCircle } from 'react-icons/bi';
 import { CiFacebook, CiTwitter, CiInstagram } from 'react-icons/ci';
 import { TbSocial } from 'react-icons/tb';
+import Link from 'next/link';
 
 const Menu = () => {
   return (
@@ -23,15 +24,21 @@ const Menu = () => {
           <ul className='flex flex-col gap-1 items-start divide-y divide-white/10 w-full'>
             <li className='inline-flex items-center gap-2 w-full py-1'>
               <MdHomeFilled className='text-xl' />{' '}
-              <span className='text-md'>Home</span>
+              <span className='text-md'>
+                <Link href='/'>Home</Link>
+              </span>
             </li>
             <li className='inline-flex items-center gap-2 w-full py-1'>
               <MdAlternateEmail className='text-xl' />{' '}
-              <span className='text-md'>Contact</span>
+              <span className='text-md'>
+                <Link href='/contact'>Contact</Link>
+              </span>
             </li>
             <li className='inline-flex items-center gap-2 w-full py-1'>
               <BsCurrencyDollar className='text-xl' />{' '}
-              <span className='text-md'>Price</span>
+              <span className='text-md'>
+                <Link href='/pricing'>Pricing</Link>
+              </span>
             </li>
             <li className='inline-flex items-center gap-2 w-full py-1'>
               <FaQq className='text-xl' /> <span className='text-md'>FAQS</span>
@@ -50,11 +57,15 @@ const Menu = () => {
           <ul className='flex flex-col gap-1 items-start  divide-y w-full divide-white/10'>
             <li className='inline-flex items-center gap-2 w-full py-1'>
               <BiLogInCircle className='text-xl' />{' '}
-              <span className='text-md'>Login</span>
+              <span className='text-md'>
+                <Link href='/accounts/login'>Login</Link>
+              </span>
             </li>
             <li className='inline-flex items-center gap-2 w-full py-1'>
               <BiLogInCircle className='text-xl rotate-180' />{' '}
-              <span className='text-md'>Register</span>
+              <span className='text-md'>
+                <Link href='/accounts/register'>Register</Link>
+              </span>
             </li>
           </ul>
         </div>

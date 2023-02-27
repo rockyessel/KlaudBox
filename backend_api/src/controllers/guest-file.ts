@@ -12,8 +12,6 @@ export const GuestPost = async (request: Request, response: Response) => {
       { filename: `${request.file?.originalname.replaceAll(' ', '-')}` }
     );
 
-    console.log('body', request.body);
-
     const create_guest_file = await GuestFile.create({
       url: SanityCMS?.url,
       size: SanityCMS?.size,
@@ -61,6 +59,35 @@ export const GuestGet = async (request: Request, response: Response) => {
     }
 
     const find_guest_file = await GuestFile.findOne({ identifier });
+
+    if (!find_guest_file) {
+      response
+        .status(404)
+        .json({ message: 'File not found or deleted', success: false });
+    } else {
+      response.status(200).json({ file: find_guest_file, success: true });
+    }
+  } catch (error) {
+    response.status(500).json({
+      error: 'Internal server error',
+      success: false,
+      error_msg: error,
+      handler: 'SingleGet Handler',
+    });
+  }
+};
+
+export const GuestFileSlug = async (request: Request, response: Response) => {
+  try {
+    const { cms_id } = request.params;
+
+    if (cms_id === '' || !cms_id) {
+      response
+        .status(404)
+        .json({ message: 'File no was not entered', success: false });
+    }
+
+    const find_guest_file = await GuestFile.findOne({ cms_id });
 
     if (!find_guest_file) {
       response

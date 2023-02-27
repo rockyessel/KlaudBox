@@ -19,6 +19,7 @@ import { GoFile } from 'react-icons/go';
 const TypeSwitcher = (props: any): JSX.Element => {
   switch (props.extension) {
     case 'png':
+    case 'svg':
       return <BsImageFill className={props.class} />;
 
     case 'mp4':
@@ -37,9 +38,12 @@ const TypeSwitcher = (props: any): JSX.Element => {
     case 'mpg':
     case 'asf':
     case 'wmv':
+    case 'webm':
       return <BsFillCameraVideoFill className={props.class} />;
 
     case 'mp3':
+    case 'wma':
+    case 'm4a':
       return <MdAudiotrack className={props.class} />;
 
     case 'pdf':

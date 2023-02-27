@@ -2,6 +2,7 @@ import { GuestFileModelProps } from '@/interface';
 import { SelectedFileProps } from '@/interface';
 import { GuestFileUploadPost } from '@/utils/api-request';
 import { isEqual } from '@/utils/functions';
+import { InitialFileUpload, InitialModalFormData } from '@/utils/initial-values';
 // import { isEqual } from 'date-fns';
 import React, { ChangeEvent } from 'react';
 
@@ -9,6 +10,7 @@ interface GuestContextProps {
   localCollection: GuestFileModelProps[];
   code: string;
   viewOption: string;
+  file: SelectedFileProps;
   selectedOption: string;
   fileLength: number;
   progress: number;
@@ -24,6 +26,7 @@ interface GuestContextProps {
 
 const GuestContext = React.createContext<GuestContextProps>({
   localCollection: [],
+  file: InitialFileUpload,
   code: '',
   viewOption: '',
   selectedOption: '',
@@ -60,15 +63,18 @@ export const GuestContextProvider = ({ children }: Props) => {
   const [fileLength, setFileLength] = React.useState<number>(0);
   const [modalState, setModalState] = React.useState(false);
   const [viewOptionState, setViewOptionState] = React.useState(false);
+  const [modalFormData, setModalFormData] = React.useState(InitialModalFormData);
 
   // @desc Find-File
   const [code, setCode] = React.useState('');
 
   // @desc Modal
-  const [file, setFile] = React.useState<File | ''>('');
-  const [progress, setProgress] = React.useState(100);
+  const [file, setFile] = React.useState<SelectedFileProps>(InitialFileUpload);
+  const [progress, setProgress] = React.useState(0);
   const [getFile, setGetFile] = React.useState<any>({});
-  const [localCollection, setLocalCollection] = React.useState<any>(() => {
+  const [localCollection, setLocalCollection] = React.useState<
+    GuestFileModelProps[]
+  >(() => {
     if (typeof window !== 'undefined') {
       const user_files = window.localStorage.getItem('guestCollection');
       const files = !user_files ? [] : JSON?.parse(`${user_files}`);
@@ -107,7 +113,6 @@ export const GuestContextProvider = ({ children }: Props) => {
   // @desc Functions
   const fileUpdates = (event: ChangeEvent<HTMLInputElement>) => {
     const { files } = event.target;
-    console.log(files);
     const selectedFile: any = files as FileList;
     setFile(selectedFile?.[0]);
   };
@@ -123,8 +128,12 @@ export const GuestContextProvider = ({ children }: Props) => {
       event.preventDefault();
 
       const data = new FormData();
+      const selectedFile: unknown = Object.assign({}, file);
 
-      data.set('file', file);
+      console.log('selectedFile', selectedFile);
+      const up_file = selectedFile as string;
+
+      data.append('file', file);
 
       const data_ = await GuestFileUploadPost(data, setProgress);
 
@@ -133,6 +142,8 @@ export const GuestContextProvider = ({ children }: Props) => {
 
       setGetFile(data_);
       setModalState(false);
+      setFile(InitialFileUpload);
+      setProgress(0);
       console.log('getFile in', getFile);
     } catch (error) {
       console.log(error);
@@ -148,6 +159,7 @@ export const GuestContextProvider = ({ children }: Props) => {
     setModalState,
     viewOption,
     fileLength,
+    file,
     setViewOption,
     setViewOptionState,
     viewOptionState,
@@ -169,27 +181,3 @@ export const getStaticProps = async () => {};
 export const getInitialProps = async () => {};
 
 export const useGuestContext = () => React.useContext(GuestContext);
-
-//  const [selected, setSelected] = React.useState<string>();
-//  const [viewOption, setViewOption] = React.useState<string>(() => {
-//    const myCookieValue = Cookies.get('myCookie');
-//    return myCookieValue ? myCookieValue.replaceAll('"', '') : 'List';
-//  });
-//  const [fileLength, setFileLength] = React.useState<number>(0);
-//  const [modalState, setModalState] = React.useState(false);
-//  const [viewOptionState, setViewOptionState] = React.useState(false);//
-
-//  // @desc Find-File
-//  const [code, setCode] = React.useState('');//
-
-//  const handleClose = () => {
-//    setModalState((prevState: boolean) => !prevState);
-//  };//
-
-//  React.useEffect(() => {
-//    if (typeof window !== 'undefined') {
-//      Cookies.set('myCookie', JSON.stringify(viewOption));
-//    }//
-
-//    setSelected(viewOption);
-//  }, [viewOption]);

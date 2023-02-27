@@ -19,7 +19,7 @@ const Tiles = ({ guestData }: any) => {
 
           <div className='text-center'>
             <p className='text-gray-300 text-[14px] hover:underline cursor-pointer'>
-              <Link href={`/files/${data?.cms_id}`}>
+              <Link href={`/guests/files/${data?.cms_id}`}>
                 {data?.originalFilename?.slice(0, 26)}
               </Link>
             </p>

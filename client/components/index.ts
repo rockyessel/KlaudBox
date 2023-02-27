@@ -1,9 +1,14 @@
 export { default as Menu } from './atoms/menu';
+export { default as Image } from './atoms/image';
+export { default as Video } from './atoms/video';
+export { default as Audio } from './atoms/audio';
 export { default as CompactList } from './atoms/compact-list';
 export { default as TableList } from './atoms/table-list';
 export { default as Tiles } from './atoms/tiles';
 export { default as Main } from './atoms/main';
 export { default as Navbar } from './molecules/navbar';
+export { default as FileCardInfo } from './molecules/file-card-info';
 export { default as Modal } from './molecules/modal';
+export { default as MediaSwitcher } from './molecules/media-switcher';
 export { default as TypeSwitcher } from './molecules/media-type-switcher';
 export { default as SwitchViewOptions } from './molecules/switch-view-options';

@@ -2,7 +2,6 @@ import multer from 'multer';
 import path from 'path';
 import fs from 'fs';
 import axios from 'axios';
-import { baseURL } from '../..';
 
 export const shuffleString = (input: string): string => {
   let characters = input.split('');
@@ -46,7 +45,10 @@ const storageEngine = multer.diskStorage({
 
 export const upload = multer({ storage: storageEngine });
 
-export const next_day = ( createdAt_date: Date, number_of_days: number): Date => {
+export const next_day = (
+  createdAt_date: Date,
+  number_of_days: number
+): Date => {
   const day_in_ms = 24 * 60 * 60 * 1000 * number_of_days;
   const createdAt_in_ms = createdAt_date.getTime();
 
@@ -104,36 +106,45 @@ export const handleFileDeletion = (
 };
 
 export const GuestScheduleDeletion = async () => {
-  const { data: endpoints } = await axios.get(`${baseURL}/v1/guest/all`);
+  try {
+    const baseURL = `http://localhost:7789`;
 
-  Promise.all(
-    endpoints?.all_file?.map(async (endpoint: any) => {
-      const createdAt_ms = new Date(endpoint.createdAt).getTime();
+    const { data: endpoints } = await axios.get(`${baseURL}/v1/guest/all`);
 
-      const expire_date = next_day(new Date(endpoint.createdAt),1).toISOString();
+    Promise.all(
+      endpoints?.all_file?.map(async (endpoint: any) => {
+        const createdAt_ms = new Date(endpoint.createdAt).getTime();
 
-      const today_in_ms = new Date().getTime();
+        const expire_date = next_day(
+          new Date(endpoint.createdAt),
+          1
+        ).toISOString();
 
-      const expire_date_ms = new Date(expire_date).getTime();
-      // console.log('expire_date_ms', expire_date_ms);
+        const today_in_ms = new Date().getTime();
 
-      const expect_expire_date = expire_date_ms - createdAt_ms;
-      // console.log('expect_expire_date', expect_expire_date);
+        const expire_date_ms = new Date(expire_date).getTime();
+        // console.log('expire_date_ms', expire_date_ms);
 
-      const difference_in_ms = today_in_ms - createdAt_ms;
-      // console.log('difference_in_ms', difference_in_ms);
+        const expect_expire_date = expire_date_ms - createdAt_ms;
+        // console.log('expect_expire_date', expect_expire_date);
 
-      const difference_in_days = Math.floor(
-        difference_in_ms / expect_expire_date
-      );
-      // console.log('difference_in_days', difference_in_days);
+        const difference_in_ms = today_in_ms - createdAt_ms;
+        // console.log('difference_in_ms', difference_in_ms);
 
-      if (difference_in_days >= 1) {
-        await axios.delete(`${baseURL}/v1/guest/${endpoint?.identifier}`);
-        console.log('deleted', `${endpoint?.identifier}`);
-      }
-    })
-  );
+        const difference_in_days = Math.floor(
+          difference_in_ms / expect_expire_date
+        );
+        // console.log('difference_in_days', difference_in_days);
+
+        if (difference_in_days >= 1) {
+          await axios.delete(`${baseURL}/v1/guest/${endpoint?.identifier}`);
+          console.log('deleted', `${endpoint?.identifier}`);
+        }
+      })
+    );
+  } catch (error) {
+    console.log(error);
+  }
 };
 
 export const CreatedDirectory = (path: string) => {
@@ -150,52 +161,3 @@ export const CreatedDirectory = (path: string) => {
   // Log the success message
   console.log(`Directories created`);
 };
-
-// const directory = path.join(__dirname, '..', 'uploads', `${type}`);
-
-// const storageEngine = multer.diskStorage({
-//   destination: (_req, file, cb) => {
-//     switch (file.mimetype) {
-//       case 'image/jpeg':
-//       case 'image/png':
-//       case 'image/gif':
-//       case 'image/bmp':
-//       case 'image/webp':
-//       case 'image/tiff':
-//       case 'image/x-icon':
-//       case 'image/svg+xml':
-//         cb(null, path.join(__dirname, '../../uploads/images'));
-//         break;
-//       case 'application/pdf':
-//         cb(null, path.join(__dirname, '../../uploads/pdf/'));
-//         break;
-//       case 'video/mp4':
-//       case 'video/quicktime':
-//       case 'video/x-msvideo':
-//       case 'video/3gpp':
-//       case 'video/x-ms-wmv':
-//       case 'video/x-flv':
-//       case 'video/x-matroska':
-//       case 'video/webm':
-//       case 'video/ogg':
-//         cb(null, path.join(__dirname, '../../uploads/videos/'));
-//         break;
-//       case 'audio/mpeg':
-//       case 'audio/basic':
-//       case 'audio/mid':
-//       case 'audio/x-wav':
-//       case 'audio/webm':
-//       case 'audio/ogg':
-//       case 'audio/x-aiff':
-//       case 'audio/x-pn-realaudio':
-//         cb(null, path.join(__dirname, '../../uploads/audio/'));
-//         break;
-//       default:
-//         cb(null, path.join(__dirname, '../../uploads/others/'));
-//         break;
-//     }
-//   },
-//   filename: (_req, file, cb) => {
-//     cb(null, `${Date.now()}-${file.originalname.replaceAll(' ', '-')}`);
-//   },
-// });

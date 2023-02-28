@@ -1,6 +1,6 @@
 import React from 'react';
 import { HiPaperAirplane } from 'react-icons/hi';
-import { FileCardInfo, Main, TypeSwitcher } from '@/components';
+import { FileCardInfo, Main } from '@/components';
 import { singleGuestFile } from '@/utils/api-request';
 import { GuestFileProps } from '@/interface';
 
@@ -18,8 +18,6 @@ const FindFilePage = () => {
 
       setFoundFile(found_file);
       setCode('');
-
-      console.log('foundFile', foundFile);
     } catch (error) {
       console.log(error);
     }

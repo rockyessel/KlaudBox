@@ -2,7 +2,6 @@ import React from 'react';
 import { Audio, Image, Video } from '../index';
 
 const MediaSwitcher = (props: any) => {
-  console.log(props?.data);
   switch (props?.data?.file?.extension) {
     case 'png':
     case 'svg':

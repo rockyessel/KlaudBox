@@ -16,12 +16,12 @@ const GuestFileModel = new Mongoose.Schema({
   createdAt: { type: String, require: [true, 'This field is required'] },
   updatedAt: { type: String, require: [true, 'This field is required'] },
   uploadId: { type: String, require: [true, 'This field is required'] },
-  daysBeforeDelete: { type: String, require: [true, 'This field is required'] },
+  delete_after: { type: String, require: [true, 'This field is required'] },
 
   // Options
   title: { type: String, require: false },
   description: { type: String, require: false },
-  isPublic: { type: Boolean, require: false },
+  secure: { type: String, require: false },
 });
 
 export const GuestFile = Mongoose.model('GuestFile', GuestFileModel);

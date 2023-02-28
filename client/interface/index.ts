@@ -11,10 +11,10 @@ export interface GuestFileModelProps {
   createdAt: string;
   updatedAt: string;
   uploadId: string;
-  daysBeforeDelete: string;
+  delete_after: string;
   title: string;
   description: string;
-  isPublic: string;
+  secure: string;
 }
 
 export interface GuestFileProps {
@@ -29,10 +29,10 @@ export interface GuestFileProps {
     createdAt: string;
     updatedAt: string;
     uploadId: string;
-    daysBeforeDelete: string;
+    delete_after: string;
     title: string;
     description: string;
-    isPublic: string;
+    secure: string;
   };
   success?: boolean;
 }
@@ -49,3 +49,10 @@ export interface SelectedFileProps {
 export interface Params extends ParsedUrlQuery {
   file: string;
 }
+
+export interface InitialModalFormDataProps {
+  title: string;
+  description: string;
+  secure: string;
+  delete_after: string;
+};

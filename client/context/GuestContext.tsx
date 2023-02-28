@@ -1,43 +1,56 @@
-import { GuestFileModelProps } from '@/interface';
+import { GuestFileModelProps, InitialModalFormDataProps } from '@/interface';
 import { SelectedFileProps } from '@/interface';
-import { GuestFileUploadPost } from '@/utils/api-request';
+import { DeleteGuestFile, GuestFileUploadPost } from '@/utils/api-request';
 import { isEqual } from '@/utils/functions';
-import { InitialFileUpload, InitialModalFormData } from '@/utils/initial-values';
+import {
+  InitialFileUpload,
+  InitialModalFormData,
+} from '@/utils/initial-values';
 // import { isEqual } from 'date-fns';
 import React, { ChangeEvent } from 'react';
 
-interface GuestContextProps {
+export interface GuestContextProps {
   localCollection: GuestFileModelProps[];
-  code: string;
+  modalFormData: InitialModalFormDataProps;
   viewOption: string;
-  file: SelectedFileProps;
+  file: string | File | SelectedFileProps;
   selectedOption: string;
   fileLength: number;
   progress: number;
   modalState: boolean;
   viewOptionState: boolean;
+  loadingState: boolean;
+  setLocalCollection: React.Dispatch<React.SetStateAction<GuestFileModelProps[]>>;
   setViewOptionState: React.Dispatch<React.SetStateAction<boolean>>;
   setViewOption: React.Dispatch<React.SetStateAction<string>>;
   setModalState: React.Dispatch<React.SetStateAction<boolean>>;
+  setModalFormData: React.Dispatch<React.SetStateAction<InitialModalFormDataProps>>;
+  setLoadingState: React.Dispatch<React.SetStateAction<boolean>>;
   handleClose: () => void;
+  handleDeleteFile: (identifier: string) => void;
   handleSubmission: (event: React.SyntheticEvent) => Promise<void>;
   fileUpdates: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
 const GuestContext = React.createContext<GuestContextProps>({
   localCollection: [],
-  file: InitialFileUpload,
-  code: '',
+  modalFormData: InitialModalFormData,
+  file: '',
   viewOption: '',
   selectedOption: '',
   fileLength: 0,
   progress: 0,
   modalState: false,
   viewOptionState: false,
+  loadingState: false,
+  setModalFormData: () => {},
+  setLocalCollection: () => {},
   setViewOptionState: () => false,
+  setLoadingState: () => false,
   setViewOption: () => 'List',
   setModalState: () => false,
   handleClose: () => {},
+  handleDeleteFile: () => {},
   handleSubmission: (event: React.SyntheticEvent) => Promise.resolve(),
   fileUpdates: (event: React.ChangeEvent<HTMLInputElement>) => {},
 });
@@ -63,13 +76,13 @@ export const GuestContextProvider = ({ children }: Props) => {
   const [fileLength, setFileLength] = React.useState<number>(0);
   const [modalState, setModalState] = React.useState(false);
   const [viewOptionState, setViewOptionState] = React.useState(false);
-  const [modalFormData, setModalFormData] = React.useState(InitialModalFormData);
+  const [modalFormData, setModalFormData] =
+    React.useState<InitialModalFormDataProps>(InitialModalFormData);
 
-  // @desc Find-File
-  const [code, setCode] = React.useState('');
+  const [loadingState, setLoadingState] = React.useState<boolean>(false);
 
   // @desc Modal
-  const [file, setFile] = React.useState<SelectedFileProps>(InitialFileUpload);
+  const [file, setFile] = React.useState<string | File | SelectedFileProps>('');
   const [progress, setProgress] = React.useState(0);
   const [getFile, setGetFile] = React.useState<any>({});
   const [localCollection, setLocalCollection] = React.useState<
@@ -112,13 +125,25 @@ export const GuestContextProvider = ({ children }: Props) => {
 
   // @desc Functions
   const fileUpdates = (event: ChangeEvent<HTMLInputElement>) => {
-    const { files } = event.target;
-    const selectedFile: any = files as FileList;
-    setFile(selectedFile?.[0]);
+    const file = event.target.files ? event.target.files[0] : '';
+
+    setFile(file);
   };
 
   const handleClose = () => {
     setModalState((prevState: boolean) => !prevState);
+  };
+
+  const handleDeleteFile = async (identifier: string) => {
+    if (identifier === '' || !identifier) return;
+
+    const response = await DeleteGuestFile(identifier);
+
+    const new_localCollection = localCollection.filter(
+      (file) => file.identifier !== identifier
+    );
+
+    setLocalCollection(new_localCollection);
   };
 
   const handleSubmission = async (
@@ -127,13 +152,28 @@ export const GuestContextProvider = ({ children }: Props) => {
     try {
       event.preventDefault();
 
+      if (
+        modalFormData === InitialModalFormData ||
+        !modalFormData ||
+        modalFormData === null ||
+        modalFormData === undefined
+      )
+        return;
+
+      const { title, description, delete_after, secure } = modalFormData;
+
+      if (!title || !description || !delete_after || !secure) return;
+
       const data = new FormData();
       const selectedFile: unknown = Object.assign({}, file);
 
-      console.log('selectedFile', selectedFile);
       const up_file = selectedFile as string;
-
+      // eslint-disable-next-line no-undef
       data.append('file', file);
+      data.append('title', modalFormData.title);
+      data.append('description', modalFormData.description);
+      data.append('secure', modalFormData.secure);
+      data.append('delete_after', modalFormData.delete_after);
 
       const data_ = await GuestFileUploadPost(data, setProgress);
 
@@ -142,9 +182,9 @@ export const GuestContextProvider = ({ children }: Props) => {
 
       setGetFile(data_);
       setModalState(false);
-      setFile(InitialFileUpload);
+      setFile('');
       setProgress(0);
-      console.log('getFile in', getFile);
+      setModalFormData(InitialModalFormData);
     } catch (error) {
       console.log(error);
     }
@@ -152,24 +192,28 @@ export const GuestContextProvider = ({ children }: Props) => {
   // End of Functions Zone
 
   const value = {
-    // @desc Find-File
-    code,
     // @desc Upload-File
     modalState,
+    loadingState,
     setModalState,
     viewOption,
     fileLength,
     file,
     setViewOption,
     setViewOptionState,
+    setLoadingState,
+    setModalFormData,
     viewOptionState,
     selectedOption,
     progress,
     localCollection,
+    setLocalCollection,
     // @desc Functions
     handleClose,
+    modalFormData,
     handleSubmission,
     fileUpdates,
+    handleDeleteFile,
   };
 
   return (

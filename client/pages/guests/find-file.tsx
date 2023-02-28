@@ -2,11 +2,11 @@ import React from 'react';
 import { HiPaperAirplane } from 'react-icons/hi';
 import { FileCardInfo, Main, TypeSwitcher } from '@/components';
 import { singleGuestFile } from '@/utils/api-request';
-import { GuestFileModelProps } from '@/interface';
+import { GuestFileProps } from '@/interface';
 
 const FindFilePage = () => {
   const [code, setCode] = React.useState('');
-  const [foundFile, setFoundFile] = React.useState<GuestFileModelProps>();
+  const [foundFile, setFoundFile] = React.useState<GuestFileProps>();
 
   const handleFindFileWithCode = async (event: React.SyntheticEvent) => {
     try {

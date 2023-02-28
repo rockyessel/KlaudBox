@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{ChangeEvent} from 'react';
 import { BsFillCloudUploadFill } from 'react-icons/bs';
 import { FaTimes } from 'react-icons/fa';
 import { RiArrowDownSFill } from 'react-icons/ri';
@@ -7,37 +7,38 @@ import { useGuestContext } from '@/context/GuestContext';
 import { formatFileSize } from '@/utils/functions';
 import TypeSwitcher from './media-type-switcher';
 import { InitialFileUpload } from '@/utils/initial-values';
-import { PostFile } from '@/utils/api-request';
 
 const Modal = ({ modalState, handleClose }: any) => {
   const [showDropdown, setShowDropdown] = React.useState<boolean>(false);
   const [deleteAfterState, setDeleteAfterState] =
     React.useState<boolean>(false);
   const [showDropdownValue, setShowDropdownValue] = React.useState<string>('');
-  const [deleteAfter, setDeleteAfter] = React.useState<string>('0');
-  const [formData, setFormData] = React.useState({
-    title: '',
-    description: '',
-  });
+  const [deleteAfter, setDeleteAfter] = React.useState<string>('1');
 
-  const { handleSubmission, fileUpdates, progress, file } = useGuestContext();
+  const {
+    handleSubmission,
+    fileUpdates,
+    progress,
+    file,
+    modalFormData,
+    setModalFormData,
+  } = useGuestContext();
 
-  const isFileSelected: boolean = file === InitialFileUpload || file === undefined || file === null;
+
+
+  const isFileSelected: boolean = file === '' || file === undefined || file === null;
 
   const numbers = [1, 2, 3, 4, 5, 7, 8, 9, 10];
 
   const extension: string = file && `${file?.name?.split('.').pop()}`;
 
-  const handleFormModalData = async (event: React.SyntheticEvent) => {
-    try {
-      event.preventDefault();
-      const {title, description} = formData;
-      if(!title || title === '' || description === '' || !description) return
-
-      const data = await PostFile(formData);
-    } catch (error) {
-      console.log(error);
-    }
+  const handleModalForm = (event: ChangeEvent<HTMLInputElement>) => {
+    setModalFormData((previousData) => ({
+      ...previousData,
+      [event.target.name]: event.target.value,
+      secure: showDropdownValue,
+      delete_after: deleteAfter,
+    }));
   };
 
   return (
@@ -151,13 +152,13 @@ const Modal = ({ modalState, handleClose }: any) => {
                     {showDropdown && (
                       <ul className='bg-[#2c2c2c] absolute px-2 flex flex-col items-center py-2 rounded-md divide-y divide-white/20'>
                         <li
-                          onClick={() => setShowDropdownValue('Public')}
+                          onClick={() => setShowDropdownValue('public')}
                           className='w-full inline-flex items-center gap-2 py-1 px-2'
                         >
                           Public <MdPublic />{' '}
                         </li>
                         <li
-                          onClick={() => setShowDropdownValue('Private')}
+                          onClick={() => setShowDropdownValue('private')}
                           className='w-full inline-flex items-center gap-2 py-1 px-2'
                         >
                           Private <MdVpnLock />{' '}
@@ -205,18 +206,22 @@ const Modal = ({ modalState, handleClose }: any) => {
                 <div className='flex flex-col gap-1'>
                   <label className='font-medium'>Message Title</label>
                   <input
-                    value={formData.title}
+                    value={modalFormData.title}
                     title='title'
+                    name='title'
                     type='text'
+                    onChange={handleModalForm}
                     className='px-4 py-2 w-full text-black rounded-md outline-none focus:ring-2 focus:ring-rose-800 hover:ring-2 hover:ring-rose-500'
                   />
                 </div>
                 <div className='flex flex-col gap-1'>
                   <label className='font-medium'>File Description</label>
                   <input
-                    value={formData.description}
+                    value={modalFormData.description}
                     title='description'
+                    name='description'
                     type='text'
+                    onChange={handleModalForm}
                     className='px-4 py-2 w-full text-black rounded-md outline-none focus:ring-2 focus:ring-rose-800 hover:ring-2 hover:ring-rose-500'
                   />
                 </div>

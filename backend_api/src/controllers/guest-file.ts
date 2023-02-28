@@ -12,6 +12,8 @@ export const GuestPost = async (request: Request, response: Response) => {
       { filename: `${request.file?.originalname.replaceAll(' ', '-')}` }
     );
 
+    console.log(request.body);
+
     const create_guest_file = await GuestFile.create({
       url: SanityCMS?.url,
       size: SanityCMS?.size,
@@ -23,16 +25,13 @@ export const GuestPost = async (request: Request, response: Response) => {
       createdAt: SanityCMS?._createdAt,
       updatedAt: SanityCMS?._updatedAt,
       uploadId: SanityCMS?.uploadId,
-      title: request.body?.title === '' ? 'No title' : request.body?.title,
-      description:
-        request.body?.description === ''
-          ? 'No description'
-          : request.body?.description,
-      isPublic: true,
-      daysBeforeDelete: request.body?.daysBeforeDelete,
+      title: request.body?.title,
+      description: request.body?.description,
+      secure: request.body?.secure,
+      delete_after: request.body?.delete_after,
     });
 
-    handleFileDeletion(
+    await handleFileDeletion(
       `${request.file?.destination}`,
       `${request.file?.filename}`
     );
@@ -136,20 +135,18 @@ export const GuestDelete = async (request: Request, response: Response) => {
     if (!find_file || find_file === undefined || null) {
       return response
         .status(404)
-        .json({ error: 'File not found', success: false });
+        .json({ error: 'File not found or has been deleted', success: false });
     }
 
     // Delete from CMS
-    const deleted_file_cms = await Client.delete(`${find_file?.cms_id}`);
+    await Client.delete(`${find_file?.cms_id}`);
     // Delete from MongoDB
-    const deleted_file = await find_file.delete();
+    await find_file.delete();
 
-    response
-      .status(204)
-      .json({ success: true, db: identifier, cms: deleted_file_cms });
+    response.status(200).json({ success: true, deleted: identifier });
 
     if (!response.headersSent) {
-      response.status(204).json({ success: true, deleted_file });
+      response.status(200).json({ success: true, deleted: identifier });
     }
   } catch (error) {
     response.status(500).json({

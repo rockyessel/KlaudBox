@@ -3,8 +3,10 @@ import TypeSwitcher from './media-type-switcher';
 import { formatFileSize, next_day } from '@/utils/functions';
 import { format } from 'date-fns';
 import { GuestFileProps } from '@/interface';
+import { useGuestContext } from '@/context/GuestContext';
 
 const FileCardInfo = ({ data }: { data: GuestFileProps }) => {
+  const { handleDeleteFile } = useGuestContext();
   return (
     <section className='w-full p-6 bg-[#2c2c2c] rounded-lg flex flex-col'>
       <div className='flex gap-16'>
@@ -63,7 +65,9 @@ const FileCardInfo = ({ data }: { data: GuestFileProps }) => {
             </div>
             <div className='flex flex-col gap-2'>
               <span className='text-lg'>File Privacy</span>
-              <span className='text-gray-300 text-sm font-medium'>Private</span>
+              <span className='text-gray-300 text-sm font-medium'>
+                {data?.file?.secure}
+              </span>
             </div>
             <div className='flex flex-col gap-2'>
               <span className='text-lg'>File Extension</span>
@@ -84,8 +88,10 @@ const FileCardInfo = ({ data }: { data: GuestFileProps }) => {
           </div>
 
           <div className='flex flex-col gap-1'>
-            <span>No title</span>
-            <span className='max-w-lg'>No description</span>
+            <span>Title: {data?.file?.title}</span>
+            <span className='max-w-lg'>
+              Description: {data?.file?.description}
+            </span>
           </div>
         </div>
       </div>
@@ -98,7 +104,11 @@ const FileCardInfo = ({ data }: { data: GuestFileProps }) => {
         >
           Download
         </a>
-        <button className='px-4 py-2 rounded-lg bg-rose-500'>
+        <button
+          type='button'
+          onClick={() => handleDeleteFile(`${data?.file?.identifier}`)}
+          className='px-4 py-2 rounded-lg bg-rose-500'
+        >
           Delete File
         </button>
       </div>

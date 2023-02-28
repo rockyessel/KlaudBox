@@ -17,17 +17,6 @@ const UploadFilePage = () => {
     selectedOption,
   } = useGuestContext();
 
-  React.useEffect(() => {
-    const a = async () => {
-      const s = await fetch('/api/hello');
-
-      const d = s.json();
-
-      console.log(d);
-    };
-    a();
-  }, []);
-
   return (
     <>
       <Modal

@@ -1,3 +1,5 @@
+import { useGuestContext } from '@/context/GuestContext';
+import { GuestFileModelProps } from '@/interface';
 import axios from 'axios';
 
 // const API_URI = process.env.NEXT_PUBLIC_API_URI;
@@ -55,4 +57,38 @@ export const PostFile = async (file_object: any) => {
   const data = await response.json();
 
   return data;
+};
+
+export const DeleteGuestFile = async (identifier: string) => {
+  const response = await axios({
+    method: 'DELETE',
+    url: `${API_URI}v1/guest/${identifier}`,
+    headers: { 'Content-Type': 'application/json' },
+  });
+
+  const data_ = await response.data;
+
+  return data_;
+};
+
+export const BulkDeleteFiles = async (
+  identifiers: string[],
+  localCollection: GuestFileModelProps[],
+  setLocalCollection: any
+) => {
+  const delete_response = Promise.all(
+    identifiers?.map(async (identifier) => {
+      const response = await axios.delete(`${API_URI}v1/guest/${identifier}`);
+      const data_ = await response.data;
+
+      const new_localCollection = localCollection.filter(
+        (file) => file.identifier !== identifier
+      );
+
+      setLocalCollection(new_localCollection);
+      return data_;
+    })
+  );
+
+  return delete_response;
 };

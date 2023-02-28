@@ -1,3 +1,5 @@
+
+
 export const InitialFileUpload = {
   lastModified: 0,
   lastModifiedDate: '',
@@ -11,6 +13,6 @@ export const InitialFileUpload = {
 export const InitialModalFormData = {
   title: '',
   description: '',
-  public: true,
-  private: false,
+  secure: '',
+  delete_after: '',
 };

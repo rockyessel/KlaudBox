@@ -15,6 +15,7 @@ connectDatabase();
 
 // @desc Routes Imports
 import GuestFile from './routes/guest-file';
+import UserFile from './routes/user-file';
 // @desc PORT
 const PORT = process.env.PORT || 7789;
 export const baseURL = `http://localhost:${PORT}`;
@@ -28,7 +29,7 @@ app.use('/uploads', Express.static(__dirname + '/uploads'));
 // @desc Guest Route
 app.use('/v1/', GuestFile);
 // @desc user Route
-// app.use('/v1/', UserFile);
+app.use('/v1/', UserFile);
 
 startCronJob();
 

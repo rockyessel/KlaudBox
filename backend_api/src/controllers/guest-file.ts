@@ -29,10 +29,10 @@ export const GuestPost = async (request: Request, response: Response) => {
       delete_after: request.body?.delete_after,
     });
 
-    handleFileDeletion(
-      `${request.file?.destination}`,
-      `${request.file?.filename}`
-    );
+    // handleFileDeletion(
+    //   `${request.file?.destination}`,
+    //   `${request.file?.filename}`
+    // );
 
     response.status(201).json({ file: create_guest_file, success: true });
   } catch (error) {

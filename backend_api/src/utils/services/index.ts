@@ -105,6 +105,39 @@ export const handleFileDeletion = (
   });
 };
 
+export const handleDeletionOfAllFiles = (directory: string) => {
+  fs.readdir(directory, (error, files) => {
+    if (error) {
+      console.log(error);
+      throw new Error('Could not read directory');
+    }
+
+    files.forEach((file) => {
+      const file_path = path.join(directory, file);
+
+      fs.stat(file_path, (error, stat) => {
+        if (error) {
+          console.log(error);
+          throw new Error('File do not exist');
+        }
+
+        if (stat.isDirectory()) {
+          handleDeletionOfAllFiles(file_path);
+        } else {
+          fs.unlink(file_path, (error) => {
+            if (error) {
+              console.log(error);
+              throw new Error('Could not delete file');
+            }
+
+            console.log(`Deleted ${file_path}`);
+          });
+        }
+      });
+    });
+  });
+};
+
 export const GuestScheduleDeletion = async () => {
   try {
     const baseURL = `http://localhost:7789`;
@@ -117,7 +150,7 @@ export const GuestScheduleDeletion = async () => {
 
         const expire_date = next_day(
           new Date(endpoint.createdAt),
-          1
+          Number(endpoint.delete_after)
         ).toISOString();
 
         const today_in_ms = new Date().getTime();

@@ -1,12 +1,7 @@
 import { GuestFileModelProps, InitialModalFormDataProps } from '@/interface';
-import { SelectedFileProps } from '@/interface';
 import { DeleteGuestFile, GuestFileUploadPost } from '@/utils/api-request';
 import { isEqual } from '@/utils/functions';
-import {
-  InitialFileUpload,
-  InitialModalFormData,
-} from '@/utils/initial-values';
-// import { isEqual } from 'date-fns';
+import { InitialModalFormData } from '@/utils/initial-values';
 import React, { ChangeEvent } from 'react';
 
 export interface GuestContextProps {

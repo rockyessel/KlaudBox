@@ -14,7 +14,7 @@ import { BulkDeleteFiles } from '@/utils/api-request';
 import Link from 'next/link';
 
 const TableList = ({ guestData }: { guestData: GuestFileModelProps[] }) => {
-  const [selectedItems, setSelectedItems] = React.useState<any>([]);
+  const [selectedItems, setSelectedItems] = React.useState<string[]>([]);
 
   const { fileLength, localCollection, setLocalCollection } = useGuestContext();
 
@@ -41,18 +41,18 @@ const TableList = ({ guestData }: { guestData: GuestFileModelProps[] }) => {
     >
       <div className='flex items-center gap-5'>
         {selectedItems && selectedItems.length !== 0 ? (
-          <p className='bg-[#212121] px-4 py-2 rounded-lg w-fit'>
+          <button className='bg-[#212121] btn px-4 py-2 rounded-lg w-fit'>
             {selectedItems?.length}/{fileLength} is selected
-          </p>
+          </button>
         ) : (
-          <p className='bg-[#212121] px-4 py-2 rounded-lg w-fit'>
+          <button className='bg-[#212121] btn px-4 py-2 rounded-lg w-fit'>
             {fileLength} files
-          </p>
+          </button>
         )}
 
         {selectedItems && selectedItems.length !== 0 ? (
           <button
-            className='bg-rose-700 px-4 py-2 rounded-lg w-fit'
+            className='bg-rose-700 btn px-4 py-2 rounded-lg w-fit'
             type='button'
             onClick={() =>
               BulkDeleteFiles(
@@ -77,6 +77,7 @@ const TableList = ({ guestData }: { guestData: GuestFileModelProps[] }) => {
                 value={JSON.stringify(guestData)}
                 name='all'
                 type='checkbox'
+                className='checkbox checkbox-error'
               />
             </th>
             <th className='py-4'>Icon</th>
@@ -98,6 +99,7 @@ const TableList = ({ guestData }: { guestData: GuestFileModelProps[] }) => {
                   name={`checkbox_${index + 1} all`}
                   type='checkbox'
                   value={data.identifier}
+                  className='checkbox checkbox-error'
                 />
               </td>
 
@@ -147,7 +149,7 @@ const TableList = ({ guestData }: { guestData: GuestFileModelProps[] }) => {
               <td>
                 <span className='inline-flex items-center gap-2'>
                   <span className='text-green-500 inline-flex items-center gap-1'>
-                    <span className=''> Everyone</span>
+                    <span className=''>Everyone</span>
                     <MdPublic />
                   </span>
                   <span>

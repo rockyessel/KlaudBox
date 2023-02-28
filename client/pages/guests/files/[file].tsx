@@ -12,9 +12,10 @@ import {
   GetStaticProps,
   InferGetServerSidePropsType,
 } from 'next';
-import { GuestFileProps, Params } from '@/interface';
+import { AllGuestFileProps, GuestFileProps, Params } from '@/interface';
 import { useGuestContext } from '@/context/GuestContext';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 
 const FileDetails = ({
   file_data,
@@ -41,9 +42,13 @@ const FileDetails = ({
     }
   }, [memoizedAllFiles]);
 
+   const router = useRouter();
+
+ if (router.isFallback) return <p>404</p>;
+ 
   return (
     <Main class={` ${checkboxState ? 'h-full' : 'h-screen'}`}>
-      {file_data?.file.secure === 'private' ? (
+      {file_data?.file.secure !== 'private' ? (
         <React.Fragment>
           <FileCardInfo data={file_data} />
 
@@ -116,7 +121,10 @@ const FileDetails = ({
       ) : (
         <Main>
           <p className='text-5xl text-center font-bold'>This is a private</p>
-          <p className="text-center">If you have the code to file, then go to <Link href='/guests/find-file'>here.</Link></p>
+          <p className='text-center'>
+            If you have the code to file, then go to{' '}
+            <Link href='/guests/find-file'>here.</Link>
+          </p>
         </Main>
       )}
     </Main>
@@ -126,7 +134,7 @@ const FileDetails = ({
 export default FileDetails;
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  const file_path_fun: GuestFileProps[] = await GetAllFiles();
+  const file_path_fun: AllGuestFileProps = await GetAllFiles();
 
   const paths = file_path_fun.all_file.map((path) => ({
     params: {

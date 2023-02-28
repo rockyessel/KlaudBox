@@ -20,6 +20,25 @@ const TypeSwitcher = (props: any): JSX.Element => {
   switch (props.extension) {
     case 'png':
     case 'svg':
+    case 'bmp':
+    case 'gif':
+    case 'jpeg':
+    case 'jpg':
+    case 'psd':
+    case 'tiff':
+    case 'tif':
+    case 'webp':
+    case 'ico':
+    case 'cdr':
+    case 'ai':
+    case 'eps':
+    case 'jfif':
+    case 'jp2':
+    case 'jpx':
+    case 'pbm':
+    case 'pgm':
+    case 'ppm':
+    case 'raw':
       return <BsImageFill className={props.class} />;
 
     case 'mp4':
@@ -44,6 +63,14 @@ const TypeSwitcher = (props: any): JSX.Element => {
     case 'mp3':
     case 'wma':
     case 'm4a':
+    case 'aac':
+    case 'aif':
+    case 'aiff':
+    case 'flac':
+    case 'ogg':
+    case 'opus':
+    case 'wav':
+    case 'wma':
       return <MdAudiotrack className={props.class} />;
 
     case 'pdf':

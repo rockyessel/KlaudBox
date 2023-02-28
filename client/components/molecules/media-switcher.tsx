@@ -6,6 +6,25 @@ const MediaSwitcher = (props: any) => {
   switch (props?.data?.file?.extension) {
     case 'png':
     case 'svg':
+    case 'bmp':
+    case 'gif':
+    case 'jpeg':
+    case 'jpg':
+    case 'psd':
+    case 'tiff':
+    case 'tif':
+    case 'webp':
+    case 'ico':
+    case 'cdr':
+    case 'ai':
+    case 'eps':
+    case 'jfif':
+    case 'jp2':
+    case 'jpx':
+    case 'pbm':
+    case 'pgm':
+    case 'ppm':
+    case 'raw':
       return (
         <Image
           url={props?.data?.file?.url}
@@ -40,6 +59,14 @@ const MediaSwitcher = (props: any) => {
     case 'mp3':
     case 'wma':
     case 'm4a':
+    case 'aac':
+    case 'aif':
+    case 'aiff':
+    case 'flac':
+    case 'ogg':
+    case 'opus':
+    case 'wav':
+    case 'wma':
       return (
         <Audio
           url={props?.data?.file?.url}

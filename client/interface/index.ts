@@ -18,22 +18,12 @@ export interface GuestFileModelProps {
 }
 
 export interface GuestFileProps {
-  file: {
-    url: string;
-    size: number;
-    identifier: string;
-    originalFilename: string;
-    mimeType: string;
-    extension: string;
-    cms_id: string;
-    createdAt: string;
-    updatedAt: string;
-    uploadId: string;
-    delete_after: string;
-    title: string;
-    description: string;
-    secure: string;
-  };
+  file: GuestFileModelProps;
+  success?: boolean;
+}
+
+export interface AllGuestFileProps {
+  all_file: GuestFileModelProps[];
   success?: boolean;
 }
 
@@ -55,4 +45,4 @@ export interface InitialModalFormDataProps {
   description: string;
   secure: string;
   delete_after: string;
-};
+}

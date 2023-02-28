@@ -10,7 +10,7 @@ const SwitchViewOptions = (): JSX.Element => {
       return <TableList guestData={localCollection} />;
 
     case 'Compact List':
-      return <CompactList />;
+      return <CompactList guestData={localCollection} />;
 
     case 'Tiles':
       return <Tiles guestData={localCollection} />;

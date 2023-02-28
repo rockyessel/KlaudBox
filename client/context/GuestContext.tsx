@@ -13,18 +13,22 @@ export interface GuestContextProps {
   localCollection: GuestFileModelProps[];
   modalFormData: InitialModalFormDataProps;
   viewOption: string;
-  file: string | File | SelectedFileProps;
+  file: string | File;
   selectedOption: string;
   fileLength: number;
   progress: number;
   modalState: boolean;
   viewOptionState: boolean;
   loadingState: boolean;
-  setLocalCollection: React.Dispatch<React.SetStateAction<GuestFileModelProps[]>>;
+  setLocalCollection: React.Dispatch<
+    React.SetStateAction<GuestFileModelProps[]>
+  >;
   setViewOptionState: React.Dispatch<React.SetStateAction<boolean>>;
   setViewOption: React.Dispatch<React.SetStateAction<string>>;
   setModalState: React.Dispatch<React.SetStateAction<boolean>>;
-  setModalFormData: React.Dispatch<React.SetStateAction<InitialModalFormDataProps>>;
+  setModalFormData: React.Dispatch<
+    React.SetStateAction<InitialModalFormDataProps>
+  >;
   setLoadingState: React.Dispatch<React.SetStateAction<boolean>>;
   handleClose: () => void;
   handleDeleteFile: (identifier: string) => void;
@@ -82,7 +86,7 @@ export const GuestContextProvider = ({ children }: Props) => {
   const [loadingState, setLoadingState] = React.useState<boolean>(false);
 
   // @desc Modal
-  const [file, setFile] = React.useState<string | File | SelectedFileProps>('');
+  const [file, setFile] = React.useState<string | File>('');
   const [progress, setProgress] = React.useState(0);
   const [getFile, setGetFile] = React.useState<any>({});
   const [localCollection, setLocalCollection] = React.useState<
@@ -126,7 +130,6 @@ export const GuestContextProvider = ({ children }: Props) => {
   // @desc Functions
   const fileUpdates = (event: ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files ? event.target.files[0] : '';
-
     setFile(file);
   };
 

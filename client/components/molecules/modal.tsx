@@ -1,4 +1,4 @@
-import React,{ChangeEvent} from 'react';
+import React, { ChangeEvent } from 'react';
 import { BsFillCloudUploadFill } from 'react-icons/bs';
 import { FaTimes } from 'react-icons/fa';
 import { RiArrowDownSFill } from 'react-icons/ri';
@@ -24,13 +24,14 @@ const Modal = ({ modalState, handleClose }: any) => {
     setModalFormData,
   } = useGuestContext();
 
-
-
-  const isFileSelected: boolean = file === '' || file === undefined || file === null;
+  const isFileSelected: boolean =
+    file === '' || file === undefined || file === null;
 
   const numbers = [1, 2, 3, 4, 5, 7, 8, 9, 10];
 
-  const extension: string = file && `${file?.name?.split('.').pop()}`;
+  const un_file: any = file;
+
+  const extension = un_file?.name?.split('.').pop();
 
   const handleModalForm = (event: ChangeEvent<HTMLInputElement>) => {
     setModalFormData((previousData) => ({
@@ -80,16 +81,16 @@ const Modal = ({ modalState, handleClose }: any) => {
               <div className='border border-[#515151] rounded-lg w-auto p-5 flex flex-col gap-5'>
                 <div className='w-full flex justify-between'>
                   <div className='flex items-center gap-2.5'>
-                    <TypeSwitcher class='text-7xl' extension={extension} />
+                    <TypeSwitcher class='text-7xl' extension={`${extension}`} />
                     <div className='flex flex-col'>
-                      <p className='font-medium'>{file?.name}</p>
+                      <p className='font-medium'>{un_file?.name}</p>
                       <p className='font-medium text-white flex items-center'>
-                        <span>{formatFileSize(file?.size)}</span>・
-                        <div className='animate-pulse flex gap-1 items-center'>
-                          <div className='w-2 h-2 bg-slate-400 rounded-full'></div>
-                          <div className='w-2 h-2 bg-slate-400 rounded-full'></div>
-                          <div className='w-2 h-2 bg-slate-400 rounded-full'></div>
-                        </div>
+                        <span>{formatFileSize(un_file?.size)}</span>・
+                        <span className='animate-pulse flex gap-1 items-center'>
+                          <span className='w-2 h-2 bg-slate-400 rounded-full'></span>
+                          <span className='w-2 h-2 bg-slate-400 rounded-full'></span>
+                          <span className='w-2 h-2 bg-slate-400 rounded-full'></span>
+                        </span>
                       </p>
                     </div>
                   </div>

@@ -52,7 +52,12 @@ const FileCardInfo = ({ data }: { data: GuestFileProps }) => {
               <span className='text-lg'>Deletion Date</span>
               <span className='text-gray-300 text-sm font-medium'>
                 {format(
-                  new Date(next_day(new Date(data?.file?.createdAt), 1)),
+                  new Date(
+                    next_day(
+                      new Date(data?.file?.createdAt),
+                      Number(data?.file?.delete_after)
+                    )
+                  ),
                   'MMM d, yyyy'
                 )}
               </span>

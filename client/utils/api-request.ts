@@ -71,19 +71,28 @@ export const DeleteGuestFile = async (identifier: string) => {
   return data_;
 };
 
-export const BulkDeleteFiles = async (
-  identifiers: string[],
-  localCollection: GuestFileModelProps[],
-  setLocalCollection: any
-) => {
-  const delete_response = Promise.all(
-    identifiers?.map(async (identifier) => {
-      const response = await axios.delete(`${API_URI}v1/guest/${identifier}`);
-      const data_ = await response.data;
+export const BulkDeleteFiles = async ( identifiers: string[], localCollection: GuestFileModelProps[], setLocalCollection: any ) => {
+  try {
+      const delete_response = Promise.all(
+        identifiers?.map(async (identifier) => {
+          const response = await axios.delete(
+            `${API_URI}v1/guest/${identifier}`
+          );
 
-      return data_;
-    })
-  );
+          if(response.status !== 200) return
+          
+          // Remove the deleted file from the local collection
+          const new_localCollection = localCollection.filter(
+            (file) => file.identifier !== identifier
+          );
+          setLocalCollection(new_localCollection);
 
-  return delete_response;
+          return response.data;
+        })
+      );
+
+      return delete_response;
+  } catch (error) {
+   console.log(error) 
+  }
 };

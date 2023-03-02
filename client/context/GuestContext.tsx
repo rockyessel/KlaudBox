@@ -135,7 +135,7 @@ export const GuestContextProvider = ({ children }: Props) => {
   const handleDeleteFile = async (identifier: string) => {
     if (identifier === '' || !identifier) return;
 
-    const response = await DeleteGuestFile(identifier);
+     await DeleteGuestFile(identifier);
 
     const new_localCollection = localCollection.filter(
       (file) => file.identifier !== identifier

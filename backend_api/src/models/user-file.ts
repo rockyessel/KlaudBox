@@ -1,7 +1,15 @@
 import Mongoose from 'mongoose';
 
 const UserSchema = new Mongoose.Schema({
-  name: String,
+  email: {
+    type: String,
+    required: true,
+    unique: true,
+  },
+  password: {
+    type: String,
+    required: true,
+  },
 });
 
-export const GuestFile = Mongoose.model('UserFile', UserSchema);
+export const User = Mongoose.model('User', UserSchema);

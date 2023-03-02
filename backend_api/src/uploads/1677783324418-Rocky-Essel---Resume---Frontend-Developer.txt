@@ -1,0 +1,70 @@
+Rocky Essel
+Frontend Developer
+
+Greater Accra
++233 59 919 3360
+
+I have experience building web applications. I am passionate about creating a better web, focusing on speed, ease of use, aesthetic design, accessibility, and user satisfaction.
+
+PERSONAL INFORMATION
+  Address: , Greater Accra, 
+  Nationality: 
+  Driving License: 
+  Hobbies: 
+
+SOCIAL PROFILES
+  * Portfolio: https://esselr.vercel.app/
+  * Github: https://github.com/rockyessel
+  * Linkedin: https://www.linkedin.com/in/rockyessel/
+
+SKILLS
+  Adobe Photoshop
+  MongoDB
+  Python
+  Node.js
+  CSS
+  HTML5
+  React
+  Git
+  ES6 JavaScript
+  Next.js
+  Rust
+  TypeScript
+  Express.js
+  API
+  CMS
+
+WORK EXPERIENCE
+  * February 2023 – February 2023
+    KlaudBox at , 
+      KloudBox is a file cloud storage service, designed to store and manage user files. The platform allows users to upload their files, generate a link to the file, and easily share it with others. 
+
+Responsibilities
+
+  Design and code out the whole web application
+  Built file upload and management.
+  Worked well independently and on a team to solve problems.
+  CMS integration using Sanity.io at the backend.
+  Designed and modelled Restful API deployed on AWS EC2 Virtual Server.
+
+Full Project  Website
+
+  * January 2023 – January 2023
+    Finlac IT & Engineering at , 
+      Finlac IT &amp; Engineering is a CCTV website that allows customers to contact professionals for help with the installation or repair of CCTV systems
+
+Responsibilities
+
+  Design and code out the whole web application
+  Worked well independently to solve problems.
+  CMS integration using Sanity.io at the front end.
+  Added a blog feature.
+
+Full Project Website
+
+
+EDUCATION
+  * September 2019 – June 2023
+    Regional Maritime University, Tema Bachelor
+
+

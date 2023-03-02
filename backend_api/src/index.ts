@@ -31,9 +31,9 @@ app.get('/', (req, res) => {
 });
 
 // @desc Guest Route
-app.use('/v1/', GuestFile);
+app.use('/v1/guest', GuestFile);
 // @desc user Route
-app.use('/v1/', UserFile);
+app.use('/v1/user', UserFile);
 
 startCronJob();
 

@@ -7,8 +7,6 @@ import { useGuestContext } from '@/context/GuestContext';
 
 const UploadFilePage = () => {
   const {
-    modalState,
-    setModalState,
     handleClose,
     fileLength,
     setViewOption,
@@ -19,11 +17,7 @@ const UploadFilePage = () => {
 
   return (
     <>
-      <Modal
-        modalState={modalState}
-        setModalState={setModalState}
-        handleClose={handleClose}
-      />
+      <Modal />
 
       <Main>
         <section className=' flex flex-col gap-5'>
@@ -72,9 +66,9 @@ const UploadFilePage = () => {
                       </ul>
                     )}
                   </button>
-                  <button className='bg-rose-700 rounded-lg w-fit px-4 py-2 inline-flex items-center gap-1 text-xl font-medium'>
+                  {/* <button className='bg-rose-700 rounded-lg w-fit px-4 py-2 inline-flex items-center gap-1 text-xl font-medium'>
                     Info <AiOutlinePlus />
-                  </button>
+                  </button> */}
                 </div>
               </div>
             </div>

@@ -17,7 +17,7 @@ connectDatabase();
 import GuestFile from './routes/guest-file';
 import UserFile from './routes/user-file';
 // @desc PORT
-const PORT = process.env.PORT || 7789;
+const PORT = process.env.PORT || 8080;
 export const baseURL = `http://localhost:${PORT}`;
 
 app.use(cors({ origin: '*' }));
@@ -25,6 +25,10 @@ app.use(morgan('tiny'));
 app.use(Express.json());
 app.use(Express.urlencoded({ extended: false }));
 app.use('/uploads', Express.static(__dirname + '/uploads'));
+
+app.get('/', (req, res) => {
+  res.send('Welcome');
+});
 
 // @desc Guest Route
 app.use('/v1/', GuestFile);

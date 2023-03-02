@@ -6,13 +6,13 @@ import { MdPublic, MdVpnLock } from 'react-icons/md';
 import { useGuestContext } from '@/context/GuestContext';
 import { formatFileSize } from '@/utils/functions';
 import TypeSwitcher from './media-type-switcher';
-import { InitialFileUpload } from '@/utils/initial-values';
 
-const Modal = ({ modalState, handleClose }: any) => {
+const Modal = () => {
   const [showDropdown, setShowDropdown] = React.useState<boolean>(false);
   const [deleteAfterState, setDeleteAfterState] =
     React.useState<boolean>(false);
-  const [showDropdownValue, setShowDropdownValue] = React.useState<string>('');
+  const [showDropdownValue, setShowDropdownValue] =
+    React.useState<string>('public');
   const [deleteAfter, setDeleteAfter] = React.useState<string>('1');
 
   const {
@@ -20,12 +20,20 @@ const Modal = ({ modalState, handleClose }: any) => {
     fileUpdates,
     progress,
     file,
+    modalState,
+    handleClose,
+    setModalState,
     modalFormData,
     setModalFormData,
   } = useGuestContext();
 
-  const isFileSelected: boolean =
-    file === '' || file === undefined || file === null;
+  const isFileSelected: boolean = file === '' || file === undefined || file === null;
+  const isFileStarted: boolean = progress > 0
+  const state = isFileSelected || isFileStarted;
+
+  console.log('isFileStarted', isFileStarted);
+  console.log('isFileSelected', isFileSelected);
+  console.log('state', state);
 
   const numbers = [1, 2, 3, 4, 5, 7, 8, 9, 10];
 
@@ -44,12 +52,12 @@ const Modal = ({ modalState, handleClose }: any) => {
 
   return (
     <section
-      className={`w-full h-screen bg-black/90 text-white fixed top-0 right-0 flex justify-center items-center z-[10] ${
+      className={`w-full h-screen bg-black/90 text-white fixed top-0 right-0 flex justify-center items-center z-[10] px-6 ${
         modalState ? 'block' : 'hidden'
       }`}
     >
-      <section className='w-[50rem] p-10 py-4 rounded-md flex flex-col gap-5 bg-gray-900'>
-        <div className=' border-dashed  h-40 rounded-xl border-4 border-gray-200 flex flex-col justify-center items-center  outline-none mt-10 w-full p-10 cursor-pointer hover:border-black'>
+      <section className='w-[50rem] p-10 py-4 rounded-md flex flex-col gap-5 bg-gray-700'>
+        <div className=' border-dashed  h-40 rounded-xl border-4 border-gray-200 flex flex-col justify-center items-center outline-none mt-10 w-full p-10 cursor-pointer hover:border-gray-300'>
           <form onSubmit={handleSubmission}>
             <label className='cursor-pointer'>
               <div className='flex flex-col items-center justify-center h-full'>
@@ -140,10 +148,10 @@ const Modal = ({ modalState, handleClose }: any) => {
                     <span className='inline-flex items-center gap-1'>
                       Secure
                       {showDropdownValue === '' ? null : showDropdownValue ===
-                        'Public' ? (
-                        <MdPublic />
+                        'public' ? (
+                        <MdPublic className='text-green-500' />
                       ) : (
-                        <MdVpnLock />
+                        <MdVpnLock className='text-rose-500' />
                       )}
                       <RiArrowDownSFill
                         className={`${showDropdown ? 'rotate-180' : ''}`}
@@ -234,17 +242,22 @@ const Modal = ({ modalState, handleClose }: any) => {
         <div className='w-full flex justify-between gap-10'>
           <button
             type='button'
-            onClick={() => handleClose}
-            className='bg-red-500 px-6 py-2 rounded-md w-full'
+            disabled={isFileStarted}
+            onClick={handleClose}
+            className={`bg-red-500 px-6 py-2 rounded-md w-full ${
+              isFileStarted
+                ? 'cursor-not-allowed bg-opacity-20 text-gray-700'
+                : ''
+            }`}
           >
             Close
           </button>
           <button
-            disabled={isFileSelected}
+            disabled={state}
             type='submit'
             onClick={handleSubmission}
             className={`bg-blue-500 px-6 py-2 rounded-md w-full ${
-              isFileSelected ? 'cursor-not-allowed' : ''
+              state ? 'cursor-not-allowed bg-opacity-20 text-gray-700' : ''
             }`}
           >
             Upload

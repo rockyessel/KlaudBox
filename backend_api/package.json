@@ -8,7 +8,8 @@
     "format": "eslint src/**/*.ts --fix",
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "rimraf ./build && tsc && mkdirp ./build/uploads",
-    "start": "npm run build && node build/index.js",
+    "start": "npm run build && npm run server",
+    "server": "node build/index.js",
     "dev": "npx nodemon index.ts && mkdirp ./src/uploads"
   },
   "husky": {
@@ -27,8 +28,8 @@
     "@types/morgan": "^1.9.4",
     "@types/multer": "^1.4.7",
     "@types/node": "^18.13.0",
-    "@typescript-eslint/eslint-plugin": "^5.52.0",
-    "@typescript-eslint/parser": "^5.52.0",
+    "@typescript-eslint/eslint-plugin": "^5.54.0",
+    "@typescript-eslint/parser": "^5.54.0",
     "eslint": "^8.34.0",
     "husky": "^8.0.3",
     "mkdirp": "^2.1.3",

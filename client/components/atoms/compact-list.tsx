@@ -5,7 +5,7 @@ import {
   AiFillEye,
 } from 'react-icons/ai';
 import { HiOutlineExternalLink } from 'react-icons/hi';
-import { MdContentCopy, MdPublic } from 'react-icons/md';
+import { MdContentCopy, MdPublic, MdVpnLock } from 'react-icons/md';
 import TypeSwitcher from '../molecules/media-type-switcher';
 import { formatFileSize, next_day } from '../../utils/functions';
 import { GuestFileModelProps } from '@/interface';
@@ -17,7 +17,8 @@ import { format } from 'date-fns';
 const CompactList = ({ guestData }: { guestData: GuestFileModelProps[] }) => {
   const [selectedItems, setSelectedItems] = React.useState<string[]>([]);
 
-  const { fileLength, localCollection, setLocalCollection } = useGuestContext();
+  const { fileLength, localCollection, setLocalCollection, handleDeleteFile } =
+    useGuestContext();
 
   const handleCheckboxChange = (event: any) => {
     const isChecked = event.target.checked;
@@ -148,19 +149,23 @@ const CompactList = ({ guestData }: { guestData: GuestFileModelProps[] }) => {
                 <span>{formatFileSize(Number(data?.size))}</span>
               </td>
               <td>
-                <span> {format(new Date(data?.createdAt), 'MMM d, yyyy')}</span>
+                <span>
+                  {data?.createdAt &&
+                    format(new Date(data?.createdAt), 'MMM d, yyyy')}
+                </span>
               </td>
               <td>
                 <span>
-                  {format(
-                    new Date(
-                      next_day(
-                        new Date(data?.createdAt),
-                        Number(data?.delete_after)
-                      )
-                    ),
-                    'MMM d, yyyy'
-                  )}
+                  {data?.createdAt &&
+                    format(
+                      new Date(
+                        next_day(
+                          new Date(data?.createdAt),
+                          Number(data?.delete_after)
+                        )
+                      ),
+                      'MMM d, yyyy'
+                    )}
                 </span>
               </td>
               <td>
@@ -169,9 +174,16 @@ const CompactList = ({ guestData }: { guestData: GuestFileModelProps[] }) => {
 
               <td>
                 <span className='inline-flex items-center gap-2'>
-                  <span className='text-green-500 inline-flex items-center gap-1'>
-                    <span className=''>Everyone</span>
-                    <MdPublic />
+                  <span>
+                    {data?.secure === 'public' ? (
+                      <span className='text-green-500 inline-flex items-center gap-1'>
+                        Everyone <MdPublic />
+                      </span>
+                    ) : (
+                      <span className='text-rose-500 inline-flex items-center gap-1'>
+                        Private <MdVpnLock />
+                      </span>
+                    )}
                   </span>
                   <span>
                     <AiFillQuestionCircle className='hidden lg:block' />
@@ -181,10 +193,19 @@ const CompactList = ({ guestData }: { guestData: GuestFileModelProps[] }) => {
 
               <td>
                 <span className='inline-flex items-center gap-2'>
-                  <button className='inline-flex items-center gap-1'>
-                    <span className=''> Delete</span>
+                  <button
+                    onClick={() => handleDeleteFile(data?.identifier)}
+                    className='inline-flex items-center gap-1 text-rose-500'
+                  >
+                    <span> Delete</span>
                     <AiTwotoneDelete />
                   </button>
+                  <Link href={`/guests/files/${data?.cms_id}`}>
+                    <span className='inline-flex items-center gap-1'>
+                      <span className=''> View</span>
+                      <AiFillEye />
+                    </span>
+                  </Link>
                 </span>
               </td>
             </tr>

@@ -73,7 +73,7 @@ export const GuestContextProvider = ({ children }: Props) => {
   const [viewOption, setViewOption] = React.useState<string>(option);
   const [selectedOption, setSelectedOption] = React.useState<string>('');
   const [fileLength, setFileLength] = React.useState<number>(0);
-  const [modalState, setModalState] = React.useState(false);
+  const [modalState, setModalState] = React.useState<boolean>(false);
   const [viewOptionState, setViewOptionState] = React.useState(false);
   const [modalFormData, setModalFormData] =
     React.useState<InitialModalFormDataProps>(InitialModalFormData);
@@ -129,7 +129,7 @@ export const GuestContextProvider = ({ children }: Props) => {
   };
 
   const handleClose = () => {
-    setModalState((prevState: boolean) => !prevState);
+    setModalState((prevState) => !prevState);
   };
 
   const handleDeleteFile = async (identifier: string) => {

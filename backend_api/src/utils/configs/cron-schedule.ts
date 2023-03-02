@@ -6,7 +6,7 @@ const job = new cron.CronJob('*/1 * * * *', () => {
   GuestScheduleDeletion();
 });
 
-const deleteJob = new cron.CronJob('*/5 * * * * *', () => {
+const deleteJob = new cron.CronJob('*/5 * * * *', () => {
   handleDeletionOfAllFiles(path.join(__dirname, '..', '../uploads'));
 });
 

@@ -5,7 +5,7 @@ import {
   AiFillEye,
 } from 'react-icons/ai';
 import { HiOutlineExternalLink } from 'react-icons/hi';
-import { MdContentCopy, MdPublic } from 'react-icons/md';
+import { MdContentCopy, MdPublic, MdVpnLock } from 'react-icons/md';
 import TypeSwitcher from '../molecules/media-type-switcher';
 import { formatFileSize } from '../../utils/functions';
 import { GuestFileModelProps } from '@/interface';
@@ -16,7 +16,8 @@ import Link from 'next/link';
 const TableList = ({ guestData }: { guestData: GuestFileModelProps[] }) => {
   const [selectedItems, setSelectedItems] = React.useState<string[]>([]);
 
-  const { fileLength, localCollection, setLocalCollection } = useGuestContext();
+  const { fileLength, localCollection, setLocalCollection, handleDeleteFile } =
+    useGuestContext();
 
   const handleCheckboxChange = (event: any) => {
     const isChecked = event.target.checked;
@@ -98,7 +99,7 @@ const TableList = ({ guestData }: { guestData: GuestFileModelProps[] }) => {
                   title='checkbox'
                   name={`checkbox_${index + 1} all`}
                   type='checkbox'
-                  value={data.identifier}
+                  value={data?.identifier}
                   className='checkbox checkbox-error'
                 />
               </td>
@@ -148,9 +149,16 @@ const TableList = ({ guestData }: { guestData: GuestFileModelProps[] }) => {
 
               <td>
                 <span className='inline-flex items-center gap-2'>
-                  <span className='text-green-500 inline-flex items-center gap-1'>
-                    <span className=''>Everyone</span>
-                    <MdPublic />
+                  <span>
+                    {data?.secure === 'public' ? (
+                      <span className='text-green-500 inline-flex items-center gap-1'>
+                        Everyone <MdPublic />
+                      </span>
+                    ) : (
+                      <span className='text-rose-500 inline-flex items-center gap-1'>
+                        Private <MdVpnLock />
+                      </span>
+                    )}
                   </span>
                   <span>
                     <AiFillQuestionCircle className='hidden lg:block' />
@@ -160,14 +168,19 @@ const TableList = ({ guestData }: { guestData: GuestFileModelProps[] }) => {
 
               <td>
                 <span className='inline-flex items-center gap-2'>
-                  <span className='inline-flex items-center gap-1'>
-                    <span className=''> Delete</span>
+                  <button
+                    onClick={() => handleDeleteFile(data?.identifier)}
+                    className='inline-flex items-center gap-1 text-rose-500'
+                  >
+                    <span> Delete</span>
                     <AiTwotoneDelete />
-                  </span>
-                  <span className='inline-flex items-center gap-1'>
-                    <span className=''> View</span>
-                    <AiFillEye />
-                  </span>
+                  </button>
+                  <Link href={`/guests/files/${data?.cms_id}`}>
+                    <span className='inline-flex items-center gap-1'>
+                      <span className=''>View</span>
+                      <AiFillEye />
+                    </span>
+                  </Link>
                 </span>
               </td>
             </tr>

@@ -17,7 +17,7 @@ connectDatabase();
 import GuestFile from './routes/guest-file';
 import UserFile from './routes/user-file';
 // @desc PORT
-const PORT = process.env.PORT || 8080;
+const PORT = process.env.PORT || 7789;
 export const baseURL = `http://localhost:${PORT}`;
 
 app.use(cors({ origin: '*' }));

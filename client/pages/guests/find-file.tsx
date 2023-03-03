@@ -16,7 +16,7 @@ const FindFilePage = () => {
 
       const found_file = await singleGuestFile(code);
 
-      setFoundFile(found_file);
+      // setFoundFile(found_file);
       setCode('');
     } catch (error) {
       console.log(error);

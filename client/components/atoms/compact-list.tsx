@@ -24,7 +24,6 @@ const CompactList = ({ guestData }: { guestData: GuestFileModelProps[] }) => {
     const isChecked = event.target.checked;
     const item = event.target.value;
     if (isChecked) {
-      console.log('selectedItems', selectedItems);
       setSelectedItems((previousValue: any) => [
         ...previousValue,
         // ...selectedItems,

@@ -15,8 +15,6 @@ const LoginPage = () => {
     setShowState((previousState) => !previousState);
   };
 
-  console.log('accountFormData: ', accountFormData);
-
   const handleAccountFormData = (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {

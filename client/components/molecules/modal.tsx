@@ -31,10 +31,6 @@ const Modal = () => {
   const isFileStarted: boolean = progress > 0
   const state = isFileSelected || isFileStarted;
 
-  console.log('isFileStarted', isFileStarted);
-  console.log('isFileSelected', isFileSelected);
-  console.log('state', state);
-
   const numbers = [1, 2, 3, 4, 5, 7, 8, 9, 10];
 
   const un_file: any = file;

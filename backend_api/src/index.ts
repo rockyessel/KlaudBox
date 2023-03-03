@@ -32,23 +32,10 @@ app.get('/', (req, res) => {
   res.send('Welcome');
 });
 
-const file_info = `
-8A74386FD5616B0A0329AACE1AA58BA1889679F46BD2F75621031D8B8F7F9C5B
-comodoca.com
-859582550185405
-`;
-
-app.get(
-  '/.well-known/pki-validation/D22C8D2375BDDD680A35FDDE74E4F465.txt',
-  (req, res) => {
-    res.send(file_info);
-  }
-);
-
-// const options = {
-//   key: fs.readFileSync('private.key'),
-//   cert: fs.readFileSync('certificate.crt'),
-// };
+const options = {
+  key: fs.readFileSync('private.key'),
+  cert: fs.readFileSync('certificate.crt'),
+};
 
 // @desc Guest Route
 app.use('/v1/guest', GuestFile);
@@ -57,10 +44,6 @@ app.use('/v1/user', UserFile);
 
 startCronJob();
 
-app.listen(PORT, () => {
-  console.log('Server listening on port');
-});
-
-// https
-//   .createServer(options, app)
-//   .listen(PORT, () => console.log(`Server is running on ${baseURL}`));
+https
+  .createServer(options, app)
+  .listen(8443, () => console.log(`Server is running on ${baseURL}`));

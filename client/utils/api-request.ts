@@ -3,7 +3,7 @@ import { GuestFileModelProps } from '@/interface';
 import axios from 'axios';
 
 const API_URI = process.env.NEXT_PUBLIC_API_URI;
-// const API_URI = `http://localhost:7789/`;
+// const API_URI = `http://localhost:8080/`;
 
 export const GuestFileUploadPost = async (file_object: any, fn: any) => {
   const response = await axios({

@@ -41,31 +41,31 @@ export const GuestFileUploadPost = async (file_object: any, fn: any) => {
 };
 
 export const singleGuestFile = async (file_code: string) => {
-  const response = await fetch(`${API_URI}v1/guest/${file_code}`);
+  const response = await instance.get(`${API_URI}v1/guest/${file_code}`);
 
-  const data_ = await response.json();
+  const data_ = await response.data
 
   return data_;
 };
 
 export const GuestFileSlug = async (path: string) => {
-  const response = await fetch(`${API_URI}v1/guest/path/${path}`);
+  const response = await instance.get(`${API_URI}v1/guest/path/${path}`);
 
-  const data_ = await response.json();
+  const data_ = await response.data
 
   return data_;
 };
 
 export const GetAllFiles = async () => {
-  const response = await fetch(`${API_URI}v1/guest/all`);
+  const response = await instance.get(`${API_URI}v1/guest/all`);
 
-  const data_ = await response.json();
+  const data_ = await response.data
 
   return data_;
 };
 
 export const PostFile = async (file_object: any) => {
-  const response = await fetch(`${API_URI}v1/guest`, {
+  const response = await instance.get(`${API_URI}v1/guest`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -73,7 +73,7 @@ export const PostFile = async (file_object: any) => {
     body: JSON.stringify(file_object),
   });
 
-  const data = await response.json();
+  const data = await response.data
 
   return data;
 };

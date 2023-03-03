@@ -15,7 +15,7 @@ import Link from 'next/link';
 
 const Menu = () => {
   return (
-    <div className='bg-black rounded-md shadow-lg w-[280px] absolute right-0 top-14 p-5 uppercase'>
+    <div className='bg-black rounded-md shadow-lg w-[280px] absolute right-0 top-14 p-5 uppercase z-[200]'>
       <div className='w-full flex flex-col gap-5 divide-y divide-white/20'>
         <div className='flex flex-col gap-1 items-start'>
           <span className='inline-flex items-center uppercase text-white/40 px-0 gap-2 relative right-2'>
@@ -46,6 +46,26 @@ const Menu = () => {
             <li className='inline-flex items-center gap-2 w-full py-1'>
               <GiProcessor className='text-xl' />{' '}
               <span className='text-md'>How it works</span>
+            </li>
+          </ul>
+        </div>
+
+        <div className='flex flex-col gap-1 items-start'>
+          <span className='inline-flex items-center uppercase text-white/40 px-0 gap-2 relative right-2'>
+            <MdSupervisorAccount /> Guest
+          </span>
+          <ul className='flex flex-col gap-1 items-start  divide-y w-full divide-white/10'>
+            <li className='inline-flex items-center gap-2 w-full py-1'>
+              <BiLogInCircle className='text-xl' />{' '}
+              <span className='text-md'>
+                <Link href='/guests/find-file'>Find file</Link>
+              </span>
+            </li>
+            <li className='inline-flex items-center gap-2 w-full py-1'>
+              <BiLogInCircle className='text-xl rotate-180' />{' '}
+              <span className='text-md'>
+                <Link href='/guests/upload-file'>Upload a file</Link>
+              </span>
             </li>
           </ul>
         </div>

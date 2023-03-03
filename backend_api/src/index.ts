@@ -5,6 +5,8 @@ import dotenv from 'dotenv';
 import morgan from 'morgan';
 import { startCronJob } from './utils/configs/cron-schedule';
 import { connectDatabase } from './utils/configs/database';
+import https from 'https';
+import fs from 'fs';
 
 dotenv.config();
 
@@ -30,6 +32,11 @@ app.get('/', (req, res) => {
   res.send('Welcome');
 });
 
+const options = {
+  key: fs.readFileSync('key.pem'),
+  cert: fs.readFileSync('cert.pem'),
+};
+
 // @desc Guest Route
 app.use('/v1/guest', GuestFile);
 // @desc user Route
@@ -37,6 +44,6 @@ app.use('/v1/user', UserFile);
 
 startCronJob();
 
-app.listen(PORT, () => {
-  console.log(`Server is running on ${baseURL}`);
-});
+https
+  .createServer(options, app)
+  .listen(PORT, () => console.log(`Server is running on ${baseURL}`));

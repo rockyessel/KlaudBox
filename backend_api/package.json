@@ -8,8 +8,8 @@
     "format": "eslint src/**/*.ts --fix",
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "rimraf ./build && tsc && mkdirp ./build/uploads",
-    "start": "npm run build && npm run server",
-    "server": "node build/index.js",
+    "start": "node build/index.js",
+    "server": "npm run build && node build/index.js",
     "dev": "npx nodemon index.ts && mkdirp ./src/uploads"
   },
   "husky": {

@@ -140,7 +140,7 @@ export const handleDeletionOfAllFiles = (directory: string) => {
 
 export const GuestScheduleDeletion = async () => {
   try {
-    const baseURL = `https://localhost:8443`;
+    const baseURL = `https://52.4.183.221`;
 
     const { data: endpoints } = await axios.get(`${baseURL}/v1/guest/all`);
 

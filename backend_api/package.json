@@ -10,7 +10,7 @@
     "build": "rimraf ./build && tsc && mkdirp ./build/uploads",
     "start": "node build/index.js",
     "server": "npm run build && node build/index.js",
-    "dev": "npx nodemon index.ts && mkdirp ./src/uploads"
+    "dev": "mkdirp ./src/uploads && npx nodemon index.ts"
   },
   "husky": {
     "hooks": {

@@ -1,18 +1,5 @@
-import { useGuestContext } from '@/context/GuestContext';
 import { GuestFileModelProps } from '@/interface';
-import axios from 'axios';
-import https from 'https';
-import fs from 'fs';
-
-const agent = new https.Agent({
-  ca: fs.readFileSync('../backend_api/52.4.183.221.chained+root.crt'),
-  key: fs.readFileSync('../backend_api/private.key'),
-  cert: fs.readFileSync('../backend_api/certificate.crt'),
-});
-
-const instance = axios.create({
-  httpsAgent: agent,
-});
+import { instance } from '../../backend_api/src/utils/services';
 
 const API_URI = process.env.NEXT_PUBLIC_API_URI;
 // const API_URI = `http://localhost:8080/`;

@@ -1,5 +1,3 @@
 node_modules
 build
 .env
-private.key
-certificate.crt

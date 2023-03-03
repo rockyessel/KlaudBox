@@ -38,9 +38,12 @@ comodoca.com
 859582550185405
 `;
 
-app.get('//.well-known/pki-validation/D22C8D2375BDDD680A35FDDE74E4F465.txt', (req,res)=>{
-  res.send(file_info)
-});
+app.get(
+  '/.well-known/pki-validation/D22C8D2375BDDD680A35FDDE74E4F465.txt',
+  (req, res) => {
+    res.send(file_info);
+  }
+);
 
 // const options = {
 //   key: fs.readFileSync('private.key'),

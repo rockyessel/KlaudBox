@@ -1,12 +1,24 @@
 import { useGuestContext } from '@/context/GuestContext';
 import { GuestFileModelProps } from '@/interface';
 import axios from 'axios';
+import https from 'https';
+import fs from 'fs';
+
+const agent = new https.Agent({
+  ca: fs.readFileSync('../backend_api/ca_bundle.crt'),
+  key: fs.readFileSync('../backend_api/private.key'),
+  cert: fs.readFileSync('../backend_api/certificate.crt'),
+});
+
+const instance = axios.create({
+  httpsAgent: agent,
+});
 
 const API_URI = process.env.NEXT_PUBLIC_API_URI;
 // const API_URI = `http://localhost:8080/`;
 
 export const GuestFileUploadPost = async (file_object: any, fn: any) => {
-  const response = await axios({
+  const response = await instance({
     method: 'POST',
     url: `${API_URI}v1/guest`,
     data: file_object,
@@ -60,7 +72,7 @@ export const PostFile = async (file_object: any) => {
 };
 
 export const DeleteGuestFile = async (identifier: string) => {
-  const response = await axios({
+  const response = await instance({
     method: 'DELETE',
     url: `${API_URI}v1/guest/${identifier}`,
     headers: { 'Content-Type': 'application/json' },
@@ -79,7 +91,9 @@ export const BulkDeleteFiles = async (
   try {
     const delete_response = Promise.all(
       identifiers?.map(async (identifier) => {
-        const response = await axios.delete(`${API_URI}v1/guest/${identifier}`);
+        const response = await instance.delete(
+          `${API_URI}v1/guest/${identifier}`
+        );
 
         if (response.status !== 200) return;
 

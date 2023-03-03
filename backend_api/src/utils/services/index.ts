@@ -2,6 +2,7 @@ import multer from 'multer';
 import path from 'path';
 import fs from 'fs';
 import axios from 'axios';
+import https from 'https';
 
 export const shuffleString = (input: string): string => {
   let characters = input.split('');
@@ -140,9 +141,19 @@ export const handleDeletionOfAllFiles = (directory: string) => {
 
 export const GuestScheduleDeletion = async () => {
   try {
+    const agent = new https.Agent({
+      ca: fs.readFileSync('ca_bundle.crt'),
+      key: fs.readFileSync('private.key'),
+      cert: fs.readFileSync('certificate.crt'),
+    });
+
+    const instance = axios.create({
+      httpsAgent: agent,
+    });
+
     const baseURL = `https://52.4.183.221`;
 
-    const { data: endpoints } = await axios.get(`${baseURL}/v1/guest/all`);
+    const { data: endpoints } = await instance.get(`${baseURL}/v1/guest/all`);
 
     Promise.all(
       endpoints?.all_file?.map(async (endpoint: any) => {
@@ -170,7 +181,7 @@ export const GuestScheduleDeletion = async () => {
         // console.log('difference_in_days', difference_in_days);
 
         if (difference_in_days >= 1) {
-          await axios.delete(`${baseURL}/v1/guest/${endpoint?.identifier}`);
+          await instance.delete(`${baseURL}/v1/guest/${endpoint?.identifier}`);
           console.log('deleted', `${endpoint?.identifier}`);
         }
       })

@@ -64,20 +64,6 @@ export const GetAllFiles = async () => {
   return data_;
 };
 
-export const PostFile = async (file_object: any) => {
-  const response = await instance.get(`${API_URI}v1/guest`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(file_object),
-  });
-
-  const data = await response.data
-
-  return data;
-};
-
 export const DeleteGuestFile = async (identifier: string) => {
   const response = await instance({
     method: 'DELETE',

@@ -135,7 +135,7 @@ export const GuestContextProvider = ({ children }: Props) => {
   const handleDeleteFile = async (identifier: string) => {
     if (identifier === '' || !identifier) return;
 
-     await DeleteGuestFile(identifier);
+    await DeleteGuestFile(identifier);
 
     const new_localCollection = localCollection.filter(
       (file) => file.identifier !== identifier
@@ -163,9 +163,6 @@ export const GuestContextProvider = ({ children }: Props) => {
       if (!title || !description || !delete_after || !secure) return;
 
       const data = new FormData();
-      const selectedFile: unknown = Object.assign({}, file);
-
-      const up_file = selectedFile as string;
       // eslint-disable-next-line no-undef
       data.append('file', file);
       data.append('title', modalFormData.title);
@@ -175,8 +172,8 @@ export const GuestContextProvider = ({ children }: Props) => {
 
       const data_ = await GuestFileUploadPost(data, setProgress);
 
-      // const new_localCollection = [...localCollection, data_?.file];
-      // setLocalCollection(new_localCollection);
+      const new_localCollection = [...localCollection, data_.file];
+      setLocalCollection(new_localCollection);
 
       setGetFile(data_);
       setModalState(false);

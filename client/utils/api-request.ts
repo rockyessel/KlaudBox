@@ -5,7 +5,7 @@ import https from 'https';
 import fs from 'fs';
 
 const agent = new https.Agent({
-  ca: fs.readFileSync('../backend_api/ca_bundle.crt'),
+  ca: fs.readFileSync('../backend_api/52.4.183.221.chained+root.crt'),
   key: fs.readFileSync('../backend_api/private.key'),
   cert: fs.readFileSync('../backend_api/certificate.crt'),
 });

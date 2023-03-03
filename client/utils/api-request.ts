@@ -2,8 +2,8 @@ import { useGuestContext } from '@/context/GuestContext';
 import { GuestFileModelProps } from '@/interface';
 import axios from 'axios';
 
-// const API_URI = process.env.NEXT_PUBLIC_API_URI;
-const API_URI = `http://localhost:7789/`;
+const API_URI = process.env.NEXT_PUBLIC_API_URI;
+// const API_URI = `http://localhost:7789/`;
 
 export const GuestFileUploadPost = async (file_object: any, fn: any) => {
   const response = await axios({
@@ -71,28 +71,30 @@ export const DeleteGuestFile = async (identifier: string) => {
   return data_;
 };
 
-export const BulkDeleteFiles = async ( identifiers: string[], localCollection: GuestFileModelProps[], setLocalCollection: any ) => {
+export const BulkDeleteFiles = async (
+  identifiers: string[],
+  localCollection: GuestFileModelProps[],
+  setLocalCollection: any
+) => {
   try {
-      const delete_response = Promise.all(
-        identifiers?.map(async (identifier) => {
-          const response = await axios.delete(
-            `${API_URI}v1/guest/${identifier}`
-          );
+    const delete_response = Promise.all(
+      identifiers?.map(async (identifier) => {
+        const response = await axios.delete(`${API_URI}v1/guest/${identifier}`);
 
-          if(response.status !== 200) return
-          
-          // Remove the deleted file from the local collection
-          const new_localCollection = localCollection.filter(
-            (file) => file.identifier !== identifier
-          );
-          setLocalCollection(new_localCollection);
+        if (response.status !== 200) return;
 
-          return response.data;
-        })
-      );
+        // Remove the deleted file from the local collection
+        const new_localCollection = localCollection.filter(
+          (file) => file.identifier !== identifier
+        );
+        setLocalCollection(new_localCollection);
 
-      return delete_response;
+        return response.data;
+      })
+    );
+
+    return delete_response;
   } catch (error) {
-   console.log(error) 
+    console.log(error);
   }
 };

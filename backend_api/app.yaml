@@ -1,8 +1,0 @@
-runtime: nodejs18
-env_variables:
-  NODE_ENV: production
-  MONGODB_URI: "mongodb+srv://everfile:everfile@everfile.nuopw6d.mongodb.net/?retryWrites=true&w=majority"
-  SANITY_SECRET_TOKEN: "sko536BwQHTrxnQjdkm2fVXIIw8VTuguaBcHUwB4F9MBLj6LC5qdchNVqxg35vPSe36f295VaFyGBRuCf4p0GYlXXVg66tW67ptSl3TfQsKATqFN6dZyYSyvVt1EBY5vtaUXjb4dxKXIYOh1QsjldnWnfUdVkJmUJbb7mizN0ECmIEeFSYbP"
-handlers:
-  - url: /.*
-    script: auto

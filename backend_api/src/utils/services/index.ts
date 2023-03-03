@@ -138,7 +138,6 @@ export const handleDeletionOfAllFiles = (directory: string) => {
     });
   });
 };
-
 const agent = new https.Agent({
   ca: fs.readFileSync('52.4.183.221.chained+root.crt'),
   key: fs.readFileSync('private.key'),
@@ -151,7 +150,8 @@ export const instance = axios.create({
 
 export const GuestScheduleDeletion = async () => {
   try {
-    const baseURL = `https://localhost:8443`;
+
+    const baseURL = `https://52.4.183.221`;
 
     const { data: endpoints } = await instance.get(`${baseURL}/v1/guest/all`);
 

@@ -77,7 +77,8 @@ const Tiles = ({ guestData }: { guestData: GuestFileModelProps[] }) => {
                 </Link>
               </p>
               <time className='text-[0.8rem]'>
-                {format(new Date(data?.createdAt), 'MMM d, yyyy')}
+                {data?.createdAt &&
+                  format(new Date(data?.createdAt), 'MMM d, yyyy')}
               </time>
             </div>
           </li>

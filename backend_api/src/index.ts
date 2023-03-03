@@ -20,7 +20,7 @@ import GuestFile from './routes/guest-file';
 import UserFile from './routes/user-file';
 // @desc PORT
 const PORT = process.env.PORT || 8443;
-export const baseURL = `https://localhost:8443/`;
+export const baseURL = `https://localhost:${PORT}/`;
 
 app.use(cors({ origin: '*' }));
 app.use(morgan('tiny'));

@@ -1,8 +1,24 @@
 import { GuestFileModelProps } from '@/interface';
-import { instance } from '../../backend_api/src/utils/services';
+import fs from 'fs';
+import https from 'https';
+import axios from 'axios';
 
 const API_URI = process.env.NEXT_PUBLIC_API_URI;
-// const API_URI = `http://localhost:8080/`;
+// const API_URI = `https://localhost:8443/`;
+
+const ca =  await fetch('http://localhost:3000/52.4.183.221.chained+root.crt').then(res => res.arrayBuffer()).then(buf => Buffer.from(buf));
+const key = await  fetch('http://localhost:3000/private.key').then(res => res.arrayBuffer()).then(buf => Buffer.from(buf));
+const cert = await fetch('http://localhost:3000/certificate.crt').then(res => res.arrayBuffer()).then(buf => Buffer.from(buf));
+
+const agent = new https.Agent({
+  ca: [ca],
+  key: key,
+  cert: cert,
+});
+
+const instance = axios.create({
+  httpsAgent: agent,
+});
 
 export const GuestFileUploadPost = async (file_object: any, fn: any) => {
   const response = await instance({

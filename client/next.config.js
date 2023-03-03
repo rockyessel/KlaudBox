@@ -4,6 +4,10 @@ const nextConfig = {
   images: {
     domains: ['cdn.sanity.io'],
   },
+  webpack(config) {
+    config.experiments = { ...config.experiments, topLevelAwait: true };
+    return config;
+  },
 };
 
 module.exports = nextConfig

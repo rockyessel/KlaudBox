@@ -33,8 +33,8 @@ app.get('/', (req, res) => {
 });
 
 const options = {
-  key: fs.readFileSync('.private.key'),
-  cert: fs.readFileSync('.certificate.crt'),
+  key: fs.readFileSync('private.key'),
+  cert: fs.readFileSync('certificate.crt'),
 };
 
 // @desc Guest Route

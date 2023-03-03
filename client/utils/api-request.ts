@@ -29,55 +29,55 @@ const instance = axios.create({
 });
 
 export const GuestFileUploadPost = async (file_object: any, fn: any) => {
-  const response = await instance({
-    method: 'POST',
-    url: `${API_URI}v1/guest`,
-    data: file_object,
-    onUploadProgress: (data) => {
-      const total: number = data?.total || 0;
-      fn(Math.round((100 * data?.loaded) / total));
-    },
-  });
+  // const response = await instance({
+  //   method: 'POST',
+  //   url: `${API_URI}v1/guest`,
+  //   data: file_object,
+  //   onUploadProgress: (data) => {
+  //     const total: number = data?.total || 0;
+  //     fn(Math.round((100 * data?.loaded) / total));
+  //   },
+  // });
 
-  const data_ = await response.data;
+  // const data_ = await response.data;
 
-  return data_;
+  // return data_;
 };
 
 export const singleGuestFile = async (file_code: string) => {
-  const response = await instance.get(`${API_URI}v1/guest/${file_code}`);
+  // const response = await instance.get(`${API_URI}v1/guest/${file_code}`);
 
-  const data_ = await response.data
+  // const data_ = await response.data
 
-  return data_;
+  // return data_;
 };
 
 export const GuestFileSlug = async (path: string) => {
-  const response = await instance.get(`${API_URI}v1/guest/path/${path}`);
+  // const response = await instance.get(`${API_URI}v1/guest/path/${path}`);
 
-  const data_ = await response.data
+  // const data_ = await response.data
 
-  return data_;
+  // return data_;
 };
 
 export const GetAllFiles = async () => {
-  const response = await instance.get(`${API_URI}v1/guest/all`);
+  // const response = await instance.get(`${API_URI}v1/guest/all`);
 
-  const data_ = await response.data
+  // const data_ = await response.data
 
-  return data_;
+  // return data_;
 };
 
 export const DeleteGuestFile = async (identifier: string) => {
-  const response = await instance({
-    method: 'DELETE',
-    url: `${API_URI}v1/guest/${identifier}`,
-    headers: { 'Content-Type': 'application/json' },
-  });
+  // const response = await instance({
+  //   method: 'DELETE',
+  //   url: `${API_URI}v1/guest/${identifier}`,
+  //   headers: { 'Content-Type': 'application/json' },
+  // });
 
-  const data_ = await response.data;
+  // const data_ = await response.data;
 
-  return data_;
+  // return data_;
 };
 
 export const BulkDeleteFiles = async (
@@ -85,27 +85,27 @@ export const BulkDeleteFiles = async (
   localCollection: GuestFileModelProps[],
   setLocalCollection: any
 ) => {
-  try {
-    const delete_response = Promise.all(
-      identifiers?.map(async (identifier) => {
-        const response = await instance.delete(
-          `${API_URI}v1/guest/${identifier}`
-        );
+  // try {
+  //   const delete_response = Promise.all(
+  //     identifiers?.map(async (identifier) => {
+  //       const response = await instance.delete(
+  //         `${API_URI}v1/guest/${identifier}`
+  //       );
 
-        if (response.status !== 200) return;
+  //       if (response.status !== 200) return;
 
-        // Remove the deleted file from the local collection
-        const new_localCollection = localCollection.filter(
-          (file) => file.identifier !== identifier
-        );
-        setLocalCollection(new_localCollection);
+  //       // Remove the deleted file from the local collection
+  //       const new_localCollection = localCollection.filter(
+  //         (file) => file.identifier !== identifier
+  //       );
+  //       setLocalCollection(new_localCollection);
 
-        return response.data;
-      })
-    );
+  //       return response.data;
+  //     })
+  //   );
 
-    return delete_response;
-  } catch (error) {
-    console.log(error);
-  }
+  //   return delete_response;
+  // } catch (error) {
+  //   console.log(error);
+  // }
 };

@@ -175,8 +175,8 @@ export const GuestContextProvider = ({ children }: Props) => {
 
       const data_ = await GuestFileUploadPost(data, setProgress);
 
-      const new_localCollection = [...localCollection, data_.file];
-      setLocalCollection(new_localCollection);
+      // const new_localCollection = [...localCollection, data_?.file];
+      // setLocalCollection(new_localCollection);
 
       setGetFile(data_);
       setModalState(false);

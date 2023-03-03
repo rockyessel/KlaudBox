@@ -142,7 +142,7 @@ export const handleDeletionOfAllFiles = (directory: string) => {
 export const GuestScheduleDeletion = async () => {
   try {
     const agent = new https.Agent({
-      ca: fs.readFileSync('ca_bundle.crt'),
+      ca: fs.readFileSync('52.4.183.221.chained+root.crt'),
       key: fs.readFileSync('private.key'),
       cert: fs.readFileSync('certificate.crt'),
     });

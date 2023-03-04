@@ -151,8 +151,8 @@ export const instance = axios.create({
 export const GuestScheduleDeletion = async () => {
   try {
 
-    // const baseURL = `https://52.4.183.221`;
-    const baseURL = 'https://localhost:8080';
+    const baseURL = `https://52.4.183.221`;
+    // const baseURL = 'https://localhost:8080';
 
     const { data: endpoints } = await instance.get(`${baseURL}/v1/guest/all`);
 

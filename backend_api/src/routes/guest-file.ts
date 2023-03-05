@@ -7,7 +7,6 @@ import {
   GuestFileSlug,
 } from '../controllers/guest-file';
 import { upload } from '../utils/services';
-// import { protect } from '../middleware/user-auth';
 
 const router = express.Router();
 

@@ -10,10 +10,6 @@ const ca_path = `${process.env.NODE_ENV === 'development' ? 'http://localhost:30
 const key_path = `${process.env.NODE_ENV === 'development' ? 'http://localhost:3000/private.key' : process.env.NODE_ENV === 'production' ? 'https://klaudbox.vercel.app/private.key' : '' }`
 const cer_path = `${process.env.NODE_ENV === 'development' ? 'http://localhost:3000/certificate.crt' : process.env.NODE_ENV === 'production' ? 'https://klaudbox.vercel.app/certificate.crt' : '' }`
 
-// const ca_path = `${process.env.PUBLIC_URL}/52.4.183.221.chained+root.crt`;
-// const key_path = `${process.env.PUBLIC_URL}/private.key`;
-// const cer_path = `${process.env.PUBLIC_URL}/certificate.crt`;
-
 const ca =  await fetch(ca_path).then(res => res.arrayBuffer()).then(buf => Buffer.from(buf));
 const key = await  fetch(key_path).then(res => res.arrayBuffer()).then(buf => Buffer.from(buf));
 const cert = await fetch(cer_path).then(res => res.arrayBuffer()).then(buf => Buffer.from(buf));

@@ -5,38 +5,56 @@ import axios from 'axios';
 import https from 'https';
 
 export const shuffleString = (input: string): string => {
+  const shuffleRatio = Math.random() * 0.8;
   let characters = input.split('');
-  characters = characters.sort(() => Math.random() - 0.5);
+  characters = characters.sort(() => Math.random() - shuffleRatio);
   return characters.join('');
 };
 
 export const generateString = (): string => {
-  let characters = shuffleString(
+  const characters = shuffleString(
     'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'
   );
+  const length = Math.floor(Math.random() * 6) + 5;
+  const usedChars: string[] = [];
   let result = '';
-  const used_chars: string[] = [];
-  let index: number;
 
-  characters = characters
-    .split('')
-    .sort(() => Math.random() - 0.5)
-    .join('');
+  for (let i = 0; i < length; i++) {
+    let index: number;
 
-  for (let i = 0; i < 5; i++) {
     do {
       index = Math.floor(Math.random() * characters.length);
-    } while (used_chars.includes(characters[index]));
+    } while (usedChars.includes(characters[index]));
 
     result += characters[index];
-    used_chars.push(characters[index]);
+    usedChars.push(characters[index]);
   }
 
   return result;
 };
 
+export const stripUniqueChars = (input: string, delimiter: string): string => {
+  const chars = input.split('');
+  const charCounts: Record<string, number> = {};
+
+  // Count the number of occurrences of each character
+  for (let i = 0; i < chars.length; i++) {
+    const char = chars[i];
+    if (!charCounts.hasOwnProperty(char)) {
+      charCounts[char] = 0;
+    }
+    charCounts[char]++;
+  }
+
+  // Filter out any characters that occur only once
+  const filteredChars = chars.filter((char) => charCounts[char] > 1);
+
+  // Join the filtered characters using the specified delimiter
+  return filteredChars.join(delimiter);
+};
+
 const storageEngine = multer.diskStorage({
-  destination: (_req, file, cb) => {
+  destination: (_req, _, cb) => {
     cb(null, path.join(__dirname, '../../uploads'));
   },
   filename: (_req, file, cb) => {
@@ -45,6 +63,9 @@ const storageEngine = multer.diskStorage({
 });
 
 export const upload = multer({ storage: storageEngine });
+
+const storageFileEngine = multer.memoryStorage();
+export const file_upload = multer({ storage: storageFileEngine });
 
 export const next_day = (
   createdAt_date: Date,
@@ -150,11 +171,10 @@ export const instance = axios.create({
 
 export const GuestScheduleDeletion = async () => {
   try {
-
     const baseURL = `https://52.4.183.221`;
     // const baseURL = 'https://localhost:8080';
 
-    const { data: endpoints } = await instance.get(`${baseURL}/v1/guest/all`);
+    const { data: endpoints } = await instance.get(`${baseURL}/v1/guests/all`);
 
     Promise.all(
       endpoints?.all_file?.map(async (endpoint: any) => {
@@ -182,7 +202,7 @@ export const GuestScheduleDeletion = async () => {
         // console.log('difference_in_days', difference_in_days);
 
         if (difference_in_days >= 1) {
-          await instance.delete(`${baseURL}/v1/guest/${endpoint?.identifier}`);
+          await instance.delete(`${baseURL}/v1/guests/${endpoint?.identifier}`);
           console.log('deleted', `${endpoint?.identifier}`);
         }
       })

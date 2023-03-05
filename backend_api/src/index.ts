@@ -7,6 +7,10 @@ import { startCronJob } from './utils/configs/cron-schedule';
 import { connectDatabase } from './utils/configs/database';
 import https from 'https';
 import fs from 'fs';
+// @desc Routes Imports
+import GuestFile from './routes/guest-file';
+import UserFile from './routes/user-file';
+import Files from './routes/files';
 
 dotenv.config();
 
@@ -15,11 +19,8 @@ const app: Express.Application = Express();
 // @desc Connecting to database
 connectDatabase();
 
-// @desc Routes Imports
-import GuestFile from './routes/guest-file';
-import UserFile from './routes/user-file';
 // @desc PORT
-const PORT = process.env.PORT || 8443;
+const PORT = process.env.PORT || 8080;
 // default 8443
 export const baseURL = `https://localhost:${PORT}/`;
 
@@ -39,12 +40,14 @@ const options = {
 };
 
 // @desc Guest Route
-app.use('/v1/guest', GuestFile);
+app.use('/v1/guests', GuestFile);
 // @desc user Route
-app.use('/v1/user', UserFile);
+app.use('/v1/users', UserFile);
+// @desc user File Route
+app.use('/v1/files', Files);
 
 startCronJob();
 
 https
   .createServer(options, app)
-  .listen(8443, () => console.log(`Server is running on ${baseURL}`));
+  .listen(PORT, () => console.log(`Server is running on ${baseURL}`));

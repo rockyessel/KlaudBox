@@ -23,7 +23,7 @@ const GuestHandler = async (req: NextApiRequest, res: NextApiResponse) => {
         console.log(req);
         const response = await instance({
           method: 'POST',
-          url: `${API_URI}v1/guest`,
+          url: `${API_URI}v1/guests`,
           data: req.body,
         });
 

@@ -27,7 +27,7 @@ const instance = axios.create({
 export const GuestFileUploadPost = async (file_object: any, fn: any) => {
   const response = await instance({
     method: 'POST',
-    url: `${API_URI}v1/guest`,
+    url: `${API_URI}v1/guests`,
     data: file_object,
     onUploadProgress: (data) => {
       const total: number = data?.total || 0;
@@ -41,7 +41,7 @@ export const GuestFileUploadPost = async (file_object: any, fn: any) => {
 };
 
 export const singleGuestFile = async (file_code: string) => {
-  const response = await instance.get(`${API_URI}v1/guest/${file_code}`);
+  const response = await instance.get(`${API_URI}v1/guests/${file_code}`);
 
   const data_ = await response.data
 
@@ -49,7 +49,7 @@ export const singleGuestFile = async (file_code: string) => {
 };
 
 export const GuestFileSlug = async (path: string) => {
- const response = await instance.get(`${API_URI}v1/guest/path/${path}`);
+ const response = await instance.get(`${API_URI}v1/guests/path/${path}`);
 
  const data_ = await response.data
 
@@ -57,7 +57,7 @@ export const GuestFileSlug = async (path: string) => {
 };
 
 export const GetAllFiles = async () => {
- const response = await instance.get(`${API_URI}v1/guest/all`);
+ const response = await instance.get(`${API_URI}v1/guests/all`);
 
  const data_ = await response.data
 
@@ -67,7 +67,7 @@ export const GetAllFiles = async () => {
 export const DeleteGuestFile = async (identifier: string) => {
  const response = await instance({
    method: 'DELETE',
-   url: `${API_URI}v1/guest/${identifier}`,
+   url: `${API_URI}v1/guests/${identifier}`,
    headers: { 'Content-Type': 'application/json' },
  });
 
@@ -85,7 +85,7 @@ export const BulkDeleteFiles = async (
    const delete_response = Promise.all(
      identifiers?.map(async (identifier) => {
        const response = await instance.delete(
-         `${API_URI}v1/guest/${identifier}`
+         `${API_URI}v1/guests/${identifier}`
        );
 
        if (response.status !== 200) return;

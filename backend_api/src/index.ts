@@ -20,7 +20,7 @@ const app: Express.Application = Express();
 connectDatabase();
 
 // @desc PORT
-const PORT = process.env.PORT || 8080;
+const PORT = process.env.PORT || 8443;
 // default 8443
 export const baseURL = `https://localhost:${PORT}/`;
 
@@ -50,4 +50,4 @@ startCronJob();
 
 https
   .createServer(options, app)
-  .listen(PORT, () => console.log(`Server is running on ${baseURL}`));
+  .listen(8443, () => console.log(`Server is running on ${baseURL}`));

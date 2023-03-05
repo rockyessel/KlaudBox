@@ -118,9 +118,7 @@ export const ForgotUserPassword = async (
       response.status(404).json({ error: true, msg: `User doesn't exist` });
     }
 
-    
     const token = GenToken(user?._id);
-
   } catch (error) {
     response
       .status(500)

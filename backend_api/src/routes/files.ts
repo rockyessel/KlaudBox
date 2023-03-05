@@ -1,7 +1,7 @@
 import express from 'express';
 import {
   FilesPost,
-  FilesGet,
+  TempFileLink,
   FilesDelete,
   GetAllFiles,
   GuestFileSlug,
@@ -12,9 +12,9 @@ import { protect } from '../middleware/user-auth';
 const router = express.Router();
 
 router.post('/', file_upload.single('file'), protect, FilesPost);
-router.get('/find/:filename', protect, FilesGet);
+router.get('/find/:filename', protect, TempFileLink);
 router.get('/', protect, GetAllFiles);
-router.get('/path/:path', protect, GuestFileSlug);
+router.get('/path/:path', protect, TempFileLink);
 router.delete('/delete/:filename', protect, FilesDelete);
 
 export = router;

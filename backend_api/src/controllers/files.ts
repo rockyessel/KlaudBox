@@ -47,6 +47,7 @@ export const FilesPost = async (request: Request, response: Response) => {
     await s3.send(command);
 
     const create_file = await FilesModel.create({
+      user: `${user}`,
       url: `${url}${file_name}`,
       size: request.file?.size,
       identifier,
@@ -59,7 +60,6 @@ export const FilesPost = async (request: Request, response: Response) => {
       description: request.body?.description,
       secure: request.body?.secure,
       delete_after: request.body?.delete_after,
-      user,
     });
 
     response.status(201).json({ create_file });
@@ -73,20 +73,21 @@ export const FilesPost = async (request: Request, response: Response) => {
   }
 };
 
-export const FilesGet = async (request: Request, response: Response) => {
+export const TempFileLink = async (request: Request, response: Response) => {
   try {
     const user = request.user?._id;
-    const filename = request.params.filename;
+    const path = request.params.path;
 
-    const existing_user = await FilesModel.findOne({
-      user,
-    });
+    const existing_file = await FilesModel.findOne({ path });
 
-    const existing_file = await FilesModel.findOne({
-      originalFilename: filename,
-    });
+    console.log(existing_file);
 
-    console.log('existing_file', existing_file);
+    if (existing_file?.user.toString() !== user) {
+      response.status(404).json({
+        message: 'User is not authorized to generate temp link',
+        error: true,
+      });
+    }
 
     if (existing_file === null || undefined || !existing_file) {
       response
@@ -95,7 +96,7 @@ export const FilesGet = async (request: Request, response: Response) => {
     } else {
       const params = {
         Bucket: bucket_name,
-        Key: filename,
+        Key: existing_file?.originalFilename,
       };
 
       const command = new GetObjectCommand(params);
@@ -108,18 +109,26 @@ export const FilesGet = async (request: Request, response: Response) => {
       error: 'Internal server error',
       success: false,
       error_state: true,
-      handler: 'FilesGet',
+      handler: 'TempFileLink',
     });
   }
 };
 
 export const FilesDelete = async (request: Request, response: Response) => {
   try {
+    const user = request.user?._id;
     const filename = request.params.filename;
 
     const existing_file = await FilesModel.findOne({
       originalFilename: filename,
     });
+
+    if (existing_file?.user.toString() !== user) {
+      response.status(404).json({
+        message: 'User is not authorized to delete this file',
+        error: true,
+      });
+    }
 
     if (existing_file === null || undefined || !existing_file) {
       response.status(404).json({

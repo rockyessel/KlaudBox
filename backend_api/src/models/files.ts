@@ -1,7 +1,7 @@
 import Mongoose from 'mongoose';
 
 const FilesModelSchema = new Mongoose.Schema({
-  user:{ type: String, require: [true, 'User is required'] },
+  user:{type: Mongoose.Schema.Types.ObjectId, required: true, ref: 'User' },
   url: { type: String, require: [true, 'This field is required'] },
   size: { type: Number, required: true },
   identifier: { type: String, require: [true, 'This field is required'], unique: true },

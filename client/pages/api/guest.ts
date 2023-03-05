@@ -5,9 +5,8 @@ import axios from 'axios';
 
 const GuestHandler = async (req: NextApiRequest, res: NextApiResponse) => {
   try {
-    // const API_URI = process.env.NEXT_PUBLIC_API_URI;
+    const API_URI = process.env.NEXT_PUBLIC_API_URI;
 
-    const API_URI = `http://localhost:8443/`;
     const { method } = req;
     const agent = new https.Agent({
       ca: fs.readFileSync('52.4.183.221.chained+root.crt'),

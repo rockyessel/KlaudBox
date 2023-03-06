@@ -105,3 +105,13 @@ export const BulkDeleteFiles = async (
    console.log(error);
  }
 };
+
+
+export const UserPostFile = async (object:any) => {
+  try {
+    const response = await instance.post(`${API_URI}v1/files/${object}`);
+    
+  } catch (error) {
+    console.log(error)
+  }
+}

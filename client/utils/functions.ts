@@ -41,7 +41,12 @@ export const next_day = (
   return nextDay;
 };
 
-export const FormValidation = ( formType: string, formData: string, formErr: FormErrorProps, setFormErr: React.Dispatch<React.SetStateAction<FormErrorProps>> ): boolean => {
+export const FormValidation = (
+  formType: string,
+  formData: string,
+  formErr: FormErrorProps,
+  setFormErr: React.Dispatch<React.SetStateAction<FormErrorProps>>
+): boolean => {
   let currentState: boolean = true;
 
   switch (formType) {
@@ -108,7 +113,7 @@ export const FormValidation = ( formType: string, formData: string, formErr: For
             const formState = {
               ...formErr,
               state: true,
-              msg: 'Include "@" in your format',
+              msg: 'Make sure your email is in this format: example@comapny.domain',
             };
             setFormErr(formState);
           } else {
@@ -252,42 +257,62 @@ export const FormValidation = ( formType: string, formData: string, formErr: For
         console.error(new Error('sth went wrong in message'));
       }
 
-    // case 'password':
-    //   const passwordValidation = (formValue: {
-    //     password: string;
-    //     confirmPassword: string;
-    //   }):boolean => {
-    //     let currentState = false;
-    //     const { password, confirmPassword } = formValue;
+    case 'password':
+      const passwordValidation = (formValue: string): boolean => {
+        let currentState = false;
 
-    //     if (!password) {
-    //       //    do something
-    //     } else if (!confirmPassword) {
-    //       //    do something
-    //     } else if (
-    //       !new RegExp('^(?=[^\\d_].*?\\d)\\w(\\w|[!@#$%]){7,20}').test(password)
-    //     ) {
-    //       //    do something
-    //     } else if (
-    //       !new RegExp('^(?=[^\\d_].*?\\d)\\w(\\w|[!@#$%]){7,20}').test(
-    //         confirmPassword
-    //       )
-    //     ) {
-    //       //    do something
-    //     } else if (password !== confirmPassword) {
-    //       //    do something
-    //     } else {
-    //       return (currentState = true);
-    //       //    do something
-    //     }
+        if (!formValue) {
+          const formState = {
+            ...formErr,
+            state: true,
+            msg: 'Password cannot be empty',
+          };
 
-    //     return currentState;
-    //   };
-    //   return passwordValidation(formData);
+          setFormErr(formState);
+        } else if (formValue.length < 8) {
+          const formState = {
+            ...formErr,
+            state: true,
+            msg: 'Password cannot be less then 8 characters',
+          };
+          setFormErr(formState);
+        } else if (formValue.length > 20) {
+          const formState = {
+            ...formErr,
+            state: true,
+            msg: 'Password cannot be more than 20 characters',
+          };
+          setFormErr(formState);
+        } else if (
+          !new RegExp('^(?=[^\\d_].*?\\d)\\w(\\w|[!@#$%]){7,20}').test(
+            formValue
+          )
+        ) {
+          const formState = {
+            ...formErr,
+            state: true,
+            msg: 'Password must be strong eg: dek@IL32S/._',
+          };
+
+          // dek@IL32S/._
+          setFormErr(formState);
+        } else {
+          currentState = true;
+          const formState = {
+            ...formErr,
+            state: false,
+            msg: '',
+          };
+          setFormErr(formState);
+        }
+
+        return currentState;
+      };
+      return passwordValidation(formData);
 
     default:
       break;
   }
 
   return currentState;
-}
+};

@@ -46,3 +46,8 @@ export interface InitialModalFormDataProps {
   secure: string;
   delete_after: string;
 }
+
+export interface FormErrorProps {
+  state: boolean;
+  msg: string;
+}

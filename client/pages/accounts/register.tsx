@@ -5,6 +5,7 @@ import { AiFillEye, AiFillEyeInvisible } from 'react-icons/ai';
 
 const RegisterPage = () => {
   const [showState, setShowState] = React.useState(false);
+  const [formData, setFormData] = React.useState({email:'', password: ''});
 
   const handleShowPassword = () => {
     setShowState((previousState) => !previousState);

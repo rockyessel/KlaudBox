@@ -79,7 +79,7 @@ const RegisterPage = () => {
                 type='submit'
                 className='bg-black text-white w-full px-4 py-2'
               >
-                Sign up
+                Register
               </button>
               <button
                 type='button'
@@ -95,7 +95,7 @@ const RegisterPage = () => {
             <p>
               Have an account? Then{' '}
               <Link className='font-bold underline' href='/accounts/login'>
-                Sign in
+                Login
               </Link>{' '}
               to continue
             </p>

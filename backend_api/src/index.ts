@@ -7,6 +7,7 @@ import { startCronJob } from './utils/configs/cron-schedule';
 import { connectDatabase } from './utils/configs/database';
 import https from 'https';
 import fs from 'fs';
+import path from 'path';
 // @desc Routes Imports
 import GuestFile from './routes/guest-file';
 import UserFile from './routes/user-file';
@@ -35,8 +36,8 @@ app.get('/', (req, res) => {
 });
 
 const options = {
-  key: fs.readFileSync('private.key'),
-  cert: fs.readFileSync('certificate.crt'),
+  key: fs.readFileSync(path.join(__dirname, '../private.key')),
+  cert: fs.readFileSync(path.join(__dirname,  '../certificate.crt')),
 };
 
 // @desc Guest Route

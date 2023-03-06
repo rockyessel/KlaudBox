@@ -52,5 +52,3 @@ startCronJob();
 https
   .createServer(options, app)
   .listen(8443, () => console.log(`Server is running on ${baseURL}`));
-
-  console.log()

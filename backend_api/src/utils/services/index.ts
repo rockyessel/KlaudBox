@@ -160,9 +160,9 @@ export const handleDeletionOfAllFiles = (directory: string) => {
   });
 };
 const agent = new https.Agent({
-  ca: fs.readFileSync('52.4.183.221.chained+root.crt'),
-  key: fs.readFileSync('private.key'),
-  cert: fs.readFileSync('certificate.crt'),
+  ca: fs.readFileSync(path.join(__dirname,'../../../52.4.183.221.chained+root.crt')),
+  key: fs.readFileSync(path.join(__dirname,'../../../private.key')),
+  cert: fs.readFileSync(path.join(__dirname,'../../../certificate.crt')),
 });
 
 export const instance = axios.create({

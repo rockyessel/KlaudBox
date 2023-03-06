@@ -6,7 +6,7 @@ import { FormValidation } from '@/utils/functions';
 import { FormErrorProps } from '@/interface';
 
 const LoginPage = () => {
-   const [showState, setShowState] = React.useState(false);
+  const [showState, setShowState] = React.useState(false);
   const [formData, setFormData] = React.useState({
     email: '',
     password: '',
@@ -25,7 +25,9 @@ const LoginPage = () => {
     setShowState((previousState) => !previousState);
   };
 
-  const handleAccountFormData = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleAccountFormData = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
     const { target } = event;
 
     if (target.type === 'checkbox') {
@@ -41,29 +43,38 @@ const LoginPage = () => {
     }
   };
 
-  const handleValidation = (): { email: boolean; password: boolean }  => {
-    const email: boolean = FormValidation('email', formData.email, emailErr, setEmailErr);
-    const password: boolean = FormValidation('password', formData.password, passwordErr, setPasswordErr);
+  const handleValidation = (): { email: boolean; password: boolean } => {
+    const email: boolean = FormValidation(
+      'email',
+      formData.email,
+      emailErr,
+      setEmailErr
+    );
+    const password: boolean = FormValidation(
+      'password',
+      formData.password,
+      passwordErr,
+      setPasswordErr
+    );
 
-    return { email, password }
-  }
-  
+    return { email, password };
+  };
+
   const handleSubmission = async (event: React.SyntheticEvent) => {
     try {
-      event.preventDefault()
+      event.preventDefault();
 
       const validateObject = handleValidation();
-       const { email, password } = validateObject;
-       if (!email || !password) return;
-      
-        console.log('formData', formData);
+      const { email, password } = validateObject;
+      if (!email || !password) return;
+
+      console.log('formData', formData);
 
       //  await UserPostFile(formData);
-
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
-  }
+  };
 
   return (
     <main className='w-full h-screen flex justify-center items-center'>
@@ -94,6 +105,11 @@ const LoginPage = () => {
                 onChange={handleAccountFormData}
                 type='text'
               />
+              {passwordErr.state && (
+                <p className={`text-sm text-red-600 font-light`}>
+                  {passwordErr.msg}
+                </p>
+              )}
             </div>
             <div className='flex flex-col gap-2'>
               <label>Password</label>
@@ -119,6 +135,11 @@ const LoginPage = () => {
                   />
                 )}
               </div>
+              {passwordErr.state && (
+                <p className={`text-sm text-red-600 font-light`}>
+                  {passwordErr.msg}
+                </p>
+              )}
             </div>
             <div className='flex justify-between'>
               <div className='flex items-center gap-1'>

@@ -1,10 +1,13 @@
 import Link from 'next/link';
-import React, { ChangeEvent } from 'react';
+import React from 'react';
 import { FcGoogle } from 'react-icons/fc';
 import { AiFillEye, AiFillEyeInvisible } from 'react-icons/ai';
 import { FormErrorProps } from '@/interface';
 import { FormValidation } from '@/utils/functions';
-import { UserPostFile } from '@/utils/api-request';
+import { useDispatch, useSelector } from 'react-redux';
+import type { RootState, AppDispatch } from '@/reduxtoolkit/app/store';
+import { register } from '@/reduxtoolkit/features/auth/auth-request';
+// import { UserPostFile } from '@/utils/api-request';
 
 const RegisterPage = () => {
   const [showState, setShowState] = React.useState(false);
@@ -21,12 +24,19 @@ const RegisterPage = () => {
     state: false,
     msg: '',
   });
+  const dispatch: AppDispatch = useDispatch();
+
+  const { loading, user, error, success } = useSelector(
+    (state: RootState) => state.auth
+  );
 
   const handleShowPassword = () => {
     setShowState((previousState) => !previousState);
   };
 
-  const handleAccountFormData = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleAccountFormData = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
     const { target } = event;
 
     if (target.type === 'checkbox') {
@@ -42,29 +52,42 @@ const RegisterPage = () => {
     }
   };
 
-  const handleValidation = (): { email: boolean; password: boolean }  => {
-    const email: boolean = FormValidation('email', formData.email, emailErr, setEmailErr);
-    const password: boolean = FormValidation('password', formData.password, passwordErr, setPasswordErr);
+  const handleValidation = (): { email: boolean; password: boolean } => {
+    const email: boolean = FormValidation(
+      'email',
+      formData.email,
+      emailErr,
+      setEmailErr
+    );
+    const password: boolean = FormValidation(
+      'password',
+      formData.password,
+      passwordErr,
+      setPasswordErr
+    );
 
-    return { email, password }
-  }
-  
+    return { email, password };
+  };
+
   const handleSubmission = async (event: React.SyntheticEvent) => {
     try {
-      event.preventDefault()
+      event.preventDefault();
 
       const validateObject = handleValidation();
-       const { email, password } = validateObject;
-       if (!email || !password) return;
-      
-        console.log('formData', formData);
+      const { email, password } = validateObject;
+      if (!email || !password) return;
+
+      console.log('formData', formData);
+
+      const data = { email: formData.email, password: formData.password };
+
+      dispatch(register(data));
 
       //  await UserPostFile(formData);
-
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
-  }
+  };
 
   return (
     <main className='w-full h-screen flex justify-center items-center'>

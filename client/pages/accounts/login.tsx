@@ -4,6 +4,9 @@ import { FcGoogle } from 'react-icons/fc';
 import { AiFillEye, AiFillEyeInvisible } from 'react-icons/ai';
 import { FormValidation } from '@/utils/functions';
 import { FormErrorProps } from '@/interface';
+import { useDispatch, useSelector } from 'react-redux';
+import type { RootState,AppDispatch } from '@/reduxtoolkit/app/store';
+import {login} from '@/reduxtoolkit/features/auth/auth-request'
 
 const LoginPage = () => {
   const [showState, setShowState] = React.useState(false);
@@ -20,6 +23,8 @@ const LoginPage = () => {
     state: false,
     msg: '',
   });
+
+  const dispatch: AppDispatch = useDispatch();
 
   const handleShowPassword = () => {
     setShowState((previousState) => !previousState);
@@ -68,9 +73,8 @@ const LoginPage = () => {
       const { email, password } = validateObject;
       if (!email || !password) return;
 
-      console.log('formData', formData);
+      dispatch(login(formData))
 
-      //  await UserPostFile(formData);
     } catch (error) {
       console.log(error);
     }

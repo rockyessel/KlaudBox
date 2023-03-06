@@ -27,14 +27,6 @@ export const UserSignUp = async (request: Request, response: Response) => {
     if (empty) {
       response.status(404).json({ msg: 'Email/Password cannot be blank' });
     }
-    // Validator
-    // if (!validator.isEmail(email)) {
-    //   response.status(404).json({ error: true, msg: 'Email is not valid' });
-    // }
-
-    // if (!validator.isStrongPassword(password)) {
-    //   response.status(404).json({ error: true, msg: 'Password not strong' });
-    // }
 
     const ifExist = await User.findOne({ email });
 
@@ -53,7 +45,8 @@ export const UserSignUp = async (request: Request, response: Response) => {
 
     response.status(201).json({
       success: true,
-      msg: 'Account Created',
+      email,
+      _id: createdUser._id,
       token,
     });
   } catch (error) {
@@ -93,7 +86,9 @@ export const UserLogin = async (request: Request, response: Response) => {
 
     const token = GenToken(ifExist?._id);
 
-    response.status(201).json({ msg: 'User logged in', token });
+    response
+      .status(201)
+      .json({ success: true, email, _id: ifExist?._id, token });
   } catch (error) {
     response.status(500).json({ msg: 'Internal error', location: 'login' });
   }

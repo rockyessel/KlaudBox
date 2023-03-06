@@ -23,7 +23,7 @@ connectDatabase();
 // @desc PORT
 const PORT = process.env.PORT || 8443;
 // default 8443
-export const baseURL = `https://localhost:${PORT}/`;
+export const baseURL = `https://localhost:${PORT}`;
 
 app.use(cors({ origin: '*' }));
 app.use(morgan('tiny'));
@@ -37,7 +37,7 @@ app.get('/', (req, res) => {
 
 const options = {
   key: fs.readFileSync(path.join(__dirname, '../private.key')),
-  cert: fs.readFileSync(path.join(__dirname,  '../certificate.crt')),
+  cert: fs.readFileSync(path.join(__dirname, '../certificate.crt')),
 };
 
 // @desc Guest Route

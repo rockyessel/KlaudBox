@@ -3,6 +3,7 @@ import path from 'path';
 import fs from 'fs';
 import axios from 'axios';
 import https from 'https';
+import {baseURL} from '../../index'
 
 export const shuffleString = (input: string): string => {
   const shuffleRatio = Math.random() * 0.8;
@@ -171,9 +172,6 @@ export const instance = axios.create({
 
 export const GuestScheduleDeletion = async () => {
   try {
-    const baseURL = `https://52.4.183.221`;
-    // const baseURL = 'https://localhost:8080';
-
     const { data: endpoints } = await instance.get(`${baseURL}/v1/guests/all`);
 
     Promise.all(

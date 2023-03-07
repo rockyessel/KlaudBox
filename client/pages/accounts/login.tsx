@@ -5,8 +5,10 @@ import { AiFillEye, AiFillEyeInvisible } from 'react-icons/ai';
 import { FormValidation } from '@/utils/functions';
 import { FormErrorProps } from '@/interface';
 import { useDispatch, useSelector } from 'react-redux';
-import type { RootState,AppDispatch } from '@/reduxtoolkit/app/store';
-import {login} from '@/reduxtoolkit/features/auth/auth-request'
+import type { RootState, AppDispatch } from '@/reduxtoolkit/app/store';
+import { login } from '@/reduxtoolkit/features/auth/auth-request';
+import { reset } from '@/reduxtoolkit/features/auth/auth-slice';
+import { useRouter } from 'next/router';
 
 const LoginPage = () => {
   const [showState, setShowState] = React.useState(false);
@@ -23,8 +25,11 @@ const LoginPage = () => {
     state: false,
     msg: '',
   });
-
+  const { loading, user, error, success } = useSelector(
+    (state: RootState) => state.auth
+  );
   const dispatch: AppDispatch = useDispatch();
+  const router = useRouter();
 
   const handleShowPassword = () => {
     setShowState((previousState) => !previousState);
@@ -73,12 +78,24 @@ const LoginPage = () => {
       const { email, password } = validateObject;
       if (!email || !password) return;
 
-      dispatch(login(formData))
-
+      dispatch(login(formData));
     } catch (error) {
       console.log(error);
     }
   };
+
+  React.useEffect(() => {
+    if (success) {
+      router.push('/dashboard');
+    }
+
+    dispatch(reset());
+  }, [dispatch, router, success, user]);
+
+  if (loading)
+    return (
+      <main className='bg-rose-800 text-white font-extrabold'>Loading</main>
+    );
 
   return (
     <main className='w-full h-screen flex justify-center items-center'>

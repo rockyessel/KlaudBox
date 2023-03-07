@@ -65,5 +65,5 @@ const authSlice = createSlice({
     // });
   },
 });
-
+export const reset = authSlice.actions.reset;
 export default authSlice.reducer;

@@ -3,7 +3,6 @@ import path from 'path';
 import fs from 'fs';
 import axios from 'axios';
 import https from 'https';
-import {baseURL} from '../../index'
 
 export const shuffleString = (input: string): string => {
   const shuffleRatio = Math.random() * 0.8;
@@ -169,6 +168,8 @@ const agent = new https.Agent({
 export const instance = axios.create({
   httpsAgent: agent,
 });
+
+const baseURL = `https://52.4.183.221`;
 
 export const GuestScheduleDeletion = async () => {
   try {

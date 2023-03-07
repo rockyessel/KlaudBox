@@ -23,7 +23,8 @@ connectDatabase();
 // @desc PORT
 const PORT = process.env.PORT || 8443;
 // default 8443
-export const baseURL = `https://localhost:${PORT}`;
+ const baseURL = `https://localhost:${PORT}`;
+
 
 app.use(cors({ origin: '*' }));
 app.use(morgan('tiny'));

@@ -10,19 +10,21 @@ body {
   box-sizing: border-box;
 }
 
+@font-face {
+  font-family: 'Catamaran';
+  src: url('/fonts/Catamaran.ttf');
+}
+
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue','Catamaran',
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* thead {
-  border-bottom: solid 0.1px white;
-  padding: 0 0 10rem 0;
-} */
+
 
 ::-webkit-scrollbar {
   width: 10px;

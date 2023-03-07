@@ -7,7 +7,8 @@ import { FormValidation } from '@/utils/functions';
 import { useDispatch, useSelector } from 'react-redux';
 import type { RootState, AppDispatch } from '@/reduxtoolkit/app/store';
 import { register } from '@/reduxtoolkit/features/auth/auth-request';
-// import { UserPostFile } from '@/utils/api-request';
+import { reset } from '@/reduxtoolkit/features/auth/auth-slice';
+import { useRouter } from 'next/router';
 
 const RegisterPage = () => {
   const [showState, setShowState] = React.useState(false);
@@ -25,6 +26,7 @@ const RegisterPage = () => {
     msg: '',
   });
   const dispatch: AppDispatch = useDispatch();
+  const router = useRouter();
 
   const { loading, user, error, success } = useSelector(
     (state: RootState) => state.auth
@@ -88,6 +90,19 @@ const RegisterPage = () => {
       console.log(error);
     }
   };
+
+  React.useEffect(() => {
+    if (success) {
+      router.push('/dashboard');
+    }
+
+    dispatch(reset());
+  }, [dispatch, router, success, user]);
+
+  if (loading)
+    return (
+      <main className='bg-rose-800 text-white font-extrabold'>Loading</main>
+    );
 
   return (
     <main className='w-full h-screen flex justify-center items-center'>

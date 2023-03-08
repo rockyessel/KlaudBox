@@ -3,8 +3,8 @@ import fs from 'fs';
 import https from 'https';
 import axios from 'axios';
 
-export const API_URI = process.env.NEXT_PUBLIC_API_URI;
-// export const API_URI = `https://localhost:8443/`;
+// export const API_URI = process.env.NEXT_PUBLIC_API_URI;
+export const API_URI = `https://localhost:8443/`;
 
 const ca_path = `${process.env.NODE_ENV === 'development' ? 'http://localhost:3000/52.4.183.221.chained+root.crt' : process.env.NODE_ENV === 'production' ? 'https://klaudbox.vercel.app/52.4.183.221.chained+root.crt' : '' }`
 const key_path = `${process.env.NODE_ENV === 'development' ? 'http://localhost:3000/private.key' : process.env.NODE_ENV === 'production' ? 'https://klaudbox.vercel.app/private.key' : '' }`

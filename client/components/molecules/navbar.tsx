@@ -9,19 +9,19 @@ const Navbar = (): JSX.Element => {
   const [showMenu, setShowMenu] = React.useState(false);
   const [dropdown, setDropdown] = React.useState();
 
-  const { user, loading } = useSelector((state: RootState) => state.auth);
+  const { user, isLoading } = useSelector((state: RootState) => state.auth);
 
   const handleMenuState = () => {
     setShowMenu((previous_state) => !previous_state);
   };
 
-  if (loading)
+  if (isLoading)
     return (
       <main className='bg-rose-800 text-white font-extrabold'>Loading</main>
     );
 
   return (
-    <header className='bg-gray-50 flex justify-between items-center py-3 px-3 sticky w-full top-0'>
+    <header className='bg-gray-50 flex justify-between items-center py-3 px-3 sticky w-full top-0 border-b-[1px] border-black/30'>
       <section className='font-bold flex items-center gap-5'>
         <Link href='/'>
           <button className='font-catamaran text-xl md:text-3xl lg:text-5xl'>
@@ -53,7 +53,7 @@ const Navbar = (): JSX.Element => {
             <li className='border group border-black/60 rounded-md px-2 py-1 font-medium relative'>
               <button>Accounts</button>
 
-              <ul className='bg-white hidden text-[1rem] max-w-[10rem] z-[1] drop-shadow-lg absolute top-11 left-0 px-2 group-hover:flex flex-col items-center py-2 rounded-md divide-y divide-black/20'>
+              <ul className='bg-white hidden text-[1rem] max-w-[10rem] z-[1] drop-shadow-lg absolute top-8 left-0 px-2 group-hover:flex flex-col items-center py-2 rounded-md divide-y divide-black/20'>
                 <li className='px-2 py-1 font-medium'>
                   <Link href='/accounts/login'>Login</Link>
                 </li>

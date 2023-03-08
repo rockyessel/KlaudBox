@@ -169,7 +169,7 @@ export const instance = axios.create({
   httpsAgent: agent,
 });
 
-const baseURL = `https://52.4.183.221`;
+const baseURL =process.env.AWS_API_URI;
 
 export const GuestScheduleDeletion = async () => {
   try {

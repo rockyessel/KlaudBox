@@ -53,7 +53,7 @@ export interface FormErrorProps {
 }
 
 export interface AuthStateProps {
-  loading: boolean;
+  isLoading: boolean;
   user: null;
   error: string;
   success: boolean;

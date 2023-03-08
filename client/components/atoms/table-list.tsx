@@ -25,7 +25,6 @@ const TableList = ({ guestData }: { guestData: GuestFileModelProps[] }) => {
     if (isChecked) {
       setSelectedItems((previousValue: any) => [
         ...previousValue,
-        // ...selectedItems,
         item,
       ]);
     } else {

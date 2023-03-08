@@ -28,7 +28,7 @@ const RegisterPage = () => {
   const dispatch: AppDispatch = useDispatch();
   const router = useRouter();
 
-  const { loading, user, error, success } = useSelector(
+  const { isLoading, user, error, success } = useSelector(
     (state: RootState) => state.auth
   );
 
@@ -99,7 +99,7 @@ const RegisterPage = () => {
     dispatch(reset());
   }, [dispatch, router, success, user]);
 
-  if (loading)
+  if (isLoading)
     return (
       <main className='bg-rose-800 text-white font-extrabold'>Loading</main>
     );

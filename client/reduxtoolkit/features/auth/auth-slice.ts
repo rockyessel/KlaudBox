@@ -8,7 +8,7 @@ const user =
     : null;
 
 const initialState = {
-  loading: false,
+  isLoading: false,
   user,
   error: '',
   success: false,
@@ -19,7 +19,7 @@ const authSlice = createSlice({
   initialState,
   reducers: {
     reset: (state: AuthStateProps) => {
-      state.loading = false;
+      state.isLoading = false;
       state.success = false;
       state.error = '';
     },
@@ -28,41 +28,33 @@ const authSlice = createSlice({
     // register user
     builder
       .addCase(register.pending, (state) => {
-        state.loading = true;
+        state.isLoading = true;
         state.error = '';
       })
       .addCase(register.fulfilled, (state, action) => {
-        state.loading = false;
+        state.isLoading = false;
         state.success = true;
         state.user = action.payload;
       })
       .addCase(register.rejected, (state, action) => {
-        state.loading = false;
+        state.isLoading = false;
         state.error = action.payload as string;
       })
 
       // login user
       .addCase(login.pending, (state) => {
-        state.loading = true;
+        state.isLoading = true;
         state.error = '';
       })
       .addCase(login.fulfilled, (state, action) => {
-        state.loading = false;
+        state.isLoading = false;
         state.success = true;
         state.user = action.payload;
       })
       .addCase(login.rejected, (state, action) => {
-        state.loading = false;
+        state.isLoading = false;
         state.error = action.payload as string;
       });
-    // logout
-    // .addCase(logout.pending, (state) => {
-    //   state.loading = true;
-    // })
-    // .addCase(logout.fulfilled, (state) => {
-    //   state.user = null;
-    //   state.loading = false;
-    // });
   },
 });
 export const reset = authSlice.actions.reset;

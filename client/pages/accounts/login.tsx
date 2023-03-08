@@ -25,7 +25,7 @@ const LoginPage = () => {
     state: false,
     msg: '',
   });
-  const { loading, user, error, success } = useSelector(
+  const { isLoading, user, error, success } = useSelector(
     (state: RootState) => state.auth
   );
   const dispatch: AppDispatch = useDispatch();
@@ -92,7 +92,7 @@ const LoginPage = () => {
     dispatch(reset());
   }, [dispatch, router, success, user]);
 
-  if (loading)
+  if (isLoading)
     return (
       <main className='bg-rose-800 text-white font-extrabold'>Loading</main>
     );

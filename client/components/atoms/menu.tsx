@@ -11,8 +11,11 @@ import { BiLogInCircle } from 'react-icons/bi';
 import { CiFacebook, CiTwitter, CiInstagram } from 'react-icons/ci';
 import { TbSocial } from 'react-icons/tb';
 import Link from 'next/link';
-import { useSelector } from 'react-redux';
-import type { RootState } from '@/reduxtoolkit/app/store';
+import { useSelector, useDispatch } from 'react-redux';
+import type { RootState, AppDispatch } from '@/reduxtoolkit/app/store';
+import { logout } from '@/reduxtoolkit/features/auth/auth-request';
+import { reset } from '@/reduxtoolkit/features/auth/auth-slice';
+import { useRouter } from 'next/router';
 
 export interface MenuProps {
   css?: string;
@@ -20,80 +23,89 @@ export interface MenuProps {
 
 const Menu = (props: any): JSX.Element => {
   const { user } = useSelector((state: RootState) => state.auth);
+  const dispatch: AppDispatch = useDispatch();
+  const router = useRouter();
+
+  const handleLogout = () => {
+    dispatch(logout());
+    dispatch(reset());
+    router.push('/accounts/login');
+  };
 
   return (
     <div
       className={`bg-black rounded-md shadow-lg w-[280px] absolute ${props.css} top-14 p-5 z-[200] `}
     >
-      <div className='w-full flex flex-col gap-5 divide-y divide-white/20'>
-        <div className='flex flex-col gap-1 items-start'>
-          <span className='inline-flex items-center text-white/40 px-0 gap-2 relative right-2'>
-            <TbSocial /> User
-          </span>
-          <ul className='flex flex-col gap-1 items-start  divide-y w-full divide-white/10 text-gray-300'>
-            <li className='inline-flex items-center gap-2 w-full py-1'>
-              <CiFacebook className='text-xl' />
-              <span>Profile</span>
-            </li>
-            <li className='inline-flex items-center gap-2 w-full py-1'>
-              <CiTwitter className='text-xl' />
-              <span>Account settings</span>
-            </li>
-            <li className='inline-flex items-center gap-2 w-full py-1'>
-              <CiInstagram className='text-xl' />
-              <span>Logout</span>
-            </li>
-          </ul>
-        </div>
-
+      <div className='w-full flex flex-col gap-5 divide-y divide-white/20 '>
+        {user && (
+          <div className='flex flex-col gap-1 items-start'>
+            <button className='inline-flex items-center text-white/40 px-0 gap-2 relative right-2'>
+              <TbSocial /> User
+            </button>
+            <ul className='flex flex-col gap-1 items-start  divide-y w-full divide-white/10 text-gray-300'>
+              <li className='inline-flex items-center gap-2 w-full py-1'>
+                <CiFacebook className='text-xl' />
+                <button>Profile</button>
+              </li>
+              <li className='inline-flex items-center gap-2 w-full py-1'>
+                <CiTwitter className='text-xl' />
+                <button>Account settings</button>
+              </li>
+              <li className='inline-flex items-center gap-2 w-full py-1'>
+                <CiInstagram className='text-xl' />
+                <button onClick={handleLogout}>Logout</button>
+              </li>
+            </ul>
+          </div>
+        )}
         <div className='flex flex-col gap-1 items-start lg:hidden'>
-          <span className='inline-flex items-center text-white/40 px-0 gap-2 relative right-2'>
+          <button className='inline-flex items-center text-white/40 px-0 gap-2 relative right-2'>
             <MdLibraryBooks /> General
-          </span>
+          </button>
           <ul className='flex flex-col gap-1 items-start divide-y divide-white/10 w-full text-gray-300'>
             <li className='inline-flex items-center gap-2 w-full py-1'>
               <MdHomeFilled className='text-xl' />{' '}
-              <span>
+              <button>
                 <Link href='/'>Home</Link>
-              </span>
+              </button>
             </li>
             <li className='inline-flex items-center gap-2 w-full py-1'>
               <MdAlternateEmail className='text-xl' />{' '}
-              <span>
+              <button>
                 <Link href='/contact'>Contact</Link>
-              </span>
+              </button>
             </li>
             <li className='inline-flex items-center gap-2 w-full py-1'>
               <BsCurrencyDollar className='text-xl' />{' '}
-              <span>
+              <button>
                 <Link href='/pricing'>Pricing</Link>
-              </span>
+              </button>
             </li>
             <li className='inline-flex items-center gap-2 w-full py-1'>
-              <FaQq className='text-xl' /> <span>FAQS</span>
+              <FaQq className='text-xl' /> <button>FAQS</button>
             </li>
             <li className='inline-flex items-center gap-2 w-full py-1'>
-              <GiProcessor className='text-xl' /> <span>How it works</span>
+              <GiProcessor className='text-xl' /> <button>How it works</button>
             </li>
           </ul>
         </div>
         {!user ? (
           <div className='flex flex-col gap-1 items-start'>
-            <span className='inline-flex items-center text-white/40 px-0 gap-2 relative right-2'>
+            <button className='inline-flex items-center text-white/40 px-0 gap-2 relative right-2'>
               <MdSupervisorAccount /> Guest
-            </span>
+            </button>
             <ul className='flex flex-col gap-1 items-start  divide-y w-full divide-white/10 text-gray-300'>
               <li className='inline-flex items-center gap-2 w-full py-1'>
                 <BiLogInCircle className='text-xl' />{' '}
-                <span>
+                <button>
                   <Link href='/guests/find-file'>Find file</Link>
-                </span>
+                </button>
               </li>
               <li className='inline-flex items-center gap-2 w-full py-1'>
                 <BiLogInCircle className='text-xl rotate-180' />{' '}
-                <span>
+                <button>
                   <Link href='/guests/upload-file'>Upload a file</Link>
-                </span>
+                </button>
               </li>
             </ul>
           </div>
@@ -101,21 +113,21 @@ const Menu = (props: any): JSX.Element => {
 
         {!user ? (
           <div className='flex flex-col gap-1 items-start'>
-            <span className='inline-flex items-center text-white/40 px-0 gap-2 relative right-2'>
+            <button className='inline-flex items-center text-white/40 px-0 gap-2 relative right-2'>
               <MdSupervisorAccount /> Accounts
-            </span>
+            </button>
             <ul className='flex flex-col gap-1 items-start  divide-y w-full divide-white/10 text-gray-300'>
               <li className='inline-flex items-center gap-2 w-full py-1'>
                 <BiLogInCircle className='text-xl' />{' '}
-                <span>
+                <button>
                   <Link href='/accounts/login'>Login</Link>
-                </span>
+                </button>
               </li>
               <li className='inline-flex items-center gap-2 w-full py-1'>
                 <BiLogInCircle className='text-xl rotate-180' />{' '}
-                <span>
+                <button>
                   <Link href='/accounts/register'>Register</Link>
-                </span>
+                </button>
               </li>
             </ul>
           </div>

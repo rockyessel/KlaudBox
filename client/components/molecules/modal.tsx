@@ -3,7 +3,7 @@ import { BsFillCloudUploadFill } from 'react-icons/bs';
 import { FaTimes } from 'react-icons/fa';
 import { RiArrowDownSFill } from 'react-icons/ri';
 import { MdPublic, MdVpnLock } from 'react-icons/md';
-import { useGuestContext } from '@/context/GuestContext';
+import { useGuestContext } from '@/context/guest-context';
 import { formatFileSize } from '@/utils/functions';
 import TypeSwitcher from './media-type-switcher';
 

@@ -8,23 +8,11 @@ import { RiAppsLine, RiDriveLine } from 'react-icons/ri';
 import { SiMicrosoftonedrive, SiGoogledrive } from 'react-icons/si';
 import { SlSocialDropbox } from 'react-icons/sl';
 import { RxImage } from 'react-icons/rx';
-import { useRouter } from 'next/router';
+import { useUserContext } from '@/context/user-context';
 
 const Sidebar = () => {
   const [showSidebar, setShowSidebar] = React.useState<boolean>(true);
-  const [selectedRouteState, setSelectedRouteState] =
-    React.useState<boolean>(false);
-
-  const router = useRouter();
-
-  const handleChangeRouter = (name: string) => {
-    router.push({ query: { section: `${name}` } }, undefined, {
-      shallow: true,
-    });
-    const { section } = router.query;
-    const state: boolean = section === name;
-    setSelectedRouteState(state);
-  };
+  const { handleChangeRouter } = useUserContext();
 
   const normalLink = `flex items-center gap-1 hover:bg-gray-500 p-2 justify-center xl:justify-start cursor-pointer font-semibold rounded-md`;
 
@@ -40,7 +28,7 @@ const Sidebar = () => {
       </button>
 
       <div className='xl:w-[200px] w-20 flex flex-col justify-start mb-10 p-3'>
-        <div className='xl:border-b-3 border-gray-200 xl:pb-4 flex flex-col gap-5'>
+        <div className='xl:border-b-3 border-gray-200 xl:pb-4 flex flex-col gap-5 divide-y divide-gray-500/20 xl:divide-y-0'>
           <div className='flex flex-col gap-4 text-lg'>
             <p className='font-semibold text-xl hidden xl:block'>
               Explore Folder
@@ -65,7 +53,7 @@ const Sidebar = () => {
             </ul>
           </div>
 
-          <div className='flex flex-col gap-4 text-lg'>
+          <div className='flex flex-col gap-4 text-lg pt-5 xl:pt-0'>
             <p className='font-semibold text-xl hidden xl:block'>Documents</p>
             <ul className='flex flex-col gap-1 ml-2 font-medium'>
               <li
@@ -115,7 +103,7 @@ const Sidebar = () => {
             </ul>
           </div>
 
-          <div className='flex flex-col gap-4 text-lg'>
+          <div className='flex flex-col gap-4 text-lg pt-5 xl:pt-0'>
             <p className='font-semibold text-xl hidden xl:block'>
               Storage disks
             </p>

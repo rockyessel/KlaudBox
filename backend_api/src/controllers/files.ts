@@ -63,6 +63,10 @@ export const FilesPost = async (request: Request, response: Response) => {
     });
 
     response.status(201).json({ create_file });
+
+    if (!response.headersSent) {
+      response.status(200).json({ create_file });
+    }
   } catch (error) {
     response.status(500).json({
       error: 'Internal server error',

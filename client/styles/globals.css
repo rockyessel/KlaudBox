@@ -19,6 +19,11 @@ body {
   src: url('/fonts/Catamaran.ttf');
 }
 
+.progress {
+  clip: rect(0, 0.5em, 1em, 0);
+  position: absolute;
+}
+
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',

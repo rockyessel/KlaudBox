@@ -11,9 +11,9 @@ import { protect } from '../middleware/user-auth';
 
 const router = express.Router();
 
-router.post('/', file_upload.single('file'), protect, FilesPost);
-router.get('/find/:filename', protect, TempFileLink);
+router.post('/', file_upload.array('file'), protect, FilesPost);
 router.get('/', protect, GetAllFiles);
+router.get('/find/:filename', protect, TempFileLink);
 router.get('/path/:path', protect, TempFileLink);
 router.delete('/delete/:filename', protect, FilesDelete);
 

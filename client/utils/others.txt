@@ -21,3 +21,29 @@
 
 //    setSelected(viewOption);
 //  }, [viewOption]);
+
+
+
+  React.useEffect(() => {
+    const handleScroll = ():void => {
+      const winScroll =
+        document.body.scrollTop || document.documentElement.scrollTop;
+      const height =
+        document.documentElement.scrollHeight -
+        document.documentElement.clientHeight;
+      setPercent(Math.round((winScroll / height) * 100));
+    };
+
+    window.addEventListener('scroll', handleScroll);
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, [percent]);
+
+  
+  const TopBar = ({ percent }: any) => (
+    <div className='fixed inset-x-0 top-0 z-50'>
+      <div className='h-2 bg-blue-500' style={{ width: `${percent}%` }}></div>
+    </div>
+  );

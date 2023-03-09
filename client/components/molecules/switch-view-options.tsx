@@ -1,6 +1,6 @@
 import React from 'react';
 import { CompactList, TableList, Tiles } from '..';
-import { useGuestContext } from '@/context/GuestContext';
+import { useGuestContext } from '@/context/guest-context';
 
 const SwitchViewOptions = (): JSX.Element => {
   const { localCollection, selectedOption } = useGuestContext();

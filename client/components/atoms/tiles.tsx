@@ -3,7 +3,7 @@ import TypeSwitcher from '../molecules/media-type-switcher';
 
 import { format } from 'date-fns';
 import Link from 'next/link';
-import { useGuestContext } from '@/context/GuestContext';
+import { useGuestContext } from '@/context/guest-context';
 import { BulkDeleteFiles } from '@/utils/api-request';
 import { GuestFileModelProps } from '@/interface';
 

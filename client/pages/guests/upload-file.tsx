@@ -3,7 +3,7 @@ import { AiOutlinePlus } from 'react-icons/ai';
 import { FaThList } from 'react-icons/fa';
 import { Main, Modal, SwitchViewOptions } from '@/components';
 import { BsGrid1X2Fill } from 'react-icons/bs';
-import { useGuestContext } from '@/context/GuestContext';
+import { useGuestContext } from '@/context/guest-context';
 
 const UploadFilePage = () => {
   const {

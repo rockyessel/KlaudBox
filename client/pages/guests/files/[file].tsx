@@ -13,7 +13,7 @@ import {
   InferGetServerSidePropsType,
 } from 'next';
 import { AllGuestFileProps, GuestFileProps, Params } from '@/interface';
-import { useGuestContext } from '@/context/GuestContext';
+import { useGuestContext } from '@/context/guest-context';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 

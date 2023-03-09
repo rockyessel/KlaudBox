@@ -21,3 +21,25 @@ export const get_all_files = createAsyncThunk(
     }
   }
 );
+
+export const post_files = createAsyncThunk( 'files/post', async ( token: string,files ) => {
+    try {
+      const response = await instance({
+        method: 'POST',
+        url: `${API_URI}v1/files`,
+        data: files,
+        xsrfCookieName: 'XSRF-TOKEN',
+        xsrfHeaderName: 'X-XSRF-TOKEN',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      return response.data;
+    } catch (error) {
+      console.log(error);
+      
+    }
+  }
+);

@@ -6,7 +6,7 @@ const Recent = () => {
     <main className='w-full p-5 flex flex-col gap-5'>
       <section className='flex flex-col gap-2'>
         <p>Recently created folders</p>
-        <section className='flex items-center gap-2'>
+        <section className='flex flex-wrap items-center gap-2'>
           <Folder />
           <Folder />
           <Folder />
@@ -19,7 +19,7 @@ const Recent = () => {
 
       <section className='flex flex-col gap-2'>
         <p>Recently added types</p>
-        <section className='flex items-center gap-2'>
+        <section className='flex items-center flex-wrap gap-2'>
           <FileType name='Picture' />
           <FileType name='Video' />
           <FileType name='Music' />

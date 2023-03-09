@@ -3,7 +3,7 @@ import TypeSwitcher from './media-type-switcher';
 import { formatFileSize, next_day } from '@/utils/functions';
 import { format } from 'date-fns';
 import { GuestFileProps } from '@/interface';
-import { useGuestContext } from '@/context/GuestContext';
+import { useGuestContext } from '@/context/guest-context';
 
 const FileCardInfo = ({ data }: { data: GuestFileProps }) => {
   const { handleDeleteFile } = useGuestContext();

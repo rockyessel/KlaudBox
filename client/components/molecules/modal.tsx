@@ -5,7 +5,7 @@ import { RiArrowDownSFill } from 'react-icons/ri';
 import { MdPublic, MdVpnLock } from 'react-icons/md';
 import { useGuestContext } from '@/context/guest-context';
 import { formatFileSize } from '@/utils/functions';
-import TypeSwitcher from './media-type-switcher';
+import TypeSwitcher from './file-extension-switcher';
 
 const Modal = () => {
   const [showDropdown, setShowDropdown] = React.useState<boolean>(false);

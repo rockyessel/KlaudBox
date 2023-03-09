@@ -1,5 +1,5 @@
 import React from 'react';
-import { TypeSwitcher } from '../index';
+import { FileExtensionSwitcher } from '../index';
 import { RiMore2Fill } from 'react-icons/ri';
 
 const TableRow = ():JSX.Element => {
@@ -15,7 +15,7 @@ const TableRow = ():JSX.Element => {
         <label className='sr-only'>checkbox</label>
       </td>
       <th className='px-6 py-4 font-medium text-gray-900 whitespace-nowrap inline-flex items-center gap-2'>
-        <TypeSwitcher class={`text-2xl`} extension={`png`} />
+        <FileExtensionSwitcher class={`text-2xl`} extension={`png`} />
         <span>Apple MacBook Pro 17.png</span>
       </th>
       <td className='px-6 py-4'>12 MB</td>
@@ -23,7 +23,11 @@ const TableRow = ():JSX.Element => {
       <td className='px-6 py-4'>Only you</td>
       <td className='px-6 py-4 inline-flex items-center text-gray-500 relative cursor-pointer'>
         <RiMore2Fill onClick={handleShowState} />
-        <ul className={`absolute w-64 top-10 right-10 bg-white rounded-lg shadow-lg divide-y-[1px] divide-gray-200/30 p-2 ${showAction ? 'block' : 'hidden'}`}>
+        <ul
+          className={`absolute w-64 top-10 right-10 bg-white rounded-lg shadow-lg divide-y-[1px] divide-gray-200/30 p-2 ${
+            showAction ? 'block' : 'hidden'
+          }`}
+        >
           <li className='px-4 py-2'>Generate temporal file link</li>
           <li className='px-4 py-2'>Details</li>
           <li className='px-4 py-2'>Share</li>

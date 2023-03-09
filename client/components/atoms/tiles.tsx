@@ -1,5 +1,5 @@
 import React from 'react';
-import TypeSwitcher from '../molecules/media-type-switcher';
+import TypeSwitcher from '../molecules/file-extension-switcher';
 
 import { format } from 'date-fns';
 import Link from 'next/link';

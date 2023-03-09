@@ -18,11 +18,12 @@ export { default as UserTable } from './molecules/user-table';
 export { default as FileCardInfo } from './molecules/file-card-info';
 export { default as Modal } from './molecules/modal';
 export { default as MediaSwitcher } from './molecules/media-switcher';
-export { default as TypeSwitcher } from './molecules/media-type-switcher';
+export { default as FileExtensionSwitcher } from './molecules/file-extension-switcher';
 export { default as SwitchViewOptions } from './molecules/switch-view-options';
 export { default as DisplayView } from './molecules/display-view';
 export { default as UserModal } from './molecules/user-modal';
 export { default as UploadFileCard } from './molecules/upload-file-card';
+export { default as FolderModal } from './molecules/folder-modal';
 
 export { default as Recent } from './organisms/recent';
 export { default as Favorites } from './organisms/favorites';

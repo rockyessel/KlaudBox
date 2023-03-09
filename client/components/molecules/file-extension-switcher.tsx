@@ -5,7 +5,7 @@ import {
   BsFillFilePdfFill,
   BsFileZipFill,
 } from 'react-icons/bs';
-import { MdAudiotrack } from 'react-icons/md';
+import { MdAudiotrack, MdOutlineFontDownload } from 'react-icons/md';
 import { SiBlender } from 'react-icons/si';
 import {
   SiMicrosoftword,
@@ -16,7 +16,7 @@ import {
 } from 'react-icons/si';
 import { GoFile } from 'react-icons/go';
 
-const TypeSwitcher = (props: any): JSX.Element => {
+const FileExtensionSwitcher = (props: any): JSX.Element => {
   switch (props.extension) {
     case 'png':
     case 'svg':
@@ -80,7 +80,7 @@ const TypeSwitcher = (props: any): JSX.Element => {
     case 'rar':
       return <BsFileZipFill className={props.class} />;
 
-    case 'blender':
+    case 'blend':
       return <SiBlender className={props.class} />;
 
     case 'docx':
@@ -115,9 +115,23 @@ const TypeSwitcher = (props: any): JSX.Element => {
     case 'one':
       return <SiMicrosoftonenote className={props.class} />;
 
+    case 'ttf':
+    case 'otf':
+    case 'pfb':
+    case 'pfm':
+    case 'pfa':
+    case 'woff':
+    case 'woff2':
+    case 'eot':
+    case 'fon':
+    case 'bdf':
+    case 'tfm':
+    case 'cmr':
+      return <MdOutlineFontDownload className={props.class} />;
+
     default:
       return <GoFile className={props.class} />;
   }
 };
 
-export default TypeSwitcher;
+export default FileExtensionSwitcher;

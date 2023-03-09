@@ -1,7 +1,7 @@
 import React from 'react';
 import { ImUpload } from 'react-icons/im';
 import { RxQuestionMarkCircled } from 'react-icons/rx';
-import TypeSwitcher from './media-type-switcher';
+import FileExtensionSwitcher from './file-extension-switcher';
 import CircleProgressbar from '../atoms/circle-progressbar';
 import { BsFiles } from 'react-icons/bs';
 import UploadFileCard from './upload-file-card';
@@ -19,9 +19,15 @@ const UserModal = () => {
 
   const { handleModalState } = useUserContext();
 
+  const handleRemoveFile = (name: string) => {
+    const removed_file = arrFiles.filter((file) => file.name !== name);
+    setArrFiles(removed_file);
+  };
+
   const handleFile = (event: any) => {
-    const file: File[] = Array.prototype.slice.call(event.target.files);
-    setArrFiles(file);
+    const file: File[] = event.target.files;
+    const arr = [...arrFiles, ...file];
+    setArrFiles(Array.prototype.slice.call(arr));
   };
 
   const handleClear = () => {
@@ -48,7 +54,7 @@ const UserModal = () => {
 
   return (
     <main className='fixed bg-gray-50/90 w-full h-full flex items-center justify-center md:px-10 z-[100]'>
-      <section className='bg-white shadow-lg rounded-lg px-4 py-10 flex flex-col gap-5 w-full lg:w-[50rem]'>
+      <section className='bg-white transition ease-in-out delay-150 shadow-lg rounded-lg px-4 py-10 flex flex-col gap-5 w-full lg:w-[50rem]'>
         <div className='flex flex-col gap-1'>
           <p className='font-bold'>Import files</p>
           <p>Upload any type of files from local machine</p>
@@ -85,9 +91,19 @@ const UserModal = () => {
 
         {arrFiles.length > 0 && (
           <React.Fragment>
-            <section className='w-full flex justify-end'>
+            <section className='w-full flex justify-end items-center gap-2'>
+              <label className='bg-blue-100 shadow-lg hover:bg-blue-200 text-blue-800 font-medium rounded-md px-2 py-1'>
+                Add more
+                <input
+                  type='file'
+                  name='file'
+                  className='w-0 h-0'
+                  onChange={handleFile}
+                  multiple
+                />
+              </label>
               <button
-                className='bg-rose-100 hover:bg-rose-200 text-rose-800 font-medium rounded-md px-2 py-1'
+                className='bg-rose-100 shadow-lg hover:bg-rose-200 text-rose-800 font-medium rounded-md px-2 py-1'
                 type='button'
                 title='Clear'
                 onClick={handleClear}
@@ -102,30 +118,37 @@ const UserModal = () => {
               }`}
             >
               {arrFiles?.map((file, index) => (
-                <UploadFileCard key={index} file={file} progress={progress} />
+                <UploadFileCard
+                  handleRemoveFile={handleRemoveFile}
+                  key={index}
+                  file={file}
+                  progress={progress}
+                />
               ))}
             </ul>
           </React.Fragment>
         )}
 
-        <section className='flex flex-col gap-2'>
-          <p className='font-bold'>Upload from URL</p>
-          <div className='rounded-md border-[1px] border-gray-500/30 flex items-center justify-between'>
-            <span className='border-r-[1px] border-gray-500/30 h-full p-2.5'>
-              https://
-            </span>
-            <input
-              title='Upload from URL'
-              type='url'
-              value={urlValue}
-              onChange={(event) => setUrlValue(event.target.value)}
-              className='outline-none border-none bg-transparent w-full px-2.5'
-            />
-            <button className='p-1.5 mr-1 border-[1px] border-gray-500/30 rounded-md text-sm font-medium'>
-              Upload
-            </button>
-          </div>
-        </section>
+        {!arrFiles.length && (
+          <section className='flex flex-col gap-2'>
+            <p className='font-bold'>Upload from URL</p>
+            <div className='rounded-md border-[1px] border-gray-500/30 flex items-center justify-between'>
+              <span className='border-r-[1px] border-gray-500/30 h-full p-2.5'>
+                https://
+              </span>
+              <input
+                title='Upload from URL'
+                type='url'
+                value={urlValue}
+                onChange={(event) => setUrlValue(event.target.value)}
+                className='outline-none border-none bg-transparent w-full px-2.5'
+              />
+              <button className='p-1.5 mr-1 border-[1px] border-gray-500/30 rounded-md text-sm font-medium'>
+                Upload
+              </button>
+            </div>
+          </section>
+        )}
 
         <section className='flex items-center justify-between py-5'>
           <span className='inline-flex items-center gap-2'>

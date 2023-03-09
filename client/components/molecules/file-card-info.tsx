@@ -1,5 +1,5 @@
 import React from 'react';
-import TypeSwitcher from './media-type-switcher';
+import TypeSwitcher from './file-extension-switcher';
 import { formatFileSize, next_day } from '@/utils/functions';
 import { format } from 'date-fns';
 import { GuestFileProps } from '@/interface';

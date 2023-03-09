@@ -6,7 +6,7 @@ import {
 } from 'react-icons/ai';
 import { HiOutlineExternalLink } from 'react-icons/hi';
 import { MdContentCopy, MdPublic, MdVpnLock } from 'react-icons/md';
-import TypeSwitcher from '../molecules/media-type-switcher';
+import TypeSwitcher from '../molecules/file-extension-switcher';
 import { formatFileSize } from '../../utils/functions';
 import { GuestFileModelProps } from '@/interface';
 import { useGuestContext } from '@/context/guest-context';

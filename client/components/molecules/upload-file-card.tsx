@@ -1,14 +1,26 @@
 import React from 'react';
-import TypeSwitcher from './media-type-switcher';
+import FileExtensionSwitcher from './file-extension-switcher';
 import { formatFileSize } from '@/utils/functions';
+import { IoIosRemoveCircleOutline } from 'react-icons/io';
 
 const UploadFileCard = (props: any) => {
   const extension = props?.file?.name?.split('.').pop();
+
   return (
-    <li className='rounded-lg p-2 border-[1px] border-gray-500/50'>
+    <li
+      onClick={() => props.handleRemoveFile(props?.file?.name)}
+      className='rounded-lg p-2 border-[1px] border-gray-500/50 transition ease-in-out delay-150'
+    >
+      <button
+        type={`button`}
+        title={`Remove ${props?.file?.name}`}
+        className='inline-flex justify-end w-full'
+      >
+        <IoIosRemoveCircleOutline className='text-xl text-red-700' />
+      </button>
       <div className='flex items-center gap-2'>
         <div className='border-[1px] border-gray-500/50 rounded-md p-1'>
-          <TypeSwitcher class='text-2xl' extension={extension} />
+          <FileExtensionSwitcher class='text-2xl' extension={extension} />
         </div>
 
         <div className=' w-full flex justify-center flex-col'>

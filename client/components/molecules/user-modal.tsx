@@ -8,6 +8,7 @@ import UploadFileCard from './upload-file-card';
 import { useUserContext } from '@/context/user-context';
 import { AppDispatch, RootState } from '@/reduxtoolkit/app/store';
 import { useDispatch, useSelector } from 'react-redux';
+import { post_files } from '@/reduxtoolkit/features/files/files-request';
 
 const UserModal = () => {
   const [progress, setProgress] = React.useState(13);
@@ -40,17 +41,27 @@ const UserModal = () => {
 
       const data = new FormData();
 
-      for (let i = 0; i < arrFiles.length; i++) {
-        data.append('file', arrFiles[i]);
-        data.append('title', 'modalFormData.title');
-        data.append('description', 'modalFormData.description');
-        data.append('secure', 'modalFormData.secure');
-        data.append('delete_after', 'modalFormData.delete_after');
-      }
+      // for (let i = 0; i < arrFiles.length; i++) {
+      //   data.append('file', arrFiles[i]);
+      //   data.append('title', 'modalFormData.title');
+      //   data.append('description', 'modalFormData.description');
+      //   data.append('secure', 'modalFormData.secure');
+      //   data.append('delete_after', 'modalFormData.delete_after');
+      //   console.log('arrFiles', arrFiles[i]);
+      // }
+
+      Promise.all(
+        arrFiles.map(async (file) => {
+            data.append('file', file);
+            data.append('title', 'modalFormData.title');
+            data.append('description', 'modalFormData.description');
+            data.append('secure', 'modalFormData.secure');
+            data.append('delete_after', 'modalFormData.delete_after');
+          await dispatch(post_files(data));
+        })
+      );
     } catch (error) {}
   };
-
-  console.log('arrFiles', arrFiles);
 
   return (
     <main className='fixed bg-gray-50/90 w-full h-full flex items-center justify-center md:px-10 z-[100]'>

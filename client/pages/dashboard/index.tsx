@@ -19,7 +19,7 @@ const Dashboard = () => {
   React.useEffect(() => {
     if (isError) console.log('Error');
     if (!user) router.push('/accounts/login');
-    dispatch(get_all_files(user.token));
+    dispatch(get_all_files(user?.token));
   }, [dispatch, isError, router, user]);
 
   return (

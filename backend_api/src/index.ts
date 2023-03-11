@@ -23,10 +23,15 @@ connectDatabase();
 // @desc PORT
 const PORT = process.env.PORT || 8443;
 // default 8443
- const baseURL = `https://localhost:${PORT}`;
+const baseURL = `https://localhost:${PORT}`;
 
+const whitelist = ['http://localhost:3000/', 'https://klaudbox.vercel.app/'];
+const corsOptions: cors.CorsOptions = {
+  origin: whitelist,
+  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+};
 
-app.use(cors({ origin: '*' }));
+app.use(cors(corsOptions));
 app.use(morgan('tiny'));
 app.use(Express.json());
 app.use(Express.urlencoded({ extended: false }));

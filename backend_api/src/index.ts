@@ -5,7 +5,7 @@ import dotenv from 'dotenv';
 import morgan from 'morgan';
 import { startCronJob } from './utils/configs/cron-schedule';
 import { connectDatabase } from './utils/configs/database';
-import https from 'https';
+import helmet from 'helmet';
 import fs from 'fs';
 import path from 'path';
 // @desc Routes Imports
@@ -13,9 +13,11 @@ import GuestFile from './routes/guest-file';
 import UserFile from './routes/user-file';
 import Files from './routes/files';
 
-dotenv.config();
-
 const app: Express.Application = Express();
+
+app.use(helmet.contentSecurityPolicy());
+
+dotenv.config();
 
 // @desc Connecting to database
 connectDatabase();
@@ -31,8 +33,8 @@ const corsOptions: cors.CorsOptions = {
   methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
 };
 
-app.use(cors(corsOptions));
-app.use(morgan('tiny'));
+app.use(cors({ origin: '*' }));
+app.use(morgan('combined'));
 app.use(Express.json());
 app.use(Express.urlencoded({ extended: false }));
 app.use('/uploads', Express.static(__dirname + '/uploads'));
@@ -55,6 +57,10 @@ app.use('/v1/files', Files);
 
 startCronJob();
 
-https
-  .createServer(options, app)
-  .listen(8443, () => console.log(`Server is running on ${baseURL}`));
+app.listen(PORT, () => {
+  console.log('Listening on port');
+});
+
+// https
+//   .createServer(options, app)
+//   .listen(8443, () => console.log(`Server is running on ${baseURL}`));

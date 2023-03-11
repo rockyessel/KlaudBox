@@ -13,7 +13,7 @@ import { post_files } from '@/reduxtoolkit/features/files/files-request';
 const UserModal = () => {
   const [progress, setProgress] = React.useState(13);
   const [arrFiles, setArrFiles] = React.useState<File[]>([]);
-  const [allFilesUploadPercent, setAllFilesUploadPercent] = React.useState(10);
+  const [allFilesUploadPercent, setAllFilesUploadPercent] = React.useState(0);
   const [urlValue, setUrlValue] = React.useState('');
   const dispatch: AppDispatch = useDispatch();
   const { user } = useSelector((state: RootState) => state.auth);
@@ -41,26 +41,17 @@ const UserModal = () => {
 
       const data = new FormData();
 
-      // for (let i = 0; i < arrFiles.length; i++) {
-      //   data.append('file', arrFiles[i]);
-      //   data.append('title', 'modalFormData.title');
-      //   data.append('description', 'modalFormData.description');
-      //   data.append('secure', 'modalFormData.secure');
-      //   data.append('delete_after', 'modalFormData.delete_after');
-      //   console.log('arrFiles', arrFiles[i]);
-      // }
-
       Promise.all(
         arrFiles.map(async (file) => {
-            data.append('file', file);
-            data.append('title', 'modalFormData.title');
-            data.append('description', 'modalFormData.description');
-            data.append('secure', 'modalFormData.secure');
-            data.append('delete_after', 'modalFormData.delete_after');
+          data.append('files', file);
+          data.append('title', 'modalFormData.title');
+          data.append('description', 'modalFormData.description');
+          data.append('secure', 'modalFormData.secure');
+          data.append('delete_after', 'modalFormData.delete_after');
           await dispatch(post_files(data));
         })
       );
-    } catch (error) {}
+    } catch (error) {console.log(error)}
   };
 
   return (

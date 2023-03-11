@@ -13,7 +13,7 @@ import { TbSocial } from 'react-icons/tb';
 import Link from 'next/link';
 import { useSelector, useDispatch } from 'react-redux';
 import type { RootState, AppDispatch } from '@/reduxtoolkit/app/store';
-import { logout } from '@/reduxtoolkit/features/auth/auth-request';
+import { logout } from '@/utils/api-request';
 import { reset } from '@/reduxtoolkit/features/auth/auth-slice';
 import { useRouter } from 'next/router';
 
@@ -27,7 +27,7 @@ const Menu = (props: any): JSX.Element => {
   const router = useRouter();
 
   const handleLogout = () => {
-    dispatch(logout());
+    logout()
     dispatch(reset());
     router.push('/accounts/login');
   };

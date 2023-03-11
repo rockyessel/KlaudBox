@@ -160,16 +160,18 @@ export const handleDeletionOfAllFiles = (directory: string) => {
   });
 };
 const agent = new https.Agent({
-  ca: fs.readFileSync(path.join(__dirname,'../../../52.4.183.221.chained+root.crt')),
-  key: fs.readFileSync(path.join(__dirname,'../../../private.key')),
-  cert: fs.readFileSync(path.join(__dirname,'../../../certificate.crt')),
+  ca: fs.readFileSync(
+    path.join(__dirname, '../../../52.4.183.221.chained+root.crt')
+  ),
+  key: fs.readFileSync(path.join(__dirname, '../../../private.key')),
+  cert: fs.readFileSync(path.join(__dirname, '../../../certificate.crt')),
 });
 
 export const instance = axios.create({
   httpsAgent: agent,
 });
 
-const baseURL =process.env.AWS_API_URI;
+const baseURL = `http://localhost:8443`;
 
 export const GuestScheduleDeletion = async () => {
   try {

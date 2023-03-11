@@ -22,9 +22,17 @@ export const get_all_files = createAsyncThunk(
   }
 );
 
+export interface UserFileProps {
+  file: File;
+  title: string;
+  description: string;
+  secure: string;
+  delete_after: string;
+}
+
 export const post_files = createAsyncThunk(
   'files/post',
-  async (files: File, thunkAPI) => {
+  async (files: UserFileProps, thunkAPI) => {
     console.log('API_URI', API_URI);
     try {
       const user = JSON.parse(`${localStorage.getItem('user')}`);
@@ -35,7 +43,7 @@ export const post_files = createAsyncThunk(
         xsrfCookieName: 'XSRF-TOKEN',
         xsrfHeaderName: 'X-XSRF-TOKEN',
         headers: {
-          'Content-Type': 'application/json',
+          'Content-Type': 'multipart/form-data',
           Authorization: `Bearer ${user?.token}`,
         },
       });

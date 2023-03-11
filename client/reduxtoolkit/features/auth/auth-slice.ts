@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { register, login, logout } from './auth-request';
+import { register, login } from './auth-request';
 import { AuthStateProps } from '@/interface';
 
 const user =

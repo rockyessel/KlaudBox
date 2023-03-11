@@ -25,56 +25,64 @@ const s3 = new S3Client({
 const random_name = new Date().getTime();
 
 export const FilesPost = async (request: Request, response: Response) => {
-  try {
-    const user = request.user?._id;
-    const file_name = `${random_name}-${request.file?.originalname?.replaceAll(
-      ' ',
-      '-'
-    )}`;
-    const extension = request.file?.originalname.split('.').pop();
-    const identifier = generateString();
-    // const file_name_no_special_characters = stripUniqueChars(file_name, '-');
+  // try {
+  //   const arr_files = request?.files;
 
-    const params = {
-      Bucket: bucket_name,
-      Key: file_name,
-      Body: request.file?.buffer,
-      ContentType: request.file?.mimetype,
-    };
+  //   request?.files?.map(async (file: any) => {
+  //     const user = request.user?._id;
+  //     const file_name = `${random_name}-${request.file?.originalname?.replaceAll(
+  //       ' ',
+  //       '-'
+  //     )}`;
+  //     const extension = request.file?.originalname.split('.').pop();
+  //     const identifier = generateString();
+  //     // const file_name_no_special_characters = stripUniqueChars(file_name, '-');
 
-    const command = new PutObjectCommand(params);
+  //     const params = {
+  //       Bucket: bucket_name,
+  //       Key: file_name,
+  //       Body: request.file?.buffer,
+  //       ContentType: request.file?.mimetype,
+  //     };
 
-    await s3.send(command);
+  //     const command = new PutObjectCommand(params);
 
-    const create_file = await FilesModel.create({
-      user: `${user}`,
-      url: `${url}${file_name}`,
-      size: request.file?.size,
-      identifier,
-      originalFilename: file_name,
-      mimeType: request.file?.mimetype,
-      extension,
-      path: `${file_name}-${new Date().getTime()}-${identifier}`,
-      title: request.body?.title,
-      tags: '',
-      description: request.body?.description,
-      secure: request.body?.secure,
-      delete_after: request.body?.delete_after,
-    });
+  //     await s3.send(command);
 
-    response.status(201).json({ create_file });
+  //     const create_file = await FilesModel.create({
+  //       user: `${user}`,
+  //       url: `${url}${file_name}`,
+  //       size: request.file?.size,
+  //       identifier,
+  //       originalFilename: file_name,
+  //       mimeType: request.file?.mimetype,
+  //       extension,
+  //       path: `${file_name}-${new Date().getTime()}-${identifier}`,
+  //       title: request.body?.title,
+  //       tags: '',
+  //       description: request.body?.description,
+  //       secure: request.body?.secure,
+  //       delete_after: request.body?.delete_after,
+  //     });
 
-    if (!response.headersSent) {
-      response.status(200).json({ create_file });
-    }
-  } catch (error) {
-    response.status(500).json({
-      error: 'Internal server error',
-      success: false,
-      error_state: true,
-      handler: 'Post Handler',
-    });
-  }
+  //     console.log('create_file', create_file);
+
+  //     response.status(201).json({ create_file });
+  //     if (!response.headersSent) {
+  //       response.status(200).json({ create_file });
+  //     }
+  //   });
+  // } catch (error) {
+  //   response.status(500).json({
+  //     error: 'Internal server error',
+  //     success: false,
+  //     error_state: true,
+  //     handler: 'Post Handler',
+  //   });
+  // }
+
+  console.log('files', request.files);
+  response.json(request.files);
 };
 
 export const TempFileLink = async (request: Request, response: Response) => {

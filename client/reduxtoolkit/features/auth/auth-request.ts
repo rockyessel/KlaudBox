@@ -58,7 +58,4 @@ export const login = createAsyncThunk(
   }
 );
 
-export const logout = () => {
-  window.localStorage.removeItem('user');
-  // return { success: true, user: {} };
-};
+

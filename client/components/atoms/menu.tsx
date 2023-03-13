@@ -15,7 +15,7 @@ import Link from 'next/link';
 import { useSelector, useDispatch } from 'react-redux';
 import type { RootState, AppDispatch } from '@/reduxtoolkit/app/store';
 import { logout } from '@/utils/api-request';
-import { reset } from '@/reduxtoolkit/features/auth/auth-slice';
+import { reset } from '@/reduxtoolkit/features/files/files-slice';
 import { useRouter } from 'next/router';
 
 export interface MenuProps {
@@ -28,7 +28,7 @@ const Menu = (props: any): JSX.Element => {
   const router = useRouter();
 
   const handleLogout = () => {
-    logout()
+    logout();
     dispatch(reset());
     router.push('/accounts/login');
   };

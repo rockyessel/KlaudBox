@@ -38,21 +38,14 @@ const UserModal = () => {
   const handleSubmission = async (event: React.SyntheticEvent) => {
     try {
       event.preventDefault();
-
-      const data = new FormData();
-
-      await Promise.all(
-        arrFiles.map(async (file) => {
-          data.append('files', file);
-          // data.append('title', 'modalFormData.title');
-          // data.append('description', 'modalFormData.description');
-          // data.append('secure', 'modalFormData.secure');
-          // data.append('delete_after', 'modalFormData.delete_after');
-          await dispatch(post_files(data));
-        })
-      );
+     const data = new FormData();
+     arrFiles.forEach((file) => {
+       data.append('files', file);
+     });
+     await dispatch(post_files(data));
+     handleModalState()
     } catch (error) {
-      console.log(error);
+      console.log(error)
     }
   };
 

@@ -130,6 +130,9 @@ export const BulkDeleteFiles = async (
   }
 };
 
+
+
+
 export const logout = () => {
   window.localStorage.removeItem('user');
 };

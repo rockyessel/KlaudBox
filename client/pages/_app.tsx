@@ -3,6 +3,7 @@ import type { AppProps } from 'next/app';
 import { Navbar } from '@/components';
 import { GuestContextProvider } from '@/context/guest-context';
 import { UserContextProvider } from '@/context/user-context';
+import { AuthContextProvider } from '@/context/auth-context';
 import { Provider } from 'react-redux';
 import { store } from '@/reduxtoolkit/app/store';
 import { useRouter } from 'next/router';
@@ -16,14 +17,16 @@ export default function App({ Component, pageProps }: AppProps) {
     : router.asPath.split('/').pop()?.split('?').includes('dashboard');
 
   return (
-    <GuestContextProvider>
-      <UserContextProvider>
-        <Provider store={store}>
-          <NextNProgress color={'#000'} />
-          {state ? null : <Navbar />}
-          <Component {...pageProps} />
-        </Provider>
-      </UserContextProvider>
-    </GuestContextProvider>
+    <AuthContextProvider>
+      <GuestContextProvider>
+        <UserContextProvider>
+          <Provider store={store}>
+            <NextNProgress color={'#000'} />
+            {state ? null : <Navbar />}
+            <Component {...pageProps} />
+          </Provider>
+        </UserContextProvider>
+      </GuestContextProvider>
+    </AuthContextProvider>
   );
 }

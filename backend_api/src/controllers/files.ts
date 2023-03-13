@@ -30,10 +30,16 @@ export const FilesPost = async (request: Request, response: Response) => {
     const files = request?.files;
     const user = request.user?._id;
 
+    console.log(files)
+
     if (Array.isArray(files)) {
-      const create_files = await Promise.all(
-        files.map(async (file) => {
-          const file_name = `${file?.originalname?.replaceAll(' ', '-')}`;
+      const create_files = files.map(async (file) => {
+
+
+          const file_name = `${random_name}-${file?.originalname?.replaceAll(
+            ' ',
+            '-'
+          )}`;
           const extension = file?.originalname.split('.').pop();
           const identifier = generateString();
           // const file_name_no_special_characters = stripUniqueChars(file_name, '-');
@@ -62,13 +68,15 @@ export const FilesPost = async (request: Request, response: Response) => {
           });
 
           return create_file;
-        })
-      );
+        
+      });
 
-      console.log('create_files', create_files);
+      const result = await Promise.all(create_files);
+      console.log('create_files', result);
 
-      response.status(201).json({ create_files });
+      response.status(201).json({ result });
     }
+
   } catch (error) {
     response.status(500).json({
       error: 'Internal server error',

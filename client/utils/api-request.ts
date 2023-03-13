@@ -48,14 +48,14 @@ export const instance = axios.create({
   httpsAgent: agent,
 });
 
-export const GuestFileUploadPost = async (file_object: any, fn: any) => {
+export const GuestFileUploadPost = async (file_object: any, setProgress: any) => {
   const response = await instance({
     method: 'POST',
     url: `${API_URI}v1/guests`,
     data: file_object,
     onUploadProgress: (data) => {
       const total: number = data?.total || 0;
-      fn(Math.round((100 * data?.loaded) / total));
+      setProgress(Math.round((100 * data?.loaded) / total));
     },
   });
 

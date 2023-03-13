@@ -8,6 +8,8 @@ export interface UserContextProps {
   handleModalState: () => void;
   selectedRouteState: boolean;
   modalState: boolean;
+  showMenu:boolean;
+  handleMenuState: () => void;
 }
 
 const UserContext = React.createContext<UserContextProps>({
@@ -15,12 +17,15 @@ const UserContext = React.createContext<UserContextProps>({
   handleModalState: () => {},
   selectedRouteState: false,
   modalState: false,
+  showMenu: false,
+  handleMenuState: () => {},
 });
 
 
 export const UserContextProvider = ({ children }: { children: React.ReactNode }) => {
   const [selectedRouteState, setSelectedRouteState] = React.useState<boolean>(false);
   const [modalState, setModalState] = React.useState<boolean>(false);
+  const [showMenu, setShowMenu] = React.useState(false);
 
   const router = useRouter();
 
@@ -33,12 +38,17 @@ export const UserContextProvider = ({ children }: { children: React.ReactNode })
     const state: boolean = section === name;
     setSelectedRouteState(state);
   };
+    const handleMenuState = () => {
+    setShowMenu((previous_state) => !previous_state);
+  };
 
   const values = {
     handleChangeRouter,
     selectedRouteState,
     modalState,
     handleModalState,
+    showMenu,
+    handleMenuState
   };
 
   return (

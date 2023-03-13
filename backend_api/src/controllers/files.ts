@@ -7,7 +7,7 @@ import {
 } from '@aws-sdk/client-s3';
 import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
 import { FilesModel } from '../models/files';
-import { generateString, stripUniqueChars } from '../utils/services';
+import { generateString } from '../utils/services';
 
 const url = `${process.env.KLAUDBOX_S3_BASE_URL}`;
 const bucket_name = `${process.env.BUCKET_NAME}`;
@@ -22,67 +22,61 @@ const s3 = new S3Client({
   },
   region: bucket_region_name,
 });
+
 const random_name = new Date().getTime();
 
 export const FilesPost = async (request: Request, response: Response) => {
-  // try {
-  //   const arr_files = request?.files;
+  try {
+    const files = request?.files;
+    const user = request.user?._id;
 
-  //   request?.files?.map(async (file: any) => {
-  //     const user = request.user?._id;
-  //     const file_name = `${random_name}-${request.file?.originalname?.replaceAll(
-  //       ' ',
-  //       '-'
-  //     )}`;
-  //     const extension = request.file?.originalname.split('.').pop();
-  //     const identifier = generateString();
-  //     // const file_name_no_special_characters = stripUniqueChars(file_name, '-');
+    if (Array.isArray(files)) {
+      const create_files = await Promise.all(
+        files.map(async (file) => {
+          const file_name = `${file?.originalname?.replaceAll(' ', '-')}`;
+          const extension = file?.originalname.split('.').pop();
+          const identifier = generateString();
+          // const file_name_no_special_characters = stripUniqueChars(file_name, '-');
+          const params = {
+            Bucket: bucket_name,
+            Key: file_name,
+            Body: file?.buffer,
+            ContentType: file?.mimetype,
+          };
+          const command = new PutObjectCommand(params);
+          await s3.send(command);
+          const create_file = await FilesModel.create({
+            user: `${user}`,
+            url: `${url}${file_name}`,
+            size: file?.size,
+            identifier,
+            originalFilename: file_name,
+            mimeType: file?.mimetype,
+            extension,
+            path: `${file_name}-${new Date().getTime()}-${identifier}`,
+            title: '',
+            tags: '',
+            description: '',
+            secure: '',
+            delete_after: '',
+          });
 
-  //     const params = {
-  //       Bucket: bucket_name,
-  //       Key: file_name,
-  //       Body: request.file?.buffer,
-  //       ContentType: request.file?.mimetype,
-  //     };
+          return create_file;
+        })
+      );
 
-  //     const command = new PutObjectCommand(params);
+      console.log('create_files', create_files);
 
-  //     await s3.send(command);
-
-  //     const create_file = await FilesModel.create({
-  //       user: `${user}`,
-  //       url: `${url}${file_name}`,
-  //       size: request.file?.size,
-  //       identifier,
-  //       originalFilename: file_name,
-  //       mimeType: request.file?.mimetype,
-  //       extension,
-  //       path: `${file_name}-${new Date().getTime()}-${identifier}`,
-  //       title: request.body?.title,
-  //       tags: '',
-  //       description: request.body?.description,
-  //       secure: request.body?.secure,
-  //       delete_after: request.body?.delete_after,
-  //     });
-
-  //     console.log('create_file', create_file);
-
-  //     response.status(201).json({ create_file });
-  //     if (!response.headersSent) {
-  //       response.status(200).json({ create_file });
-  //     }
-  //   });
-  // } catch (error) {
-  //   response.status(500).json({
-  //     error: 'Internal server error',
-  //     success: false,
-  //     error_state: true,
-  //     handler: 'Post Handler',
-  //   });
-  // }
-
-  console.log('files', request.files);
-  response.json(request.files);
+      response.status(201).json({ create_files });
+    }
+  } catch (error) {
+    response.status(500).json({
+      error: 'Internal server error',
+      success: false,
+      error_state: true,
+      handler: 'Post Handler',
+    });
+  }
 };
 
 export const TempFileLink = async (request: Request, response: Response) => {
@@ -91,8 +85,6 @@ export const TempFileLink = async (request: Request, response: Response) => {
     const path = request.params.path;
 
     const existing_file = await FilesModel.findOne({ path });
-
-    console.log(existing_file);
 
     if (existing_file?.user.toString() !== user) {
       response.status(404).json({

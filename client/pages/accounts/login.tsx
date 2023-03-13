@@ -126,9 +126,9 @@ const LoginPage = () => {
                 onChange={handleAccountFormData}
                 type='text'
               />
-              {passwordErr.state && (
+              {emailErr.state && (
                 <p className={`text-sm text-red-600 font-light`}>
-                  {passwordErr.msg}
+                  {emailErr.msg}
                 </p>
               )}
             </div>

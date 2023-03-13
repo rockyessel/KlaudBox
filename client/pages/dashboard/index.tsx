@@ -1,26 +1,9 @@
 import { DashboardNavbar, DisplayView, Sidebar, UserModal } from '@/components';
 import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { get_all_files } from '@/reduxtoolkit/features/files/files-request';
-import type { AppDispatch, RootState } from '@/reduxtoolkit/app/store';
-import { useRouter } from 'next/router';
 import { useUserContext } from '@/context/user-context';
 
 const Dashboard = () => {
-  const router = useRouter();
   const { modalState } = useUserContext();
-  const dispatch: AppDispatch = useDispatch();
-  const { user } = useSelector((state: RootState) => state.auth);
-  const { isLoading, isError, isSuccess, files } = useSelector(
-    (state: RootState) => state.files
-  );
-  console.log('files', files);
-
-  React.useEffect(() => {
-    if (isError) console.log('Error');
-    if (!user) router.push('/accounts/login');
-    dispatch(get_all_files(user?.token));
-  }, [dispatch, isError, router, user]);
 
   return (
     <React.Fragment>

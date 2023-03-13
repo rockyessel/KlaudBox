@@ -4,16 +4,14 @@ import { Menu } from '../index';
 import { useSelector } from 'react-redux';
 import type { RootState } from '@/reduxtoolkit/app/store';
 import Link from 'next/link';
+import { useUserContext } from '@/context/user-context';
 
 const Navbar = (): JSX.Element => {
-  const [showMenu, setShowMenu] = React.useState(false);
   const [dropdown, setDropdown] = React.useState();
 
-  const { user, isLoading } = useSelector((state: RootState) => state.auth);
+  const { handleMenuState, showMenu } = useUserContext();
 
-  const handleMenuState = () => {
-    setShowMenu((previous_state) => !previous_state);
-  };
+  const { user, isLoading } = useSelector((state: RootState) => state.auth);
 
   if (isLoading)
     return (

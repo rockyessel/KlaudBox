@@ -8,9 +8,11 @@ import {
 } from 'react-icons/ri';
 import { TiCloudStorageOutline } from 'react-icons/ti';
 import { useUserContext } from '@/context/user-context';
+import Menu from './menu';
 
 const DashboardNavbar = () => {
-  const { handleChangeRouter, handleModalState } = useUserContext();
+  const { handleChangeRouter, handleModalState, showMenu, handleMenuState } =
+    useUserContext();
 
   return (
     <div className='w-full flex justify-between items-center border-b-2 border-gray-200 py-2 px-4 sticky top-0'>
@@ -59,7 +61,7 @@ const DashboardNavbar = () => {
           <li className='hidden lg:block'>
             <RiNotification2Line />
           </li>
-          <li className='w-12 h-12 rounded-full'>
+          <li onClick={handleMenuState} className='w-12 h-12 rounded-full'>
             <Image
               src='/f.png'
               className='w-12 h-12 rounded-full'
@@ -67,31 +69,11 @@ const DashboardNavbar = () => {
               height={100}
               width={100}
             />
+
+            {showMenu && <Menu css='right-2' />}
           </li>
         </ul>
       </div>
-      {/* <div className='w-[30rem] h-[50rem] text-black bg-white rounded-lg shadow-lg absolute top-0'>
-        <div>
-          <p className='inline-flex items-center text-black/40 px-0 gap-2 relative right-2'>
-            Actions
-          </p>
-          <ul>
-            <li>Add file</li>
-            <li>Create Folder</li>
-            <li>Create Types</li>
-          </ul>
-        </div>
-        <div>
-          <p className='inline-flex items-center text-black/40 px-0 gap-2 relative right-2'>
-            Actions
-          </p>
-          <ul>
-            <li>Settings</li>
-            <li>Notifications</li>
-            <li>Mode</li>
-          </ul>
-        </div>
-      </div> */}
     </div>
   );
 };

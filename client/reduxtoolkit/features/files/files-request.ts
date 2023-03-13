@@ -22,18 +22,9 @@ export const get_all_files = createAsyncThunk(
   }
 );
 
-export interface UserFileProps {
-  file: File;
-  title: string;
-  description: string;
-  secure: string;
-  delete_after: string;
-}
-
 export const post_files = createAsyncThunk(
   'files/post',
-  async (files: UserFileProps, thunkAPI) => {
-    console.log('API_URI', API_URI);
+  async (files: File, thunkAPI) => {
     try {
       const user = JSON.parse(`${localStorage.getItem('user')}`);
       const response = await instance({

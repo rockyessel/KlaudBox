@@ -29,8 +29,8 @@ const Menu = (props: any): JSX.Element => {
 
   const handleLogout = () => {
     logout();
-    dispatch(reset());
     router.push('/accounts/login');
+    dispatch(reset());
   };
 
   return (

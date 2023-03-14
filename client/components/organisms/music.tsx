@@ -1,24 +1,14 @@
 import React from 'react';
 import { Folder, UserTable } from '../index';
+import AudioPlayer from '../atoms/audio-player';
 
-const Music = ({ audioFilter }:any) => {
+const Music = ({ audioFilter }: any) => {
+
+  console.log('audioFilter', audioFilter);
   return (
-    <main className='w-full p-5 flex flex-col gap-5'>
-      {/* <section className='flex items-center gap-2'>
-        <Folder />
-        <Folder />
-        <Folder />
-        <Folder />
-        <Folder />
-        <Folder />
-        <Folder />
-      </section>
-      <section className='flex items-center gap-2'>
-        <UserTable />
-      </section> */}
-
+    <main className='w-full p-5 flex flex-wrap gap-5'>
       {audioFilter.map((audio, index) => (
-        <p key={index}>{audio.originalFilename}</p>
+        <AudioPlayer key={index} url={audio.url} />
       ))}
     </main>
   );

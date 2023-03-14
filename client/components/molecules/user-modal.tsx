@@ -161,10 +161,11 @@ const UserModal = () => {
               Discard
             </button>
             <button
+              disabled={!arrFiles.length}
               type='button'
               title='Import'
               onClick={handleSubmission}
-              className='bg-pink-800 text-white rounded-md px-2 py-1'
+              className={`bg-pink-800 text-white rounded-md px-2 py-1 ${!arrFiles.length ? 'bg-pink-200 cursor-not-allowed' : ''}`}
             >
               Import
             </button>

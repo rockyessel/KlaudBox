@@ -29,6 +29,9 @@ const DisplayView = () => {
   const imageFilter = files?.filter(
     (file: any) => file?.mimeType?.split('/')[0] === 'image'
   );
+  const videoFilter = files?.filter(
+    (file: any) => file?.mimeType?.split('/')[0] === 'video'
+  );
 
   React.useEffect(() => {
     if (isError) console.log('Error');
@@ -51,7 +54,7 @@ const DisplayView = () => {
     case 'picture':
       return <Picture imageFilter={imageFilter} />;
     case 'video':
-      return <VideoType/>;
+      return <VideoType videoFilter={videoFilter/>;
     case 'music':
       return <Music audioFilter={audioFilter} />;
     case 'application':

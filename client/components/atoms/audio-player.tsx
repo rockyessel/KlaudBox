@@ -1,21 +1,16 @@
 import React from 'react';
 import * as jsmediatags from 'jsmediatags';
+import { TagType } from 'jsmediatags/types';
 import Image from 'next/image';
 import { CgMusicNote } from 'react-icons/cg';
 import { VscPlay, VscDebugPause } from 'react-icons/vsc';
+import { Metadata } from '@/interface';
 
-interface Metadata {
-  artist?: string;
-  title?: string;
-  picture?: {
-    data: Uint8Array;
-    format: string;
-  };
-  // You can add more fields here if you need them
-}
+
+
 
 const AudioPlayer = ({ url }: { url: string }) => {
-  const [metadata, setMetadata] = React.useState<Metadata>({});
+  const [metadata, setMetadata] = React.useState<Metadata>();
   const [audio, setAudio] = React.useState<HTMLAudioElement | null>(null);
   const [isPlaying, setIsPlaying] = React.useState(false);
   const [duration, setDuration] = React.useState(0);
@@ -28,8 +23,9 @@ const AudioPlayer = ({ url }: { url: string }) => {
       console.log('data', data);
 
       jsmediatags.read(data, {
-        onSuccess: (tags) => {
-          console.log(tags.tags);
+        onSuccess: (tags: { type: string; tags: any }) => {
+          console.log('Tags', tags);
+          console.log('Tags.Type', tags.type);
           setMetadata(tags.tags);
         },
         onError: (error) => {
@@ -99,7 +95,9 @@ const AudioPlayer = ({ url }: { url: string }) => {
       </audio> */}
       <p>Artist: {metadata && metadata.artist ? metadata.artist : ''}</p>
       <div>
-        <button onClick={togglePlay}>{isPlaying ? <VscDebugPause /> : <VscPlay />}</button>
+        <button onClick={togglePlay}>
+          {isPlaying ? <VscDebugPause /> : <VscPlay />}
+        </button>
         <span>{formatTime(currentTime)}</span> /{' '}
         <span>{formatTime(duration)}</span>
       </div>

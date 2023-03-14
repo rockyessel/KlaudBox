@@ -1,6 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { register, login } from './auth-request';
-import { AuthStateProps } from '@/interface';
 
 const user =
   typeof window !== 'undefined' && `${localStorage.getItem('user')}`
@@ -17,13 +16,7 @@ const initialState = {
 const authSlice = createSlice({
   name: 'auth',
   initialState,
-  reducers: {
-    reset: (state: AuthStateProps) => {
-      state.isLoading = false;
-      state.success = false;
-      state.error = '';
-    },
-  },
+  reducers: {},
   extraReducers: (builder) => {
     // register user
     builder
@@ -57,5 +50,5 @@ const authSlice = createSlice({
       });
   },
 });
-export const reset = authSlice.actions.reset;
+// export const reset = authSlice.actions.reset;
 export default authSlice.reducer;

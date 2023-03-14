@@ -51,7 +51,7 @@ const Navbar = (): JSX.Element => {
             <li className='border group border-black/60 rounded-md px-2 py-1 font-medium relative'>
               <button>Accounts</button>
 
-              <ul className='bg-white hidden text-[1rem] max-w-[10rem] z-[1] drop-shadow-lg absolute top-8 left-0 px-2 group-hover:flex flex-col items-center py-2 rounded-md divide-y divide-black/20'>
+              <ul className='bg-white hidden text-[1rem] max-w-[10rem] drop-shadow-lg absolute top-8 left-0 px-2 group-hover:flex flex-col items-center py-2 rounded-md divide-y divide-black/20'>
                 <li className='px-2 py-1 font-medium'>
                   <Link href='/accounts/login'>Login</Link>
                 </li>

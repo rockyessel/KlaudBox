@@ -25,6 +25,8 @@ const UserModal = () => {
     setArrFiles(removed_file);
   };
 
+  console.log('arrFiles',arrFiles)
+
   const handleFile = (event: any) => {
     const file: File[] = event.target.files;
     const arr = [...arrFiles, ...file];
@@ -35,19 +37,23 @@ const UserModal = () => {
     setArrFiles([]);
   };
 
-  const handleSubmission = async (event: React.SyntheticEvent) => {
-    try {
-      event.preventDefault();
-     const data = new FormData();
-     arrFiles.forEach((file) => {
-       data.append('files', file);
-     });
-     await dispatch(post_files(data));
-     handleModalState()
-    } catch (error) {
-      console.log(error)
-    }
-  };
+const handleSubmission = async (event: React.SyntheticEvent) => {
+  try {
+    event.preventDefault();
+    const data = new FormData();
+    arrFiles.forEach((file) => {
+      data.append(`files`, file);
+    });
+    
+    await dispatch(post_files(data));
+    handleModalState();
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+
+
 
   return (
     <main className='fixed bg-gray-50/90 w-full h-full flex items-center justify-center md:px-10 z-[100]'>

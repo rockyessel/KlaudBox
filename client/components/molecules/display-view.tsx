@@ -11,6 +11,7 @@ import {
 import { get_all_files } from '@/reduxtoolkit/features/files/files-request';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '@/reduxtoolkit/app/store';
+import { UserFilesProps } from '@/interface';
 
 const DisplayView = () => {
   const [image, setImage] = React.useState([]);
@@ -23,13 +24,13 @@ const DisplayView = () => {
   );
 
   console.log('files', files);
-    const audioFilter = files?.filter(
-      (file: any) => file?.mimeType?.split('/')[0] === 'audio'
-    );
-  const imageFilter = files?.filter(
+  const audioFilter: UserFilesProps[] = files?.filter(
+    (file: any) => file?.mimeType?.split('/')[0] === 'audio'
+  );
+  const imageFilter: UserFilesProps[] = files?.filter(
     (file: any) => file?.mimeType?.split('/')[0] === 'image'
   );
-  const videoFilter = files?.filter(
+  const videoFilter: UserFilesProps[] = files?.filter(
     (file: any) => file?.mimeType?.split('/')[0] === 'video'
   );
 
@@ -42,9 +43,9 @@ const DisplayView = () => {
     dispatch(get_all_files(user?.token));
   }, [dispatch, user?.token]);
 
-  if (isLoading) {
-    return <p>Loafing</p>;
-  }
+  // if (isLoading) {
+  //   return <p>Loafing</p>;
+  // }
 
   switch (section) {
     case 'recent':
@@ -54,7 +55,7 @@ const DisplayView = () => {
     case 'picture':
       return <Picture imageFilter={imageFilter} />;
     case 'video':
-      return <VideoType videoFilter={videoFilter/>;
+      return <VideoType videoFilter={videoFilter} />;
     case 'music':
       return <Music audioFilter={audioFilter} />;
     case 'application':
@@ -71,3 +72,7 @@ const DisplayView = () => {
 };
 
 export default DisplayView;
+
+export const getStaticProps = async () => {
+  
+}

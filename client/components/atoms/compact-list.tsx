@@ -71,7 +71,7 @@ const CompactList = ({ guestData }: { guestData: GuestFileModelProps[] }) => {
       </div>
       <table className='divide-y divide-[#515151] w-full'>
         <thead className='sticky top-0 bg-[#2c2c2c]'>
-          <tr className='pb-10 z-0'>
+          <tr className='pb-10'>
             <th className='py-4'>
               <input
                 title='checkbox'

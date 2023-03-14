@@ -46,58 +46,82 @@ const agent = new https.Agent({
 
 export const instance = axios.create({
   httpsAgent: agent,
+  // timeout: 20000,
 });
 
-export const GuestFileUploadPost = async (file_object: any, setProgress: any) => {
-  const response = await instance({
-    method: 'POST',
-    url: `${API_URI}v1/guests`,
-    data: file_object,
-    onUploadProgress: (data) => {
-      const total: number = data?.total || 0;
-      setProgress(Math.round((100 * data?.loaded) / total));
-    },
-  });
+export const GuestFileUploadPost = async (
+  file_object: any,
+  setProgress: any
+) => {
+  try {
+    const response = await instance({
+      method: 'POST',
+      url: `${API_URI}v1/guests`,
+      data: file_object,
+      onUploadProgress: (data) => {
+        const total: number = data?.total || 0;
+        setProgress(Math.round((100 * data?.loaded) / total));
+      },
+    });
 
-  const data_ = await response.data;
+    const data_ = await response.data;
 
-  return data_;
+    return data_;
+  } catch (error) {
+    console.log(error);
+  }
 };
 
 export const singleGuestFile = async (file_code: string) => {
-  const response = await instance.get(`${API_URI}v1/guests/${file_code}`);
+  try {
+    const response = await instance.get(`${API_URI}v1/guests/${file_code}`);
 
-  const data_ = await response.data;
+    const data_ = await response.data;
 
-  return data_;
+    return data_;
+  } catch (error) {
+    console.log(error);
+  }
 };
 
 export const GuestFileSlug = async (path: string) => {
-  const response = await instance.get(`${API_URI}v1/guests/path/${path}`);
+  try {
+    const response = await instance.get(`${API_URI}v1/guests/path/${path}`);
 
-  const data_ = await response.data;
+    const data_ = await response.data;
 
-  return data_;
+    return data_;
+  } catch (error) {
+    console.log(error);
+  }
 };
 
 export const GetAllFiles = async () => {
-  const response = await instance.get(`${API_URI}v1/guests/all`);
+  try {
+    const response = await instance.get(`${API_URI}v1/guests/all`);
 
-  const data_ = await response.data;
+    const data_ = await response.data;
 
-  return data_;
+    return data_;
+  } catch (error) {
+    console.log(error);
+  }
 };
 
 export const DeleteGuestFile = async (identifier: string) => {
-  const response = await instance({
-    method: 'DELETE',
-    url: `${API_URI}v1/guests/${identifier}`,
-    headers: { 'Content-Type': 'application/json' },
-  });
+  try {
+    const response = await instance({
+      method: 'DELETE',
+      url: `${API_URI}v1/guests/${identifier}`,
+      headers: { 'Content-Type': 'application/json' },
+    });
 
-  const data_ = await response.data;
+    const data_ = await response.data;
 
-  return data_;
+    return data_;
+  } catch (error) {
+    console.log(error);
+  }
 };
 
 export const BulkDeleteFiles = async (
@@ -129,9 +153,6 @@ export const BulkDeleteFiles = async (
     console.log(error);
   }
 };
-
-
-
 
 export const logout = () => {
   window.localStorage.removeItem('user');

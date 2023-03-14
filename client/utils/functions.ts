@@ -1,4 +1,4 @@
-import { FormErrorProps } from '@/interface';
+import { FormErrorProps, UserFilesProps } from '@/interface';
 
 export const formatFileSize = (size: number): string => {
   const units = ['B', 'KB', 'MB', 'GB'];
@@ -316,3 +316,35 @@ export const FormValidation = (
 
   return currentState;
 };
+
+
+export const StorageCalculation = (files: UserFilesProps[]):string => {
+
+  let totalSize = 0;
+
+  files.forEach((file) => {
+    totalSize += file.size;
+  });
+
+  const KB = 1024;
+  const MB = KB * 1024;
+  const GB = MB * 1024;
+  const TB = GB * 1024;
+
+  if (totalSize >= TB) {
+    console.log(`Total size: ${(totalSize / TB).toFixed(2)} TB`);
+    return `${(totalSize / TB).toFixed(2)} TB`
+  } else if (totalSize >= GB) {
+    console.log(`Total size: ${(totalSize / GB).toFixed(2)} GB`);
+    return `${(totalSize / GB).toFixed(2)} GB`;
+  } else if (totalSize >= MB) {
+    console.log(`Total size: ${(totalSize / MB).toFixed(2)} MB`);
+    return `${(totalSize / MB).toFixed(2)} MB`;
+  } else if (totalSize >= KB) {
+    console.log(`Total size: ${(totalSize / KB).toFixed(2)} KB`);
+    return `${(totalSize / KB).toFixed(2)} KB`
+  } else {
+    console.log(`Total size: ${totalSize} bytes`);
+    return `${totalSize} B`;
+  }
+}

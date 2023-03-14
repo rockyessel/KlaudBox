@@ -11,10 +11,10 @@ const Dashboard = () => {
       <main id='dashboard' className='w-full h-[100vh] overflow-hidden'>
         <DashboardNavbar />
         <div className='flex'>
-          <div className='h-[92vh] overflow-hidden xl:overflow-y-auto border-r-2 border-gray-100 xl:border-r-[1px]'>
+          <div className='h-[100vh] overflow-hidden xl:overflow-y-auto border-r-2 border-gray-100 xl:border-r-[1px]'>
             <Sidebar />
           </div>
-          <div className='flex overflow-auto h-[88vh] flex-1'>
+          <div className='flex overflow-auto h-[88vh] flex-1 w-full'>
             <DisplayView />
           </div>
         </div>

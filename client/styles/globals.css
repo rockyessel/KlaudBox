@@ -19,6 +19,10 @@ body {
   src: url('/fonts/Catamaran.ttf');
 }
 
+#menu {
+  z-index: 1000 !important;
+}
+
 .progress {
   clip: rect(0, 0.5em, 1em, 0);
   position: absolute;

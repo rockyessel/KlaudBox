@@ -35,9 +35,10 @@ const Menu = (props: any): JSX.Element => {
 
   return (
     <div
-      className={`bg-black rounded-md shadow-lg w-[280px] absolute ${props.css} top-14 p-5 z-[200] `}
+   
+      className={`bg-black rounded-md shadow-lg w-[280px] absolute ${props.css} top-14 p-5`}
     >
-      <div className='w-full flex flex-col gap-5 divide-y divide-white/20 '>
+      <div id={'menu'} className='w-full flex flex-col gap-5 divide-y divide-white/20 '>
         {user && (
           <React.Fragment>
             <div className='flex flex-col gap-1 items-start'>

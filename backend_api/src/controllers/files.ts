@@ -29,14 +29,11 @@ export const FilesPost = async (request: Request, response: Response) => {
   try {
     const files = request?.files;
     const user = request.user?._id;
-
-    console.log(files)
-
     if (Array.isArray(files)) {
       const create_files = files.map(async (file) => {
 
 
-          const file_name = `${random_name}-${file?.originalname?.replaceAll(
+          const file_name = `${file?.originalname?.replaceAll(
             ' ',
             '-'
           )}`;

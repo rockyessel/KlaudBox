@@ -4,7 +4,7 @@ const FilesModelSchema = new Mongoose.Schema({
   user:{type: Mongoose.Schema.Types.ObjectId, required: true, ref: 'User' },
   url: { type: String, require: [true, 'This field is required'] },
   size: { type: Number, required: true },
-  identifier: { type: String, require: [true, 'This field is required'], unique: false },
+  identifier: { type: String, require: [true, 'This field is required'], unique: true },
   originalFilename: { type: String, require: [true, 'This field is required'] },
   mimeType: { type: String, require: [true, 'This field is required'] },
   extension: { type: String, require: [true, 'This field is required'] },

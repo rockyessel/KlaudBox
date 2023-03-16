@@ -154,16 +154,9 @@ interface TYER {
 }
 
 interface Comment {
-  language: string;
-  short_description: string;
-  text: string;
-}
-
-interface Picture {
-  data: number[];
-  description: string;
-  format: string;
-  type: string;
+  language?: string;
+  short_description?: string;
+  text?: string;
 }
 
 interface PictureType {
@@ -172,12 +165,12 @@ interface PictureType {
 }
 
 export interface Metadata {
-  album: string;
-  artist: string;
-  comment: Comment;
-  genre: string;
-  title: string;
-  year: string;
+  album?: string;
+  artist?: string;
+  comment?: Comment;
+  genre?: string;
+  title?: string;
+  year?: string;
   picture?: PictureType | undefined;
   APIC?: APIC;
   COMM?: COMM;
@@ -189,4 +182,19 @@ export interface Metadata {
   TOPE?: TOPE;
   TPE1?: TPE1;
   TYER?: TYER;
+}
+
+export interface TagsProps {
+  flags?: {
+    experimental_indicator: boolean;
+    extended_header: boolean;
+    footer_present: boolean;
+    unsynchronisation: boolean;
+  };
+  major?: number;
+  revision?: number;
+  size?: number;
+  tags?: Metadata;
+  type?: string;
+  version?: string;
 }

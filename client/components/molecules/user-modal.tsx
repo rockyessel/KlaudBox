@@ -11,12 +11,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import { post_files } from '@/reduxtoolkit/features/files/files-request';
 
 const UserModal = () => {
-  const [progress, setProgress] = React.useState(13);
   const [arrFiles, setArrFiles] = React.useState<File[]>([]);
+  const [progress, setProgress] = React.useState(0);
   const [allFilesUploadPercent, setAllFilesUploadPercent] = React.useState(0);
   const [urlValue, setUrlValue] = React.useState('');
   const dispatch: AppDispatch = useDispatch();
-  const { user } = useSelector((state: RootState) => state.auth);
 
   const { handleModalState } = useUserContext();
 
@@ -25,7 +24,6 @@ const UserModal = () => {
     setArrFiles(removed_file);
   };
 
-  console.log('arrFiles',arrFiles)
 
   const handleFile = (event: any) => {
     const file: File[] = event.target.files;
@@ -37,23 +35,19 @@ const UserModal = () => {
     setArrFiles([]);
   };
 
-const handleSubmission = async (event: React.SyntheticEvent) => {
-  try {
-    event.preventDefault();
-    const data = new FormData();
-    arrFiles.forEach((file) => {
-      data.append(`files`, file);
-    });
-    
-    await dispatch(post_files(data));
-    handleModalState();
-  } catch (error) {
-    console.log(error);
-  }
-};
-
-
-
+  const handleSubmission = async (event: React.SyntheticEvent) => {
+    try {
+      event.preventDefault();
+      const data = new FormData();
+      arrFiles.forEach((file) => {
+        data.append(`files`, file);
+      });
+       await dispatch(post_files({ data, setProgress }));
+      handleModalState();
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <main className='fixed bg-gray-50/90 w-full h-full flex items-center justify-center md:px-10 z-[100]'>
@@ -171,7 +165,9 @@ const handleSubmission = async (event: React.SyntheticEvent) => {
               type='button'
               title='Import'
               onClick={handleSubmission}
-              className={`bg-pink-800 text-white rounded-md px-2 py-1 ${!arrFiles.length ? 'bg-pink-200 cursor-not-allowed' : ''}`}
+              className={`bg-pink-800 text-white rounded-md px-2 py-1 ${
+                !arrFiles.length ? 'bg-pink-200 cursor-not-allowed' : ''
+              }`}
             >
               Import
             </button>

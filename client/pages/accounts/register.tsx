@@ -7,7 +7,7 @@ import { FormValidation } from '@/utils/functions';
 import { useDispatch, useSelector } from 'react-redux';
 import type { RootState, AppDispatch } from '@/reduxtoolkit/app/store';
 import { register } from '@/reduxtoolkit/features/auth/auth-request';
-import { reset } from '@/reduxtoolkit/features/auth/auth-slice';
+import { reset } from '@/reduxtoolkit/features/files/files-slice';
 import { useRouter } from 'next/router';
 
 const RegisterPage = () => {
@@ -67,25 +67,18 @@ const RegisterPage = () => {
       passwordErr,
       setPasswordErr
     );
-
     return { email, password };
   };
 
   const handleSubmission = async (event: React.SyntheticEvent) => {
     try {
       event.preventDefault();
-
       const validateObject = handleValidation();
       const { email, password } = validateObject;
       if (!email || !password) return;
-
       console.log('formData', formData);
-
       const data = { email: formData.email, password: formData.password };
-
       dispatch(register(data));
-
-      //  await UserPostFile(formData);
     } catch (error) {
       console.log(error);
     }
@@ -95,7 +88,6 @@ const RegisterPage = () => {
     if (success) {
       router.push('/dashboard');
     }
-
     dispatch(reset());
   }, [dispatch, router, success, user]);
 

@@ -57,10 +57,10 @@ app.use('/v1/files', Files);
 
 startCronJob();
 
-app.listen(PORT, () => {
-  console.log('Listening on port');
-});
+// app.listen(PORT, () => {
+//   console.log('Listening on port');
+// });
 
-// https
-//   .createServer(options, app)
-//   .listen(8443, () => console.log(`Server is running on ${baseURL}`));
+https
+  .createServer(options, app)
+  .listen(8443, () => console.log(`Server is running on ${baseURL}`));

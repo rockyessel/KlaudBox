@@ -1,42 +1,20 @@
 import { UserFilesProps } from '@/interface';
 import React from 'react';
+import VideoCard from '../atoms/video-card';
 
 const VideoType = ({ videoFilter }: { videoFilter: UserFilesProps[] }) => {
-    const sortedVideo: UserFilesProps[] = videoFilter?.sort(
-      (a: any, b: any) => {
-        return (
-          new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
-        );
-      }
-    );
+  const sortedVideo: UserFilesProps[] = videoFilter?.sort((a: any, b: any) => {
+    return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
+  });
+
+
   return (
-    <main className='w-full p-5 flex flex-col gap-5'>
-      {sortedVideo?.map((video, index) => (
-        <div
-          key={index}
-          className='relative w-[15rem] bg-gray-100 rounded-md flex items-center justify-center'
-        >
-          <video width={250} height={300} controls={false}>
-            <source src={video?.url} type={video?.mimeType} />
-          </video>
-          <div className='absolute inset-0 flex items-center justify-center'>
-            <button
-              title='play button'
-              type='button'
-              className='text-white rounded-full bg-gray-500 p-4'
-            >
-              <svg
-                viewBox='0 0 24 24'
-                xmlns='http://www.w3.org/2000/svg'
-                fill='currentColor'
-                className='w-6 h-6'
-              >
-                <path d='M8 5v14l11-7z' />
-              </svg>
-            </button>
-          </div>
-        </div>
-      ))}
+    <main className='w-full p-5 flex flex-col items-center gap-5 bg-gray-200 overflow-y-scroll'>
+      <div className='w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 3xl:grid-col-7 justify-items-center gap-5'>
+        {sortedVideo?.map((video, index) => (
+          <VideoCard video={video} key={index} />
+        ))}
+      </div>
     </main>
   );
 };

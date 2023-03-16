@@ -24,18 +24,23 @@ export const get_all_files = createAsyncThunk(
 
 export const post_files = createAsyncThunk(
   'files/post',
-  async (files: File, thunkAPI) => {
+  async (obj: any, thunkAPI) => {
     try {
+   
       const user = JSON.parse(`${localStorage.getItem('user')}`);
       const response = await instance({
         method: 'POST',
         url: `${API_URI}v1/files`,
-        data: files,
+        data: obj.data,
         xsrfCookieName: 'XSRF-TOKEN',
         xsrfHeaderName: 'X-XSRF-TOKEN',
         headers: {
           'Content-Type': 'multipart/form-data',
           Authorization: `Bearer ${user?.token}`,
+        },
+        onUploadProgress: (data) => {
+          const total: number = data?.total || 0;
+          obj.setProgress(Math.round((100 * data?.loaded) / total));
         },
       });
 

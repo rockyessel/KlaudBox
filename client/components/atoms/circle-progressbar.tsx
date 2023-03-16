@@ -1,6 +1,6 @@
 import React from 'react';
 
-const CircleProgressbar = ({ percent }: any) => {
+const CircleProgressbar = ({ percent }: {percent:number}) => {
   const circumference = 60 * 2 * Math.PI;
 
   return (

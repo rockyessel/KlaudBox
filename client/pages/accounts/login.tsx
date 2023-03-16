@@ -7,7 +7,7 @@ import { FormErrorProps } from '@/interface';
 import { useDispatch, useSelector } from 'react-redux';
 import type { RootState, AppDispatch } from '@/reduxtoolkit/app/store';
 import { login } from '@/reduxtoolkit/features/auth/auth-request';
-import { reset } from '@/reduxtoolkit/features/auth/auth-slice';
+import { reset } from '@/reduxtoolkit/features/files/files-slice';
 import { useRouter } from 'next/router';
 
 const LoginPage = () => {

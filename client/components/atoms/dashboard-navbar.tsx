@@ -11,14 +11,17 @@ import { useUserContext } from '@/context/user-context';
 import Menu from './menu';
 
 const DashboardNavbar = () => {
-  const { handleChangeRouter, handleModalState, showMenu, handleMenuState } =
-    useUserContext();
+  const { handleChangeRouter, handleModalState, showMenu, handleMenuState } = useUserContext();
 
   return (
     <div className='w-full flex justify-between items-center border-b-2 border-gray-200 py-2 px-4 sticky top-0'>
       <Link href='/dashboard'>
         <div className='w-[100px] md:w-[130px]'>
-          <button className='font-catamaran text-xl md:text-2xl lg:text-3xl inline-flex items-center'>
+          <button
+            type='button'
+            title='KlaudBox'
+            className='font-catamaran text-xl md:text-2xl lg:text-3xl inline-flex items-center'
+          >
             KlaudBox <sub className='text-sm text-rose-800'>Dashboard</sub>
           </button>
         </div>
@@ -32,12 +35,12 @@ const DashboardNavbar = () => {
           >
             Add file
           </li>
-          <li className='bg-rose-800 text-white font-medium rounded-md shadow-md p-2'>
-            Create Folder
+          {/* <li className='bg-rose-800 text-white font-medium rounded-md shadow-md p-2'>;
+            Create Folder;
           </li>
-          <li className='bg-rose-800 text-white font-medium rounded-md shadow-md p-2'>
-            Add Type
-          </li>
+          <li className='bg-rose-800 text-white font-medium rounded-md shadow-md p-2'>;
+            Add Type;
+          </li> */}
         </ul>
         <ul className='flex items-center text-xl gap-2 pl-5'>
           <li

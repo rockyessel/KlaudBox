@@ -1,15 +1,15 @@
+import { UserFilesProps } from '@/interface';
 import { useRouter } from 'next/router';
-import React from 'react'
-
-
+import React from 'react';
 
 export interface UserContextProps {
   handleChangeRouter: (name: string) => void;
   handleModalState: () => void;
   selectedRouteState: boolean;
   modalState: boolean;
-  showMenu:boolean;
+  showMenu: boolean;
   handleMenuState: () => void;
+  userFileCashing: UserFilesProps[];
 }
 
 const UserContext = React.createContext<UserContextProps>({
@@ -19,17 +19,25 @@ const UserContext = React.createContext<UserContextProps>({
   modalState: false,
   showMenu: false,
   handleMenuState: () => {},
+  userFileCashing: [],
 });
 
-
-export const UserContextProvider = ({ children }: { children: React.ReactNode }) => {
-  const [selectedRouteState, setSelectedRouteState] = React.useState<boolean>(false);
+export const UserContextProvider = ({
+  children,
+}: {
+  children: React.ReactNode;
+}) => {
+  const [selectedRouteState, setSelectedRouteState] =
+    React.useState<boolean>(false);
   const [modalState, setModalState] = React.useState<boolean>(false);
   const [showMenu, setShowMenu] = React.useState(false);
+  const [userFileCashing, setUserFileCashing] = React.useState<
+    UserFilesProps[]
+  >([]);
 
   const router = useRouter();
 
-  const handleModalState = () => setModalState((prev)=> !prev)
+  const handleModalState = () => setModalState((prev) => !prev);
   const handleChangeRouter = (name: string) => {
     router.push({ query: { section: `${name}` } }, undefined, {
       shallow: true,
@@ -38,7 +46,7 @@ export const UserContextProvider = ({ children }: { children: React.ReactNode })
     const state: boolean = section === name;
     setSelectedRouteState(state);
   };
-    const handleMenuState = () => {
+  const handleMenuState = () => {
     setShowMenu((previous_state) => !previous_state);
   };
 
@@ -48,12 +56,11 @@ export const UserContextProvider = ({ children }: { children: React.ReactNode })
     modalState,
     handleModalState,
     showMenu,
-    handleMenuState
+    handleMenuState,
+    userFileCashing,
   };
 
-  return (
-    <UserContext.Provider value={values}>{children}</UserContext.Provider>
-  );
+  return <UserContext.Provider value={values}>{children}</UserContext.Provider>;
 };
 
 export const useUserContext = () => React.useContext(UserContext);

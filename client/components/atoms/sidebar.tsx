@@ -35,12 +35,12 @@ const Sidebar = () => {
             </p>
             <ul className='flex flex-col gap-1 ml-2 font-medium'>
               <li
-                onClick={() => handleChangeRouter('recent')}
-                title='Recent'
+                onClick={() => handleChangeRouter('files')}
+                title='Files'
                 className={normalLink}
               >
-                <BiTimeFive className='text-xl' />
-                <span className='hidden xl:block'>Recent</span>
+                <BsFileSpreadsheet className='text-xl' />
+                <span className='hidden xl:block'>All Files</span>
               </li>
               <li
                 onClick={() => handleChangeRouter('favorites')}
@@ -90,15 +90,6 @@ const Sidebar = () => {
               >
                 <RiAppsLine className='text-xl' />
                 <span className='hidden xl:block'>Application</span>
-              </li>
-
-              <li
-                onClick={() => handleChangeRouter('files')}
-                title='Files'
-                className={normalLink}
-              >
-                <BsFileSpreadsheet className='text-xl' />
-                <span className='hidden xl:block'>Files</span>
               </li>
             </ul>
           </div>

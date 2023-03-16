@@ -1,7 +1,16 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { get_all_files, post_files } from './files-request';
+import { UserFilesProps } from '@/interface';
 
-const initialState = {
+interface Props {
+  files: UserFilesProps[];
+  isError: boolean;
+  isSuccess: boolean;
+  isLoading: boolean;
+  message: string;
+}
+
+const initialState: Props = {
   files: [],
   isError: false,
   isSuccess: false,
@@ -22,7 +31,11 @@ const filesSlice = createSlice({
         state.isLoading = false;
         state.isSuccess = true;
         state.isError = false;
-        state.files = [...state.files, ...action.payload.files] as never[];
+        state.files = [...state.files, ...action.payload.files];
+        window.localStorage.setItem(
+          'cachingUserFiles',
+          JSON.stringify([...action.payload.files])
+        );
       })
       .addCase(get_all_files.rejected, (state, action) => {
         state.isLoading = false;
@@ -37,13 +50,14 @@ const filesSlice = createSlice({
         state.isLoading = false;
         state.isSuccess = true;
         state.isError = false;
-        state.files.push(...action?.payload?.create_files as never[]);
+        state.files.push(...action?.payload?.result);
       })
       .addCase(post_files.rejected, (state, action) => {
         state.isLoading = false;
         state.isSuccess = false;
         state.isError = true;
         // state.message = action.payload;
+        console.log(action.error.message);
       });
   },
 });

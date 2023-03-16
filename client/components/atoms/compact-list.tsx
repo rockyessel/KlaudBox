@@ -5,7 +5,7 @@ import {
   AiFillEye,
 } from 'react-icons/ai';
 import { HiOutlineExternalLink } from 'react-icons/hi';
-import { MdContentCopy, MdPublic, MdVpnLock } from 'react-icons/md';
+import {  MdPublic, MdVpnLock } from 'react-icons/md';
 import TypeSwitcher from '../molecules/file-extension-switcher';
 import { formatFileSize, next_day } from '../../utils/functions';
 import { GuestFileModelProps } from '@/interface';
@@ -26,7 +26,6 @@ const CompactList = ({ guestData }: { guestData: GuestFileModelProps[] }) => {
     if (isChecked) {
       setSelectedItems((previousValue: any) => [
         ...previousValue,
-        // ...selectedItems,
         item,
       ]);
     } else {

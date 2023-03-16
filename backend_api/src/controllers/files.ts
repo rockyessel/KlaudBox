@@ -31,8 +31,6 @@ export const FilesPost = async (request: Request, response: Response) => {
     const user = request.user?._id;
     if (Array.isArray(files)) {
       const create_files = files.map(async (file) => {
-
-
           const file_name = `${file?.originalname?.replaceAll(
             ' ',
             '-'
@@ -69,7 +67,7 @@ export const FilesPost = async (request: Request, response: Response) => {
       });
 
       const result = await Promise.all(create_files);
-      console.log('create_files', result);
+      console.log(result);
 
       response.status(201).json({ result });
     }

@@ -2,9 +2,9 @@ import { GuestFileModelProps } from '@/interface';
 import https from 'https';
 import axios from 'axios';
 
-export const API_URI = `http://localhost:8443/`;
 
-console.log('API_URI', API_URI);
+export const API_URI = process.env.NEXT_PUBLIC_API_URI
+
 
 const ca_path = `${
   process.env.NODE_ENV === 'development'

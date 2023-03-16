@@ -8,6 +8,7 @@ import { connectDatabase } from './utils/configs/database';
 import helmet from 'helmet';
 import fs from 'fs';
 import path from 'path';
+import https from 'https';
 // @desc Routes Imports
 import GuestFile from './routes/guest-file';
 import UserFile from './routes/user-file';

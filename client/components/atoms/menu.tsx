@@ -17,35 +17,40 @@ import type { RootState, AppDispatch } from '@/reduxtoolkit/app/store';
 import { logout } from '@/utils/api-request';
 import { reset } from '@/reduxtoolkit/features/files/files-slice';
 import { useRouter } from 'next/router';
+import Loader from './loader';
 
 export interface MenuProps {
   css?: string;
 }
 
 const Menu = (props: any): JSX.Element => {
-  const { user } = useSelector((state: RootState) => state.auth);
+  const { isLoading,user } = useSelector((state: RootState) => state.auth);
   const dispatch: AppDispatch = useDispatch();
   const router = useRouter();
 
   const handleLogout = () => {
     logout();
+    if (isLoading) return <Loader />;
     router.push('/accounts/login');
     dispatch(reset());
   };
 
+
   return (
     <div
-   
-      className={`bg-black rounded-md shadow-lg w-[280px] absolute ${props.css} top-14 p-5`}
+      className={`bg-white text-black rounded-md shadow-lg w-[280px] absolute ${props.css} top-14 p-5 z-[10000]`}
     >
-      <div id={'menu'} className='w-full flex flex-col gap-5 divide-y divide-white/20 '>
+      <div
+        id={'menu'}
+        className='w-full flex flex-col gap-5 divide-y divide-black/20'
+      >
         {user && (
           <React.Fragment>
             <div className='flex flex-col gap-1 items-start'>
-              <button className='inline-flex items-center text-white/40 px-0 gap-2 relative right-2'>
+              <button className='inline-flex items-center px-0 gap-2 right-2'>
                 <TbSocial /> User
               </button>
-              <ul className='flex flex-col gap-1 items-start  divide-y w-full divide-white/10 text-gray-300'>
+              <ul className='flex flex-col gap-1 items-start  divide-y w-full divide-black/10'>
                 <li className='inline-flex items-center gap-2 w-full py-1'>
                   <CiFacebook className='text-xl' />
                   <button>Profile</button>
@@ -61,10 +66,10 @@ const Menu = (props: any): JSX.Element => {
               </ul>
             </div>
             <div className='flex flex-col gap-1 items-start'>
-              <button className='inline-flex items-center text-white/40 px-0 gap-2 relative right-2'>
+              <button className='inline-flex items-center px-0 gap-2 right-2'>
                 <TbSocial /> Actions
               </button>
-              <ul className='flex flex-col gap-1 items-start  divide-y w-full divide-white/10 text-gray-300'>
+              <ul className='flex flex-col gap-1 items-start  divide-y w-full divide-black/10'>
                 <li className='inline-flex items-center gap-2 w-full py-1'>
                   <CiFacebook className='text-xl' />
                   <button>Upload files</button>
@@ -82,10 +87,10 @@ const Menu = (props: any): JSX.Element => {
           </React.Fragment>
         )}
         <div className='flex flex-col gap-1 items-start lg:hidden'>
-          <button className='inline-flex items-center text-white/40 px-0 gap-2 relative right-2'>
+          <button className='inline-flex items-center px-0 gap-2 right-2'>
             <MdLibraryBooks /> General
           </button>
-          <ul className='flex flex-col gap-1 items-start divide-y divide-white/10 w-full text-gray-300'>
+          <ul className='flex flex-col gap-1 items-start divide-y divide-black/10 w-full'>
             <li className='inline-flex items-center gap-2 w-full py-1'>
               <MdHomeFilled className='text-xl' />{' '}
               <button>
@@ -114,10 +119,10 @@ const Menu = (props: any): JSX.Element => {
         </div>
         {!user ? (
           <div className='flex flex-col gap-1 items-start'>
-            <button className='inline-flex items-center text-white/40 px-0 gap-2 relative right-2'>
+            <button className='inline-flex items-center px-0 gap-2 right-2'>
               <MdSupervisorAccount /> Guest
             </button>
-            <ul className='flex flex-col gap-1 items-start  divide-y w-full divide-white/10 text-gray-300'>
+            <ul className='flex flex-col gap-1 items-start  divide-y w-full divide-black/10'>
               <li className='inline-flex items-center gap-2 w-full py-1'>
                 <BiLogInCircle className='text-xl' />{' '}
                 <button>
@@ -136,10 +141,10 @@ const Menu = (props: any): JSX.Element => {
 
         {!user ? (
           <div className='flex flex-col gap-1 items-start'>
-            <button className='inline-flex items-center text-white/40 px-0 gap-2 relative right-2'>
+            {/* <button className='inline-flex items-center px-0 gap-2 right-2'>
               <MdSupervisorAccount /> Accounts
             </button>
-            <ul className='flex flex-col gap-1 items-start  divide-y w-full divide-white/10 text-gray-300'>
+            <ul className='flex flex-col gap-1 items-start  divide-y w-full divide-black/10'>
               <li className='inline-flex items-center gap-2 w-full py-1'>
                 <BiLogInCircle className='text-xl' />{' '}
                 <button>
@@ -152,7 +157,7 @@ const Menu = (props: any): JSX.Element => {
                   <Link href='/accounts/register'>Register</Link>
                 </button>
               </li>
-            </ul>
+            </ul> */}
           </div>
         ) : null}
       </div>

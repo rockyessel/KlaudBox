@@ -31,6 +31,8 @@ export interface GuestContextProps {
   fileUpdates: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
+
+
 const GuestContext = React.createContext<GuestContextProps>({
   localCollection: [],
   modalFormData: InitialModalFormData,

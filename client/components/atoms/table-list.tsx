@@ -12,6 +12,7 @@ import { GuestFileModelProps } from '@/interface';
 import { useGuestContext } from '@/context/guest-context';
 import { BulkDeleteFiles } from '@/utils/api-request';
 import Link from 'next/link';
+import TableRow from './tr';
 
 const TableList = ({ guestData }: { guestData: GuestFileModelProps[] }) => {
   const [selectedItems, setSelectedItems] = React.useState<string[]>([]);
@@ -23,10 +24,7 @@ const TableList = ({ guestData }: { guestData: GuestFileModelProps[] }) => {
     const isChecked = event.target.checked;
     const item = event.target.value;
     if (isChecked) {
-      setSelectedItems((previousValue: any) => [
-        ...previousValue,
-        item,
-      ]);
+      setSelectedItems((previousValue: any) => [...previousValue, item]);
     } else {
       setSelectedItems(selectedItems?.filter((i: any) => i !== item));
     }
@@ -67,121 +65,24 @@ const TableList = ({ guestData }: { guestData: GuestFileModelProps[] }) => {
           <p></p>
         )}
       </div>
-      <table className='divide-y divide-[#515151] w-full'>
-        <thead className='sticky top-0 bg-[#2c2c2c]'>
-          <tr className='pb-10'>
-            <th className='py-4'>
-              <input
-                title='checkbox'
-                value={JSON.stringify(guestData)}
-                name='all'
-                type='checkbox'
-                className='checkbox checkbox-error'
-              />
-            </th>
-            <th className='py-4'>Icon</th>
-            <th className='py-4'>Name</th>
-            <th className='py-4'>Link</th>
-            <th className='py-4'>Size</th>
-            <th className='py-4'>Code</th>
-            <th className='py-4'>Sharing</th>
-            <th className='py-4'>Action</th>
+
+      <table className='w-full text-sm text-left text-gray-500'>
+        <thead className='text-xs text-gray-700 bg-gray-50'>
+          <tr>
+            <th className='px-6 py-3'>Icon</th>
+            <th className='px-6 py-3'>Name</th>
+            <th className='px-6 py-3'>Link</th>
+            <th className='px-6 py-3'>Size</th>
+            <th className='px-6 py-3'>Uploaded on</th>
+            <th className='px-6 py-3'>Deleted on</th>
+            <th className='px-6 py-3'>Code</th>
+            <th className='px-6 py-3'>Sharing</th>
+            <th className='px-6 py-3'>Action</th>
           </tr>
         </thead>
-        <tbody className='divide-y divide-[#515151]'>
+        <tbody>
           {guestData?.map((data, index) => (
-            <tr key={index}>
-              <td>
-                <input
-                  onChange={handleCheckboxChange}
-                  title='checkbox'
-                  name={`checkbox_${index + 1} all`}
-                  type='checkbox'
-                  value={data?.identifier}
-                  className='checkbox checkbox-error'
-                />
-              </td>
-
-              <td>
-                <TypeSwitcher
-                  class={`text-2xl`}
-                  extension={`${data?.extension}`}
-                />
-              </td>
-              <td className='inline-flex flex-col'>
-                <span className='text-rose-500'>
-                  {data?.originalFilename?.slice(0, 26)}
-                </span>
-                <span className='font-semibold inline-flex flex-col lg:flex-row gap-2 text-sm'>
-                  {/* <span>2/17/2023</span> */}
-                </span>
-              </td>
-
-              <td>
-                <span className='inline-flex flex-col'>
-                  <span className='text-rose-500 inline-flex items-center gap-1'>
-                    {data?.secure === 'public' && (
-                      <span className='inline-flex items-center gap-1'>
-                        `ht.../${data?.cms_id}`{' '}
-                        <MdContentCopy className='text-xl' />
-                      </span>
-                    )}
-                    {data?.secure === 'private' && (
-                      <span className='inline-flex items-center gap-1'>
-                        <Link href='/guests/find-file'>
-                          This file is private
-                        </Link>
-                        <HiOutlineExternalLink className='text-xl' />
-                      </span>
-                    )}
-                  </span>
-                </span>
-              </td>
-
-              <td>
-                <span>{formatFileSize(Number(data?.size))} </span>
-              </td>
-              <td>
-                <span>{data?.identifier}</span>
-              </td>
-
-              <td>
-                <span className='inline-flex items-center gap-2'>
-                  <span>
-                    {data?.secure === 'public' ? (
-                      <span className='text-green-500 inline-flex items-center gap-1'>
-                        Everyone <MdPublic />
-                      </span>
-                    ) : (
-                      <span className='text-rose-500 inline-flex items-center gap-1'>
-                        Private <MdVpnLock />
-                      </span>
-                    )}
-                  </span>
-                  <span>
-                    <AiFillQuestionCircle className='hidden lg:block' />
-                  </span>
-                </span>
-              </td>
-
-              <td>
-                <span className='inline-flex items-center gap-2'>
-                  <button
-                    onClick={() => handleDeleteFile(data?.identifier)}
-                    className='inline-flex items-center gap-1 text-rose-500'
-                  >
-                    <span> Delete</span>
-                    <AiTwotoneDelete />
-                  </button>
-                  <Link href={`/guests/files/${data?.cms_id}`}>
-                    <span className='inline-flex items-center gap-1'>
-                      <span className=''>View</span>
-                      <AiFillEye />
-                    </span>
-                  </Link>
-                </span>
-              </td>
-            </tr>
+            <TableRow key={index} data={data} />
           ))}
         </tbody>
       </table>

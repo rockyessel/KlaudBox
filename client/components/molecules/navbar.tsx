@@ -5,42 +5,30 @@ import { useSelector } from 'react-redux';
 import type { RootState } from '@/reduxtoolkit/app/store';
 import Link from 'next/link';
 import { useUserContext } from '@/context/user-context';
+import Loader from '../atoms/loader';
 
 const Navbar = (): JSX.Element => {
-  const [dropdown, setDropdown] = React.useState();
-
   const { handleMenuState, showMenu } = useUserContext();
-
   const { user, isLoading } = useSelector((state: RootState) => state.auth);
-
-  if (isLoading)
-    return (
-      <main className='bg-rose-800 text-white font-extrabold'>Loading</main>
-    );
+  if (isLoading) return <Loader />;
 
   return (
     <header className='bg-gray-50 flex justify-between items-center py-3 px-3 sticky w-full top-0 border-b-[1px] border-black/30'>
       <section className='font-bold flex items-center gap-5'>
         <Link href='/'>
-          <button className='font-catamaran text-xl md:text-3xl lg:text-5xl'>
+          <span className='font-catamaran text-xl md:text-3xl lg:text-5xl'>
             KlaudBox
-          </button>
+          </span>
         </Link>
 
         <nav className='hidden lg:block'>
           <ul className='flex gap-2 justify-center items-center'>
-            <li className='px-2 py-1 font-medium'>
-              <Link href='/'>Home</Link>
-            </li>
-            <li className='px-2 py-1 font-medium'>
-              <Link href='/contact'>Contact</Link>
-            </li>
-            <li className='px-2 py-1 font-medium'>
-              <Link href='/pricing'>Pricing</Link>
-            </li>
-            <li className='px-2 py-1 font-medium'>
-              <Link href='/guests/find-file'>Find File</Link>
-            </li>
+            <Link href='/'>
+              <li className='px-2 py-1 font-medium'>Home</li>
+            </Link>
+            <Link href='/guests/find-file'>
+              <li className='px-2 py-1 font-medium'>Find File</li>
+            </Link>
           </ul>
         </nav>
       </section>
@@ -48,7 +36,7 @@ const Navbar = (): JSX.Element => {
       {!user ? (
         <nav className='hidden lg:block'>
           <ul className='flex items-center gap-5'>
-            <li className='border group border-black/60 rounded-md px-2 py-1 font-medium relative'>
+            {/* <li className='border group border-black/60 rounded-md px-2 py-1 font-medium relative'>
               <button>Accounts</button>
 
               <ul className='bg-white hidden text-[1rem] max-w-[10rem] drop-shadow-lg absolute top-8 left-0 px-2 group-hover:flex flex-col items-center py-2 rounded-md divide-y divide-black/20'>
@@ -59,7 +47,7 @@ const Navbar = (): JSX.Element => {
                   <Link href='/accounts/register'>Register</Link>
                 </li>
               </ul>
-            </li>
+            </li> */}
             <li className='bg-white text-black rounded-md px-2 py-1 font-medium'>
               <Link href='/guests/upload-file'>Upload</Link>
             </li>
@@ -83,7 +71,7 @@ const Navbar = (): JSX.Element => {
             </li>
           </ul>
         </nav>
-      )}
+      )} 
 
       <section className='flex items-center gap-1 lg:hidden'>
         {!user ? (

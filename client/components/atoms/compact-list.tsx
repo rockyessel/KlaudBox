@@ -13,6 +13,7 @@ import { useGuestContext } from '@/context/guest-context';
 import { BulkDeleteFiles } from '@/utils/api-request';
 import Link from 'next/link';
 import { format } from 'date-fns';
+import TableRow from './tr';
 
 const CompactList = ({ guestData }: { guestData: GuestFileModelProps[] }) => {
   const [selectedItems, setSelectedItems] = React.useState<string[]>([]);
@@ -68,145 +69,23 @@ const CompactList = ({ guestData }: { guestData: GuestFileModelProps[] }) => {
           <p></p>
         )}
       </div>
-      <table className='divide-y divide-[#515151] w-full'>
-        <thead className='sticky top-0 bg-[#2c2c2c]'>
-          <tr className='pb-10'>
-            <th className='py-4'>
-              <input
-                title='checkbox'
-                value={''}
-                name='all'
-                type='checkbox'
-                className='checkbox checkbox-error'
-              />
-            </th>
-            <th className='py-4 font-normal'>Icon</th>
-            <th className='py-4 font-normal'>Name</th>
-            <th className='py-4 font-normal'>Link</th>
-            <th className='py-4 font-normal'>Size</th>
-            <th className='py-4 font-normal'>Uploaded on</th>
-            <th className='py-4 font-normal'>Deleted on</th>
-            <th className='py-4 font-normal'>Code</th>
-            <th className='py-4 font-normal'>Sharing</th>
-            <th className='py-4 font-normal'>Action</th>
+      <table className='w-full text-sm text-left text-gray-500'>
+        <thead className='text-xs text-gray-700 bg-gray-50'>
+          <tr>
+            <th className='px-6 py-3'>Icon</th>
+            <th className='px-6 py-3'>Name</th>
+            <th className='px-6 py-3'>Link</th>
+            <th className='px-6 py-3'>Size</th>
+            <th className='px-6 py-3'>Uploaded on</th>
+            <th className='px-6 py-3'>Deleted on</th>
+            <th className='px-6 py-3'>Code</th>
+            <th className='px-6 py-3'>Sharing</th>
+            <th className='px-6 py-3'>Action</th>
           </tr>
         </thead>
-        <tbody className='divide-y divide-[#515151]'>
+        <tbody>
           {guestData?.map((data, index) => (
-            <tr key={index}>
-              <td>
-                <input
-                  onChange={handleCheckboxChange}
-                  title='checkbox'
-                  name={`checkbox_${index + 1} all`}
-                  type='checkbox'
-                  value={data.identifier}
-                  className='checkbox checkbox-error'
-                />
-              </td>
-
-              <td>
-                <TypeSwitcher
-                  class={`text-2xl`}
-                  extension={`${data?.extension}`}
-                />
-              </td>
-              <td className='inline-flex flex-col'>
-                <span className='text-rose-500'>
-                  {data?.originalFilename?.slice(0, 26)}
-                </span>
-              </td>
-
-              <td>
-                <span className='inline-flex flex-col'>
-                  <span className='text-rose-500 inline-flex items-center gap-1'>
-                    {data?.secure === 'public' && (
-                      <Link
-                        target={`_blank`}
-                        href={`/guests/files/${data?.cms_id}`}
-                      >
-                        <span className='inline-flex items-center gap-1'>
-                          File Info
-                          <HiOutlineExternalLink className='text-xl' />
-                        </span>
-                      </Link>
-                    )}
-                    {data?.secure === 'private' && (
-                      <span className='inline-flex items-center gap-1'>
-                        <Link href='/guests/find-file'>
-                          This file is private
-                        </Link>
-                        <HiOutlineExternalLink className='text-xl' />
-                      </span>
-                    )}
-                  </span>
-                </span>
-              </td>
-
-              <td>
-                <span>{formatFileSize(Number(data?.size))}</span>
-              </td>
-              <td>
-                <span>
-                  {data?.createdAt &&
-                    format(new Date(data?.createdAt), 'MMM d, yyyy')}
-                </span>
-              </td>
-              <td>
-                <span>
-                  {data?.createdAt &&
-                    format(
-                      new Date(
-                        next_day(
-                          new Date(data?.createdAt),
-                          Number(data?.delete_after)
-                        )
-                      ),
-                      'MMM d, yyyy'
-                    )}
-                </span>
-              </td>
-              <td>
-                <span>{data?.identifier}</span>
-              </td>
-
-              <td>
-                <span className='inline-flex items-center gap-2'>
-                  <span>
-                    {data?.secure === 'public' ? (
-                      <span className='text-green-500 inline-flex items-center gap-1'>
-                        Everyone <MdPublic />
-                      </span>
-                    ) : (
-                      <span className='text-rose-500 inline-flex items-center gap-1'>
-                        Private <MdVpnLock />
-                      </span>
-                    )}
-                  </span>
-                  <span>
-                    <AiFillQuestionCircle className='hidden lg:block' />
-                  </span>
-                </span>
-              </td>
-
-              <td>
-                <span className='inline-flex items-center gap-2'>
-                  <button
-                    onClick={() => handleDeleteFile(data?.identifier)}
-                    className='inline-flex items-center gap-1 text-rose-500'
-                  >
-                    <span> Delete</span>
-                    <AiTwotoneDelete />
-                  </button>
-                  <Link href={`/guests/files/${data?.cms_id}`}>
-                    <span className='inline-flex items-center gap-1'>
-                      <span className=''> View</span>
-                      <AiFillEye />
-                    </span>
-                  </Link>
-                </span>
-              </td>
-            </tr>
+            <TableRow key={index} data={data} />
           ))}
         </tbody>
       </table>

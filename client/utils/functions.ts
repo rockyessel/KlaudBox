@@ -317,9 +317,7 @@ export const FormValidation = (
   return currentState;
 };
 
-
-export const StorageCalculation = (files: UserFilesProps[]):string => {
-
+export const StorageCalculation = (files: UserFilesProps[]): string => {
   let totalSize = 0;
 
   files.forEach((file) => {
@@ -333,7 +331,7 @@ export const StorageCalculation = (files: UserFilesProps[]):string => {
 
   if (totalSize >= TB) {
     console.log(`Total size: ${(totalSize / TB).toFixed(2)} TB`);
-    return `${(totalSize / TB).toFixed(2)} TB`
+    return `${(totalSize / TB).toFixed(2)} TB`;
   } else if (totalSize >= GB) {
     console.log(`Total size: ${(totalSize / GB).toFixed(2)} GB`);
     return `${(totalSize / GB).toFixed(2)} GB`;
@@ -342,9 +340,33 @@ export const StorageCalculation = (files: UserFilesProps[]):string => {
     return `${(totalSize / MB).toFixed(2)} MB`;
   } else if (totalSize >= KB) {
     console.log(`Total size: ${(totalSize / KB).toFixed(2)} KB`);
-    return `${(totalSize / KB).toFixed(2)} KB`
+    return `${(totalSize / KB).toFixed(2)} KB`;
   } else {
     console.log(`Total size: ${totalSize} bytes`);
     return `${totalSize} B`;
   }
-}
+};
+
+export const downloadFile = async (url: string, name: string): Promise<void> => {
+  try {
+    // Fetch the file from the URL
+    const response = await fetch(url);
+    const data = await response.blob();
+
+    // Create a URL object with the downloaded data
+    const blob = new Blob([data], { type: response.headers.get('Content-Type') });
+    const blobUrl = URL.createObjectURL(blob);
+
+    // Create a temporary anchor element with the URL and trigger the download
+    const link = document.createElement('a');
+    link.href = blobUrl;
+    link.download = name;
+    link.click();
+
+    // Release the URL object and remove the anchor element
+    URL.revokeObjectURL(blobUrl);
+    link.remove();
+  } catch (error) {
+    console.error('Failed to download file:', error);
+  }
+};

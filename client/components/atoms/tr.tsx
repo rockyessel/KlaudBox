@@ -1,39 +1,125 @@
 import React from 'react';
-import { FileExtensionSwitcher } from '../index';
-import { RiMore2Fill } from 'react-icons/ri';
+import {
+  AiFillQuestionCircle,
+  AiTwotoneDelete,
+  AiFillEye,
+} from 'react-icons/ai';
+import { HiOutlineExternalLink } from 'react-icons/hi';
+import { MdContentCopy, MdPublic, MdVpnLock } from 'react-icons/md';
+import TypeSwitcher from '../molecules/file-extension-switcher';
+import { formatFileSize, next_day } from '../../utils/functions';
+import { GuestFileModelProps } from '@/interface';
+import { useGuestContext } from '@/context/guest-context';
+import { BulkDeleteFiles } from '@/utils/api-request';
+import Link from 'next/link';
+import { format } from 'date-fns';
 
-const TableRow = ():JSX.Element => {
-  const [showAction, setShowAction] = React.useState<boolean>(false);
+const TableRow = ({ data }: any): JSX.Element => {
+  const [selectedItems, setSelectedItems] = React.useState<string[]>([]);
 
-  const handleShowState = () => setShowAction(!showAction);
+  const { fileLength, localCollection, setLocalCollection, handleDeleteFile } =
+    useGuestContext();
 
-  console.log('showAction', showAction);
+  const handleCheckboxChange = (event: any) => {
+    const isChecked = event.target.checked;
+    const item = event.target.value;
+    if (isChecked) {
+      setSelectedItems((previousValue: any) => [...previousValue, item]);
+    } else {
+      setSelectedItems(selectedItems?.filter((i: any) => i !== item));
+    }
+  };
+
   return (
     <tr className='bg-white border-b d'>
-      <td className='w-4 p-4'>
-        <input title='checkbox' type='checkbox' className='checkbox' />
-        <label className='sr-only'>checkbox</label>
+      <td>
+        <TypeSwitcher class={`text-2xl`} extension={`${data?.extension}`} />
       </td>
-      <th className='px-6 py-4 font-medium text-gray-900 whitespace-nowrap inline-flex items-center gap-2'>
-        <FileExtensionSwitcher class={`text-2xl`} extension={`png`} />
-        <span>Apple MacBook Pro 17.png</span>
-      </th>
-      <td className='px-6 py-4'>12 MB</td>
-      <td className='px-6 py-4'>30 June 2023</td>
-      <td className='px-6 py-4'>Only you</td>
-      <td className='px-6 py-4 inline-flex items-center text-gray-500 relative cursor-pointer'>
-        <RiMore2Fill onClick={handleShowState} />
-        <ul
-          className={`absolute w-64 top-10 right-10 bg-white rounded-lg shadow-lg divide-y-[1px] divide-gray-200/30 p-2 ${
-            showAction ? 'block' : 'hidden'
-          }`}
-        >
-          <li className='px-4 py-2'>Generate temporal file link</li>
-          <li className='px-4 py-2'>Details</li>
-          <li className='px-4 py-2'>Share</li>
-          <li className='px-4 py-2'>Favorite</li>
-          <li className='px-4 py-2'>Delete</li>
-        </ul>
+      <td className='inline-flex flex-col'>
+        <span className='text-rose-500'>
+          {data?.originalFilename?.slice(0, 26)}
+        </span>
+      </td>
+
+      <td>
+        <span className='inline-flex flex-col'>
+          <span className='text-rose-500 inline-flex items-center gap-1'>
+            {data?.secure === 'public' && (
+              <Link target={`_blank`} href={`/guests/files/${data?.cms_id}`}>
+                <span className='inline-flex items-center gap-1'>
+                  File Info
+                  <HiOutlineExternalLink className='text-xl' />
+                </span>
+              </Link>
+            )}
+            {data?.secure === 'private' && (
+              <span className='inline-flex items-center gap-1'>
+                <Link href='/guests/find-file'>This file is private</Link>
+                <HiOutlineExternalLink className='text-xl' />
+              </span>
+            )}
+          </span>
+        </span>
+      </td>
+
+      <td>
+        <span>{formatFileSize(Number(data?.size))}</span>
+      </td>
+      <td>
+        <span>
+          {data?.createdAt && format(new Date(data?.createdAt), 'MMM d, yyyy')}
+        </span>
+      </td>
+      <td>
+        <span>
+          {data?.createdAt &&
+            format(
+              new Date(
+                next_day(new Date(data?.createdAt), Number(data?.delete_after))
+              ),
+              'MMM d, yyyy'
+            )}
+        </span>
+      </td>
+      <td>
+        <span>{data?.identifier}</span>
+      </td>
+
+      <td>
+        <span className='inline-flex items-center gap-2'>
+          <span>
+            {data?.secure === 'public' ? (
+              <span className='text-green-500 inline-flex items-center gap-1'>
+                Everyone <MdPublic />
+              </span>
+            ) : (
+              <span className='text-rose-500 inline-flex items-center gap-1'>
+                Private <MdVpnLock />
+              </span>
+            )}
+          </span>
+          <span>
+            <AiFillQuestionCircle className='hidden lg:block' />
+          </span>
+        </span>
+      </td>
+
+      <td>
+        <span className='inline-flex items-center gap-2'>
+          <button
+            onClick={() => handleDeleteFile(data?.identifier)}
+            className='inline-flex items-center gap-1 text-rose-500'
+          >
+            <span> Delete</span>
+            <AiTwotoneDelete />
+          </button>
+          <Link href={`/guests/files/${data?.cms_id}`}>
+            <span className='inline-flex items-center gap-1'>
+              <span className=''> View</span>
+              <AiFillEye />
+            </span>
+          </Link>
+        </span>
       </td>
     </tr>
   );

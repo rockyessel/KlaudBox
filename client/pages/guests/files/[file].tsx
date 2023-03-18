@@ -42,10 +42,10 @@ const FileDetails = ({
     }
   }, [memoizedAllFiles]);
 
-   const router = useRouter();
+  const router = useRouter();
 
- if (router.isFallback) return <p>404</p>;
- 
+  if (router.isFallback) return <p>404</p>;
+
   return (
     <Main class={` ${checkboxState ? 'h-full' : 'h-screen'}`}>
       {file_data?.file.secure !== 'private' ? (
@@ -53,7 +53,7 @@ const FileDetails = ({
           <FileCardInfo data={file_data} />
 
           <section className='flex gap-10'>
-            <section className='bg-zinc-900 flex rounded-lg items-center justify-center p-6'>
+            <section className='bg-white shadow-lg flex rounded-lg items-center justify-center p-6'>
               <div className='flex gap-2 items-center divide-x-[1px] divide-gray-300/60'>
                 <p className='text-xl font-medium inline-flex items-center gap-1'>
                   Preview <BsInfoCircleFill />{' '}
@@ -72,48 +72,10 @@ const FileDetails = ({
                 </div>
               </div>
             </section>
-
-            <section className='w-full p-6 bg-[#2c2c2c] rounded-lg flex gap-16'>
-              <div className='flex gap-5'>
-                <div className='bg-white flex items-center w-[20rem] px-4 py-2 rounded-lg text-black hover:ring-2 hover:ring-gray-500'>
-                  <input
-                    value={code}
-                    onChange={(event) => setCode(event.target.value)}
-                    title='code'
-                    type='text'
-                    name='code'
-                    id='code'
-                    placeholder='JSDJ2'
-                    className='outline-none w-full h-full font-semibold'
-                  />
-                  {downloadState ? (
-                    <AiOutlineBarcode className='text-3xl' />
-                  ) : (
-                    <BsFillCheckCircleFill className='text-3xl text-green-500' />
-                  )}
-                </div>
-                <div className='flex items-center gap-5'>
-                  <button
-                    disabled={downloadState}
-                    className='px-4 py-2 rounded-lg bg-blue-500'
-                  >
-                    Download
-                  </button>
-                  <button
-                    onClick={() =>
-                      handleDeleteFile(`${allFiles?.file?.identifier}`)
-                    }
-                    className='px-4 py-2 rounded-lg bg-rose-500'
-                  >
-                    Delete File
-                  </button>
-                </div>
-              </div>
-            </section>
           </section>
 
           {checkboxState && (
-            <section className='w-fit p-6 bg-[#2c2c2c] rounded-lg flex gap-2 flex-col'>
+            <section className='w-fit p-6 bg-white shadow-lg rounded-lg flex gap-2 flex-col'>
               <MediaSwitcher data={file_data} />
             </section>
           )}

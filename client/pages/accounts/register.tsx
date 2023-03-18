@@ -9,6 +9,7 @@ import type { RootState, AppDispatch } from '@/reduxtoolkit/app/store';
 import { register } from '@/reduxtoolkit/features/auth/auth-request';
 import { reset } from '@/reduxtoolkit/features/files/files-slice';
 import { useRouter } from 'next/router';
+import Loader from '@/components/atoms/loader';
 
 const RegisterPage = () => {
   const [showState, setShowState] = React.useState(false);
@@ -91,25 +92,23 @@ const RegisterPage = () => {
     dispatch(reset());
   }, [dispatch, router, success, user]);
 
-  if (isLoading)
-    return (
-      <main className='bg-rose-800 text-white font-extrabold'>Loading</main>
-    );
-
+  if (isLoading) return <Loader />;
   return (
-    <main className='w-full h-screen flex justify-center items-center'>
-      <section className='bg-gray-300 w-full h-full pt-20 px-20'>
-        <div className='lg:w-[30rem] flex flex-col justify-center h-full gap-10 mx-auto'>
-          <div className='text-center'>
-            <p className='text-5xl'>Welcome back?</p>
-            <p className='text-xl'>
-              The faster you fill up, the faster you get a ticket
+    <main className='w-screen h-screen flex justify-center bg-gray-300 items-center'>
+      <section className='w-full h-full flex justify-center items-center'>
+        <div className='lg:w-[50rem] w-full flex flex-col gap-5 px-4 lg:px-20 mx-auto'>
+          <div className='text-center mb-5'>
+            <p className='text-xl lg:text-5xl font-bold lg:mb-5'>
+              Create an account with us
+            </p>
+            <p className='text-sm lg:text-xl font-medium'>
+              The faster you fill up, the faster you get into your dashboard
             </p>
           </div>
 
           <form
             onSubmit={handleSubmission}
-            className='flex flex-col gap-5 font-medium'
+            className='flex flex-col gap-5 font-medium '
           >
             <div className='flex flex-col gap-2'>
               <label>Email</label>
@@ -169,7 +168,7 @@ const RegisterPage = () => {
                   type='checkbox'
                   onChange={handleAccountFormData}
                 />
-                <label>Remember me</label>
+                <label>Read Terms and Conditions</label>
               </div>
 
               <Link href='/accounts/forgot-password'>Forgot Password?</Link>
@@ -202,9 +201,6 @@ const RegisterPage = () => {
             </p>
           </div>
         </div>
-      </section>
-      <section className='bg-black w-full h-full pt-20'>
-        Cover RegisterPage
       </section>
     </main>
   );

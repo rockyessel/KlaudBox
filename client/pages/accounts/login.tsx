@@ -9,9 +9,12 @@ import type { RootState, AppDispatch } from '@/reduxtoolkit/app/store';
 import { login } from '@/reduxtoolkit/features/auth/auth-request';
 import { reset } from '@/reduxtoolkit/features/files/files-slice';
 import { useRouter } from 'next/router';
+import Image from 'next/image';
+import Loader from '@/components/atoms/loader';
 
 const LoginPage = () => {
   const [showState, setShowState] = React.useState(false);
+  const [load, setLoad] = React.useState(false);
   const [formData, setFormData] = React.useState({
     email: '',
     password: '',
@@ -30,6 +33,8 @@ const LoginPage = () => {
   );
   const dispatch: AppDispatch = useDispatch();
   const router = useRouter();
+
+  const { section } = router.query;
 
   const handleShowPassword = () => {
     setShowState((previousState) => !previousState);
@@ -72,6 +77,7 @@ const LoginPage = () => {
 
   const handleSubmission = async (event: React.SyntheticEvent) => {
     try {
+      setLoad(true);
       event.preventDefault();
 
       const validateObject = handleValidation();
@@ -79,41 +85,42 @@ const LoginPage = () => {
       if (!email || !password) return;
 
       dispatch(login(formData));
+
+      console.log('Logged-in');
+      setLoad(false);
     } catch (error) {
       console.log(error);
     }
   };
 
   React.useEffect(() => {
-    if (success) {
-      router.push('/dashboard');
+    success ? router.push('/dashboard') : null;
+    user ? router.push('/dashboard') : null;
+
+    if (!user) {
+      console.log('you need to login')
     }
-
     dispatch(reset());
-  }, [dispatch, router, success, user]);
+  }, [dispatch, router, success, user, section]);
 
-  if (isLoading)
-    return (
-      <main className='bg-rose-800 text-white font-extrabold'>Loading</main>
-    );
+  if (isLoading || load) return <Loader />;
 
   return (
-    <main className='w-full h-screen flex justify-center items-center'>
-      <section className='bg-black w-full h-full pt-20'>
-        Cover LoginPage
-      </section>
-      <section className='bg-gray-300 w-full h-full pt-20 px-20'>
-        <div className='lg:w-[30rem] flex flex-col justify-center h-full gap-10 mx-auto'>
-          <div className='text-center'>
-            <p className='text-5xl'>Welcome back?</p>
-            <p className='text-xl'>
-              The faster you fill up, the faster you get a ticket
+    <main className='w-screen h-screen flex justify-center bg-gray-300 items-center'>
+      <section className='w-full h-full flex justify-center items-center'>
+        <div className='lg:w-[50rem] w-full flex flex-col gap-5 px-4 lg:px-20 mx-auto'>
+          <div className='text-center mb-5'>
+            <p className='text-xl lg:text-5xl font-bold lg:mb-5'>
+              Welcome back
+            </p>
+            <p className='text-sm lg:text-xl font-medium'>
+              Continue from where you left off.
             </p>
           </div>
 
           <form
             onSubmit={handleSubmission}
-            className='flex flex-col gap-5 font-medium'
+            className='flex flex-col gap-5 font-medium '
           >
             <div className='flex flex-col gap-2'>
               <label>Email</label>
@@ -132,6 +139,7 @@ const LoginPage = () => {
                 </p>
               )}
             </div>
+
             <div className='flex flex-col gap-2'>
               <label>Password</label>
               <div className='input rounded-none flex items-center justify-between'>
@@ -162,16 +170,17 @@ const LoginPage = () => {
                 </p>
               )}
             </div>
+
             <div className='flex justify-between'>
               <div className='flex items-center gap-1'>
                 <input
                   title='checkbox'
                   className='checkbox'
                   name='remember_me'
-                  onChange={handleAccountFormData}
                   type='checkbox'
+                  onChange={handleAccountFormData}
                 />
-                <label>Remember me</label>
+                <label>Read Terms and Conditions</label>
               </div>
 
               <Link href='/accounts/forgot-password'>Forgot Password?</Link>
@@ -182,21 +191,21 @@ const LoginPage = () => {
                 type='submit'
                 className='bg-black text-white w-full px-4 py-2'
               >
-                Login
+                Log into account
               </button>
               <button
                 type='button'
                 className='w-full inline-flex items-center gap-1 justify-center border-2 border-gray-500/30 px-4 py-2'
               >
                 <FcGoogle className='text-xl' />
-                <span>Continue with Google</span>
+                <span>Login with Google</span>
               </button>
             </div>
           </form>
 
           <div className='mt-10 text-center'>
             <p>
-              Don&apos;t have an account? Then{' '}
+              Have an account? Then{' '}
               <Link className='font-bold underline' href='/accounts/register'>
                 register
               </Link>{' '}

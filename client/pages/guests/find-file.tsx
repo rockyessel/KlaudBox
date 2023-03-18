@@ -37,7 +37,7 @@ const FindFilePage = () => {
       <section className='flex justify-center items-center'>
         <form
           onSubmit={handleFindFileWithCode}
-          className='bg-white flex items-center w-full p-2 rounded-lg text-black font-semibold focus:ring-2 focus:ring-rose-800 hover:ring-2 hover:ring-rose-500'
+          className='ring-[1px] ring-gray-500/30 bg-white flex items-center w-full p-2 rounded-lg text-black font-semibold'
         >
           <input
             title='Code'

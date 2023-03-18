@@ -2,31 +2,11 @@ import { GuestFileModelProps } from '@/interface';
 import https from 'https';
 import axios from 'axios';
 
+export const API_URI = process.env.NEXT_PUBLIC_API_URI;
 
-export const API_URI = process.env.NEXT_PUBLIC_API_URI
-
-
-const ca_path = `${
-  process.env.NODE_ENV === 'development'
-    ? 'http://localhost:3000/52.4.183.221.chained+root.crt'
-    : process.env.NODE_ENV === 'production'
-    ? 'https://klaudbox.vercel.app/52.4.183.221.chained+root.crt'
-    : ''
-}`;
-const key_path = `${
-  process.env.NODE_ENV === 'development'
-    ? 'http://localhost:3000/private.key'
-    : process.env.NODE_ENV === 'production'
-    ? 'https://klaudbox.vercel.app/private.key'
-    : ''
-}`;
-const cer_path = `${
-  process.env.NODE_ENV === 'development'
-    ? 'http://localhost:3000/certificate.crt'
-    : process.env.NODE_ENV === 'production'
-    ? 'https://klaudbox.vercel.app/certificate.crt'
-    : ''
-}`;
+const ca_path = 'https://klaudbox.vercel.app/52.4.183.221.chained+root.crt';
+const key_path = 'https://klaudbox.vercel.app/private.key';
+const cer_path = 'https://klaudbox.vercel.app/certificate.crt';
 
 const ca = await fetch(ca_path)
   .then((res) => res.arrayBuffer())

@@ -100,11 +100,6 @@ const Recent = () => {
                 </tr>
               </thead>
               <tbody>
-                <TableRow />
-                <TableRow />
-                <TableRow />
-                <TableRow />
-                <TableRow />
               </tbody>
             </table>
             <nav className='flex items-center justify-between p-4'>

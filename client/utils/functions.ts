@@ -354,7 +354,7 @@ export const downloadFile = async (url: string, name: string): Promise<void> => 
     const data = await response.blob();
 
     // Create a URL object with the downloaded data
-    const blob = new Blob([data], { type: response.headers.get('Content-Type') });
+    const blob = new Blob([data], { type: response.headers.get('Content-Type') || undefined });
     const blobUrl = URL.createObjectURL(blob);
 
     // Create a temporary anchor element with the URL and trigger the download

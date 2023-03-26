@@ -31,7 +31,7 @@ const TableRow = ({ data }: { data: GuestFileModelProps }): JSX.Element => {
     }
   };
 
-  const createdAt = new Date(data?.createdAt);
+  const createdAt = new Date(`${data?.createdAt}`);
   const currentTime = new Date();
   const differenceInSeconds =
     (currentTime.getTime() - createdAt.getTime()) / 1000;
@@ -44,7 +44,7 @@ const TableRow = ({ data }: { data: GuestFileModelProps }): JSX.Element => {
     }, 5000);
 
     return () => clearTimeout(turnFalse);
-  }, [data.createdAt, differenceInSeconds]);
+  }, [data?.createdAt, differenceInSeconds]);
 
   return (
     <tr

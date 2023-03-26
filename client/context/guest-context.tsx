@@ -13,6 +13,7 @@ export interface GuestContextProps {
   fileLength: number;
   progress: number;
   modalState: boolean;
+  isFileUploaded: boolean;
   viewOptionState: boolean;
   loadingState: boolean;
   setLocalCollection: React.Dispatch<
@@ -31,8 +32,6 @@ export interface GuestContextProps {
   fileUpdates: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
-
-
 const GuestContext = React.createContext<GuestContextProps>({
   localCollection: [],
   modalFormData: InitialModalFormData,
@@ -43,6 +42,7 @@ const GuestContext = React.createContext<GuestContextProps>({
   progress: 0,
   modalState: false,
   viewOptionState: false,
+  isFileUploaded: false,
   loadingState: false,
   setModalFormData: () => {},
   setLocalCollection: () => {},
@@ -77,6 +77,7 @@ export const GuestContextProvider = ({ children }: Props) => {
   const [fileLength, setFileLength] = React.useState<number>(0);
   const [modalState, setModalState] = React.useState<boolean>(false);
   const [viewOptionState, setViewOptionState] = React.useState(false);
+  const [isFileUploaded, setIsFileUploaded] = React.useState<boolean>(false);
   const [modalFormData, setModalFormData] =
     React.useState<InitialModalFormDataProps>(InitialModalFormData);
 
@@ -99,9 +100,6 @@ export const GuestContextProvider = ({ children }: Props) => {
     }
     return [];
   });
-
-  if (!isEqual) {
-  }
 
   // @desc useEffects Zone
   React.useEffect(() => {
@@ -132,6 +130,7 @@ export const GuestContextProvider = ({ children }: Props) => {
 
   const handleClose = () => {
     setModalState((prevState) => !prevState);
+    setFile('');
   };
 
   const handleDeleteFile = async (identifier: string) => {
@@ -174,6 +173,13 @@ export const GuestContextProvider = ({ children }: Props) => {
 
       const data_ = await GuestFileUploadPost(data, setProgress);
 
+      if (data_.success) {
+        setIsFileUploaded(true);
+        setTimeout(() => {
+          setIsFileUploaded(false);
+        }, 5000);
+      }
+
       const new_localCollection = [...localCollection, data_.file];
       setLocalCollection(new_localCollection);
 
@@ -203,6 +209,7 @@ export const GuestContextProvider = ({ children }: Props) => {
     viewOptionState,
     selectedOption,
     progress,
+    isFileUploaded,
     localCollection,
     setLocalCollection,
     // @desc Functions

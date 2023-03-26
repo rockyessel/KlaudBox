@@ -14,8 +14,9 @@ import { BulkDeleteFiles } from '@/utils/api-request';
 import Link from 'next/link';
 import { format } from 'date-fns';
 
-const TableRow = ({ data }: any): JSX.Element => {
+const TableRow = ({ data }: { data: GuestFileModelProps }): JSX.Element => {
   const [selectedItems, setSelectedItems] = React.useState<string[]>([]);
+  const [justAdded, setJustAdded] = React.useState<boolean>(false);
 
   const { fileLength, localCollection, setLocalCollection, handleDeleteFile } =
     useGuestContext();
@@ -30,8 +31,27 @@ const TableRow = ({ data }: any): JSX.Element => {
     }
   };
 
+  const createdAt = new Date(data?.createdAt);
+  const currentTime = new Date();
+  const differenceInSeconds =
+    (currentTime.getTime() - createdAt.getTime()) / 1000;
+
+  React.useEffect(() => {
+    const isRecentlyUploaded = differenceInSeconds <= 10;
+    setJustAdded(isRecentlyUploaded);
+    const turnFalse = setTimeout(() => {
+      setJustAdded(false);
+    }, 5000);
+
+    return () => clearTimeout(turnFalse);
+  }, [data.createdAt, differenceInSeconds]);
+
   return (
-    <tr className='bg-white border-b d'>
+    <tr
+      className={`bg-white border-b ${
+        justAdded ? 'bg-green-200 text-green-700' : null
+      }`}
+    >
       <td>
         <TypeSwitcher class={`text-2xl`} extension={`${data?.extension}`} />
       </td>

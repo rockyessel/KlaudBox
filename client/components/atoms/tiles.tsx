@@ -53,36 +53,42 @@ const Tiles = ({ guestData }: { guestData: GuestFileModelProps[] }) => {
         )}
       </div>
       <ul className='flex flex-wrap'>
-        {guestData?.map((data, index) => (
-          <li
-            key={index}
-            className='flex relative flex-col items-center hover:bg-gray-600/60 cursor-pointer rounded-lg p-5'
-          >
-            <input
-              className='checkbox checkbox-error absolute top-3 left-3'
-              type='checkbox'
-              title='checkbox'
-              onChange={handleCheckboxChange}
-              value={`${data?.identifier}`}
-            />
-            <TypeSwitcher
-              class={`text-[5rem] text-gray-300`}
-              extension={`${data?.extension}`}
-            />
+        {guestData
+          ?.sort(
+            (a, b) =>
+              new Date(b?.createdAt).getTime() -
+              new Date(a?.createdAt).getTime()
+          )
+          ?.map((data, index) => (
+            <li
+              key={index}
+              className='flex relative flex-col items-center hover:bg-gray-600/60 cursor-pointer rounded-lg p-5'
+            >
+              <input
+                className='checkbox checkbox-error absolute top-3 left-3'
+                type='checkbox'
+                title='checkbox'
+                onChange={handleCheckboxChange}
+                value={`${data?.identifier}`}
+              />
+              <TypeSwitcher
+                class={`text-[5rem] text-gray-300`}
+                extension={`${data?.extension}`}
+              />
 
-            <div className='text-center'>
-              <p className='text-gray-300 text-[14px] hover:underline cursor-pointer'>
-                <Link href={`/guests/files/${data?.cms_id}`}>
-                  {data?.originalFilename?.slice(0, 26)}
-                </Link>
-              </p>
-              <time className='text-[0.8rem]'>
-                {data?.createdAt &&
-                  format(new Date(data?.createdAt), 'MMM d, yyyy')}
-              </time>
-            </div>
-          </li>
-        ))}
+              <div className='text-center'>
+                <p className='text-gray-300 text-[14px] hover:underline cursor-pointer'>
+                  <Link href={`/guests/files/${data?.cms_id}`}>
+                    {data?.originalFilename?.slice(0, 26)}
+                  </Link>
+                </p>
+                <time className='text-[0.8rem]'>
+                  {data?.createdAt &&
+                    format(new Date(data?.createdAt), 'MMM d, yyyy')}
+                </time>
+              </div>
+            </li>
+          ))}
       </ul>
     </>
   );

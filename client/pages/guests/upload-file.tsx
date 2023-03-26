@@ -14,71 +14,62 @@ const UploadFilePage = () => {
     viewOptionState,
     selectedOption,
     viewOption,
+    isFileUploaded,
   } = useGuestContext();
 
   return (
     <>
       <Modal />
-
       <Main>
+      {isFileUploaded && (
+        <div className='w-full flex justify-center absolute top-10'>
+          <div className='w-fit alert alert-success shadow-lg'>
+            <svg
+              xmlns='http://www.w3.org/2000/svg'
+              className='stroke-current flex-shrink-0 h-6 w-6'
+              fill='none'
+              viewBox='0 0 24 24'
+            >
+              <path
+                strokeLinecap='round'
+                strokeLinejoin='round'
+                strokeWidth='2'
+                d='M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z'
+              />
+            </svg>
+            <span>Your file was added successfully.</span>
+          </div>
+        </div>
+      )}
         <section className=' flex flex-col gap-5'>
           <div className='w-full p-2 bg-white shadow-lg rounded-lg flex flex-col gap-5'>
             <div className='flex flex-col gap-5'>
               <p className='font-bold text-2xl'>My Files</p>
-              <div className='flex items-center justify-between'>
+              <div className='flex items-center justify-between text-white '>
                 <button
+                  type='button'
+                  title='Upload file'
                   onClick={handleClose}
                   className='bg-rose-700 rounded-lg w-fit px-4 py-2 inline-flex items-center gap-1 text-xl font-medium'
                 >
                   Upload <AiOutlinePlus />
                 </button>
 
-                <form>
-                  <select
-                    title={viewOption}
-                    value={viewOption}
-                    onChange={(event) => setViewOption(event.target.value)}
-                    name=''
-                    id=''
+                <ul className='flex items-center gap-2'>
+                  <li
+                    onClick={() => setViewOption('Compact List')}
+                    className='bg-rose-700 rounded-lg w-fit px-4 py-2 inline-flex items-center gap-1 text-xl font-medium'
                   >
-                    <option value='List'>List</option>
-                    <option value='Tiles'>Tiles</option>
-                  </select>
-                </form>
-                {/* 
-                <li
-                  onClick={() => setViewOptionState((pre) => !pre)}
-                  className='bg-rose-700 rounded-lg w-fit px-4 py-2 inline-flex items-center gap-1 text-xl font-medium relative'
-                >
-                  {selectedOption !== 'Tiles' ? (
                     <FaThList />
-                  ) : (
-                    <BsGrid1X2Fill />
-                  )}
-                  <span className='hidden sm:block'>{selectedOption}</span>
-                  {viewOptionState && (
-                    <ul className='bg-white text-[1rem] w-[10rem] absolute -left-[6.5rem] sm:-left-16 top-10 sm:top-12 px-2 flex flex-col items-center py-2 rounded-md divide-y divide-black/20'>
-                      <li
-                        onClick={() => setViewOption('List')}
-                        className='w-full inline-flex items-center gap-2 py-1 px-2'
-                      >
-                        <FaThList /> List
-                      </li>
-                      <li
-                        onClick={() => setViewOption('Compact List')}
-                        className='w-full inline-flex items-center gap-2 py-1 px-2'
-                      >
-                        <FaThList /> Compact List
-                      </li>
-                      <li
-                        onClick={() => setViewOption('Tiles')}
-                        className='w-full inline-flex items-center gap-2 py-1 px-2'
-                      >
-                        <BsGrid1X2Fill /> Tiles
-                      </li>
-                    </ul>
-                  )}
-                </li> */}
+                    List
+                  </li>
+                  <li
+                    onClick={() => setViewOption('Tiles')}
+                    className='bg-rose-700 rounded-lg w-fit px-4 py-2 inline-flex items-center gap-1 text-xl font-medium'
+                  >
+                    <BsGrid1X2Fill /> Tiles
+                  </li>
+                </ul>
               </div>
             </div>
           </div>

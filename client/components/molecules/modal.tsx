@@ -1,6 +1,5 @@
 import React, { ChangeEvent } from 'react';
 import { BsFillCloudUploadFill } from 'react-icons/bs';
-import { FaTimes } from 'react-icons/fa';
 import { RiArrowDownSFill } from 'react-icons/ri';
 import { MdPublic, MdVpnLock } from 'react-icons/md';
 import { useGuestContext } from '@/context/guest-context';
@@ -25,6 +24,7 @@ const Modal = () => {
     setModalState,
     modalFormData,
     setModalFormData,
+    isFileUploaded,
   } = useGuestContext();
 
   const isFileSelected: boolean =
@@ -46,6 +46,8 @@ const Modal = () => {
       delete_after: deleteAfter,
     }));
   };
+
+  console.log('isFileUploaded', isFileUploaded);
 
   return (
     <section
@@ -103,7 +105,7 @@ const Modal = () => {
 
                 <div className='relative pt-1'>
                   <div className='flex mb-2 items-center justify-between'>
-                    <div>
+                    <div className='w-full flex items-center justify-between'>
                       <span className='animate-pulse text-xs font-semibold inline-block py-1 px-2 uppercase rounded-full text-pink-600 bg-pink-200'>
                         {progress === 100
                           ? 'Upload completed'
@@ -111,6 +113,11 @@ const Modal = () => {
                           ? 'Start Upload'
                           : 'Upload in progress...'}
                       </span>
+                      {progress === 100 && (
+                        <span className='animate-pulse text-xs font-semibold inline-block py-1 px-2 uppercase rounded-full text-green-600 bg-green-200 mr-2'>
+                          {progress === 100 && 'Adding file'}
+                        </span>
+                      )}
                     </div>
                     <div className='text-right'>
                       <span className='text-xs font-semibold inline-block text-pink-600'>

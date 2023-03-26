@@ -1,17 +1,9 @@
 import React from 'react';
-import { Navbar } from '@/components';
 import Image from 'next/image';
+import Link from 'next/link';
 
 const Home = () => {
-  React.useEffect(() => {
-    const a = async () => {
-      const c = await fetch('/api/hello');
-      c.json();
-    };
-
-    a();
-  }, []);
-
+ 
   return (
     <React.Fragment>
       <section className='px-6 lg:px-20 w-full py-20 flex items-center justify-center'>
@@ -32,7 +24,7 @@ const Home = () => {
 
             <div className='font-bold flex items-center gap-4'>
               <button className='bg-black text-white px-4 py-2 rounded-md'>
-                Upload
+                <Link href='/guests/upload-file'>Upload</Link>
               </button>
               <button className='border border-black px-4 py-2 rounded-md'>
                 Demo video

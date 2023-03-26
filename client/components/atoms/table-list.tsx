@@ -32,8 +32,8 @@ const TableList = ({ guestData }: { guestData: GuestFileModelProps[] }) => {
 
   return (
     <section
-      className={`inline-block overflow-x-auto whitespace-nowrap  ${
-        fileLength > 6 ? 'h-[30rem]' : 'h-auto'
+      className={`flex flex-col gap-3 overflow-x-auto whitespace-nowrap  ${
+        fileLength > 10 ? 'h-[30rem]' : 'h-auto'
       }`}
     >
       <div className='flex items-center gap-5'>
@@ -81,9 +81,15 @@ const TableList = ({ guestData }: { guestData: GuestFileModelProps[] }) => {
           </tr>
         </thead>
         <tbody>
-          {guestData?.map((data, index) => (
-            <TableRow key={index} data={data} />
-          ))}
+          {guestData
+            ?.sort(
+              (a, b) =>
+                new Date(b?.createdAt).getTime() -
+                new Date(a?.createdAt).getTime()
+            )
+            ?.map((data, index) => (
+              <TableRow key={index} data={data} />
+            ))}
         </tbody>
       </table>
     </section>

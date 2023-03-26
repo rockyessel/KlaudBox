@@ -42,7 +42,8 @@ const UserModal = () => {
       arrFiles.forEach((file) => {
         data.append(`files`, file);
       });
-       await dispatch(post_files({ data, setProgress }));
+      await dispatch(post_files({ data, setProgress }));
+
       handleModalState();
     } catch (error) {
       console.log(error);

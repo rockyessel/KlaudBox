@@ -152,7 +152,7 @@ const UploadFilePage = () => {
           </p>
         </section>
 
-        <section className='p-6 w-full bg-white shadow-md rounded-sm flex flex-col gap-5 overflow-y-visible'>
+        <section className='p-6 w-full bg-white shadow-md rounded-sm flex flex-col gap-5 overflow-y-visible mb-10'>
           {fileLength ? (
             <SwitchViewOptions />
           ) : (

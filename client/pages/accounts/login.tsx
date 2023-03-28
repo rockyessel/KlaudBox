@@ -34,8 +34,6 @@ const LoginPage = () => {
   const dispatch: AppDispatch = useDispatch();
   const router = useRouter();
 
-  const { section } = router.query;
-
   const handleShowPassword = () => {
     setShowState((previousState) => !previousState);
   };
@@ -77,34 +75,26 @@ const LoginPage = () => {
 
   const handleSubmission = async (event: React.SyntheticEvent) => {
     try {
-      setLoad(true);
       event.preventDefault();
-
       const validateObject = handleValidation();
       const { email, password } = validateObject;
       if (!email || !password) return;
-
-      dispatch(login(formData));
-
-      console.log('Logged-in');
-      setLoad(false);
+      await dispatch(login(formData));
     } catch (error) {
       console.log(error);
     }
   };
 
   React.useEffect(() => {
-    success ? router.push('/dashboard') : null;
     user ? router.push('/dashboard') : null;
-
-    if (!user) {
-      console.log('you need to login')
-    }
+    if (!user) console.log('you need to login');
     dispatch(reset());
-  }, [dispatch, router, success, user, section]);
+  }, [dispatch, router, success, user]);
 
-  if (isLoading || load) return <Loader />;
-
+  if (isLoading) {
+    router.push('/dashboard');
+    return <Loader />;
+  }
   return (
     <main className='w-screen h-screen flex justify-center bg-gray-300 items-center'>
       <section className='w-full h-full flex justify-center items-center'>

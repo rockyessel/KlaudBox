@@ -1,6 +1,9 @@
 import { GuestFileModelProps } from '@/interface';
 import https from 'https';
 import axios from 'axios';
+import { next_day } from './functions';
+import { useGuestContext } from '@/context/guest-context';
+
 
 export const API_URI = process.env.NEXT_PUBLIC_API_URI;
 
@@ -137,3 +140,4 @@ export const BulkDeleteFiles = async (
 export const logout = () => {
   window.localStorage.removeItem('user');
 };
+

@@ -14,7 +14,7 @@ const AudioPlayer = ({ url }: { url: UserFilesProps }) => {
 
   React.useEffect(() => {
     const fetchData = async () => {
-    try {
+      try {
         const response = await fetch(`${url.url}`);
         const data = await response.blob();
 
@@ -26,9 +26,9 @@ const AudioPlayer = ({ url }: { url: UserFilesProps }) => {
             console.log(error);
           },
         });
-    } catch (error) {
-      console.log(error)
-    }
+      } catch (error) {
+        console.log(error);
+      }
     };
     fetchData();
   }, [url]);

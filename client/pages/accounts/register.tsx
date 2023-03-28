@@ -77,7 +77,6 @@ const RegisterPage = () => {
       const validateObject = handleValidation();
       const { email, password } = validateObject;
       if (!email || !password) return;
-      console.log('formData', formData);
       const data = { email: formData.email, password: formData.password };
       dispatch(register(data));
     } catch (error) {
@@ -86,13 +85,13 @@ const RegisterPage = () => {
   };
 
   React.useEffect(() => {
-    if (success) {
-      router.push('/dashboard');
-    }
     dispatch(reset());
   }, [dispatch, router, success, user]);
 
-  if (isLoading) return <Loader />;
+  if (isLoading) {
+    router.push('/dashboard');
+    return <Loader />;
+  }
   return (
     <main className='w-screen h-screen flex justify-center bg-gray-300 items-center'>
       <section className='w-full h-full flex justify-center items-center'>

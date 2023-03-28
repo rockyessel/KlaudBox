@@ -17,11 +17,8 @@ export const isEqual = (obj1: any, obj2: any) => {
   return JSON.stringify(obj1) === JSON.stringify(obj2);
 };
 
-export const next_day = (
-  createdAt_date: Date,
-  number_of_days: number
-): Date => {
-  const day_in_ms = 24 * 60 * 60 * 1000 * number_of_days;
+export const next_day = ( createdAt_date: Date, number_of_days: number ): Date => {
+  const day_in_ms = (24 * 60 * 60 * 1000) * number_of_days;
   const createdAt_in_ms = createdAt_date.getTime();
 
   const nextDay_date = new Date(createdAt_in_ms + day_in_ms);
@@ -330,19 +327,19 @@ export const StorageCalculation = (files: UserFilesProps[]): string => {
   const TB = GB * 1024;
 
   if (totalSize >= TB) {
-    console.log(`Total size: ${(totalSize / TB).toFixed(2)} TB`);
+    // console.log(`Total size: ${(totalSize / TB).toFixed(2)} TB`);
     return `${(totalSize / TB).toFixed(2)} TB`;
   } else if (totalSize >= GB) {
-    console.log(`Total size: ${(totalSize / GB).toFixed(2)} GB`);
+    // console.log(`Total size: ${(totalSize / GB).toFixed(2)} GB`);
     return `${(totalSize / GB).toFixed(2)} GB`;
   } else if (totalSize >= MB) {
-    console.log(`Total size: ${(totalSize / MB).toFixed(2)} MB`);
+    // console.log(`Total size: ${(totalSize / MB).toFixed(2)} MB`);
     return `${(totalSize / MB).toFixed(2)} MB`;
   } else if (totalSize >= KB) {
-    console.log(`Total size: ${(totalSize / KB).toFixed(2)} KB`);
+    // console.log(`Total size: ${(totalSize / KB).toFixed(2)} KB`);
     return `${(totalSize / KB).toFixed(2)} KB`;
   } else {
-    console.log(`Total size: ${totalSize} bytes`);
+    // console.log(`Total size: ${totalSize} bytes`);
     return `${totalSize} B`;
   }
 };
@@ -370,3 +367,4 @@ export const downloadFile = async (url: string, name: string): Promise<void> => 
     console.error('Failed to download file:', error);
   }
 };
+

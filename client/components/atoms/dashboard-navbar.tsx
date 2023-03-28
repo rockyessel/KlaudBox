@@ -11,7 +11,7 @@ import { useUserContext } from '@/context/user-context';
 import Menu from './menu';
 
 const DashboardNavbar = () => {
-  const { handleChangeRouter, handleModalState, showMenu, handleMenuState } = useUserContext();
+  const { handleChangeRouter, handleModalType, showMenu, handleMenuState } = useUserContext();
 
   return (
     <div className='w-full flex justify-between items-center border-b-2 border-gray-200 py-2 px-4 sticky top-0'>
@@ -30,7 +30,7 @@ const DashboardNavbar = () => {
       <div className='flex items-center gap-5 divide-x divide-gray-500/10'>
         <ul className='lg:flex items-center gap-2 text-sm hidden'>
           <li
-            onClick={handleModalState}
+            onClick={()=>handleModalType('user-modal')}
             className='bg-rose-800 text-white font-medium rounded-md shadow-md p-2'
           >
             Add file

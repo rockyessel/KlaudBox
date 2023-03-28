@@ -35,31 +35,35 @@ const Navbar = (): JSX.Element => {
 
       {!user ? (
         <nav className='hidden lg:block'>
-          <ul className='flex items-center gap-5'>
-            {/* <li className='border group border-black/60 rounded-md px-2 py-1 font-medium relative'>
-              <button>Accounts</button>
+          <span className='flex items-center gap-5'>
+            <span className='border group border-black/60 rounded-md px-2 py-1 font-medium relative'>
+              <span>Accounts</span>
 
-              <ul className='bg-white hidden text-[1rem] max-w-[10rem] drop-shadow-lg absolute top-8 left-0 px-2 group-hover:flex flex-col items-center py-2 rounded-md divide-y divide-black/20'>
-                <li className='px-2 py-1 font-medium'>
-                  <Link href='/accounts/login'>Login</Link>
-                </li>
-                <li className='px-2 py-1 font-medium'>
-                  <Link href='/accounts/register'>Register</Link>
-                </li>
-              </ul>
-            </li> */}
-            <li className='bg-white text-black rounded-md px-2 py-1 font-medium'>
-              <Link href='/guests/upload-file'>Upload</Link>
-            </li>
-          </ul>
+              <span className='bg-white hidden text-[1rem] max-w-[10rem] drop-shadow-lg absolute top-8 left-0 px-2 group-hover:flex flex-col items-center py-2 rounded-md divide-y divide-black/20'>
+                <Link href='/accounts/login'>
+                  <span className='px-2 py-1 font-medium'>Login</span>
+                </Link>
+                <Link href='/accounts/register'>
+                  <span className='px-2 py-1 font-medium'>Register</span>
+                </Link>
+              </span>
+            </span>
+            <Link href='/guests/upload-file'>
+              <span className='bg-white text-black rounded-md px-2 py-1 font-medium'>
+                Upload
+              </span>
+            </Link>
+          </span>
         </nav>
       ) : (
         <nav className='hidden lg:block'>
-          <ul className='flex items-center gap-5'>
-            <li className='bg-rose-800 text-white rounded-md px-2 py-1 font-medium'>
-              <Link href='/dashboard/'>Dashboard</Link>
-            </li>
-            <li
+          <span className='flex items-center gap-5'>
+            <Link href='/dashboard/'>
+              <span className='bg-rose-800 text-white rounded-md px-2 py-1 font-medium'>
+                Dashboard
+              </span>
+            </Link>
+            <span
               title='menu button'
               onClick={handleMenuState}
               className='w-10 group h-10 rounded-full bg-black flex items-center justify-center hover:ring-2 hover:ring-rose-700'
@@ -68,22 +72,24 @@ const Navbar = (): JSX.Element => {
                 RE
               </button>
               {showMenu && <Menu css='right-2' />}
-            </li>
-          </ul>
+            </span>
+          </span>
         </nav>
-      )} 
+      )}
 
       <section className='flex items-center gap-1 lg:hidden'>
         {!user ? (
           <Link href='/guests/upload-file'>
-            <button className='bg-white lg:hidden block text-black rounded-md px-2 py-1 font-medium'>
+            <button type='button' title='Upload' className='bg-white lg:hidden block text-black rounded-md px-2 py-1 font-medium'>
               Upload
             </button>
           </Link>
         ) : (
-          <button className='bg-rose-800 hidden sm:block text-white rounded-md px-2 py-1 font-medium'>
-            <Link href='/dashboard/'>Dashboard</Link>
-          </button>
+          <Link href='/dashboard/'>
+            <button type='button' title='Dashboard' className='bg-rose-800 hidden sm:block text-white rounded-md px-2 py-1 font-medium'>
+              Dashboard
+            </button>
+          </Link>
         )}
 
         <div className='lg:hidden block'>

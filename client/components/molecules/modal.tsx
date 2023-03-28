@@ -47,8 +47,6 @@ const Modal = () => {
     }));
   };
 
-  console.log('isFileUploaded', isFileUploaded);
-
   return (
     <section
       className={`w-full h-screen bg-gray-500/90 fixed top-0 right-0 flex justify-center items-center z-[10] px-6 ${

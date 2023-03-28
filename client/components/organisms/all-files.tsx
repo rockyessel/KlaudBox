@@ -6,6 +6,11 @@ import { StorageCalculation } from '@/utils/functions';
 const AllFiles = ({ files }: { files: UserFilesProps[] }) => {
   const storageUsed = StorageCalculation(files);
   
+  //  const sortedAllFiles: UserFilesProps[] = files?.sort(
+  //    (a: any, b: any) => {
+  //      return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
+  //    }
+  //  );
 
   return (
     <main className='w-full p-5 flex flex-col items-center gap-5 bg-gray-200 overflow-y-scroll'>

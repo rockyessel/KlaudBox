@@ -71,7 +71,7 @@ export const next_day = (
   createdAt_date: Date,
   number_of_days: number
 ): Date => {
-  const day_in_ms = 24 * 60 * 60 * 1000 * number_of_days;
+  const day_in_ms = (24 * 60 * 60 * 1000) * number_of_days;
   const createdAt_in_ms = createdAt_date.getTime();
 
   const nextDay_date = new Date(createdAt_in_ms + day_in_ms);
@@ -202,7 +202,7 @@ export const GuestScheduleDeletion = async () => {
         );
         // console.log('difference_in_days', difference_in_days);
 
-        if (difference_in_days >= 1) {
+        if (difference_in_days >= Number(endpoint.delete_after)) {
           await instance.delete(`${baseURL}/v1/guests/${endpoint?.identifier}`);
           console.log('deleted', `${endpoint?.identifier}`);
         }

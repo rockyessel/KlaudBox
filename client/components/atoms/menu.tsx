@@ -1,40 +1,38 @@
 import React from 'react';
-import { FaQq } from 'react-icons/fa';
 import {
   MdLibraryBooks,
   MdHomeFilled,
-  MdAlternateEmail,
   MdSupervisorAccount,
 } from 'react-icons/md';
-import { BsCurrencyDollar } from 'react-icons/bs';
-import { GiProcessor } from 'react-icons/gi';
 import { BiLogInCircle } from 'react-icons/bi';
 import { CiFacebook, CiTwitter, CiInstagram } from 'react-icons/ci';
 import { TbSocial } from 'react-icons/tb';
 import Link from 'next/link';
 import { useSelector, useDispatch } from 'react-redux';
 import type { RootState, AppDispatch } from '@/reduxtoolkit/app/store';
-import { logout } from '@/utils/api-request';
 import { reset } from '@/reduxtoolkit/features/files/files-slice';
 import { useRouter } from 'next/router';
 import Loader from './loader';
+import { logout } from '@/reduxtoolkit/features/auth/auth-request';
+
 
 export interface MenuProps {
   css?: string;
 }
 
 const Menu = (props: any): JSX.Element => {
-  const { isLoading,user } = useSelector((state: RootState) => state.auth);
+  const { isLoading, user } = useSelector((state: RootState) => state.auth);
   const dispatch: AppDispatch = useDispatch();
   const router = useRouter();
-
   const handleLogout = () => {
-    logout();
-    if (isLoading) return <Loader />;
-    router.push('/accounts/login');
+    router.pathname === '/dashboard' ? router.push('/accounts/login') : null;
+    localStorage.removeItem('cachingUserFiles');
+    dispatch(logout());
     dispatch(reset());
+    router.replace(router.asPath);
   };
-
+  
+  if (isLoading) return <Loader />;
 
   return (
     <div
@@ -97,24 +95,6 @@ const Menu = (props: any): JSX.Element => {
                 <Link href='/'>Home</Link>
               </button>
             </li>
-            <li className='inline-flex items-center gap-2 w-full py-1'>
-              <MdAlternateEmail className='text-xl' />{' '}
-              <button>
-                <Link href='/contact'>Contact</Link>
-              </button>
-            </li>
-            <li className='inline-flex items-center gap-2 w-full py-1'>
-              <BsCurrencyDollar className='text-xl' />{' '}
-              <button>
-                <Link href='/pricing'>Pricing</Link>
-              </button>
-            </li>
-            <li className='inline-flex items-center gap-2 w-full py-1'>
-              <FaQq className='text-xl' /> <button>FAQS</button>
-            </li>
-            <li className='inline-flex items-center gap-2 w-full py-1'>
-              <GiProcessor className='text-xl' /> <button>How it works</button>
-            </li>
           </ul>
         </div>
         {!user ? (
@@ -141,7 +121,7 @@ const Menu = (props: any): JSX.Element => {
 
         {!user ? (
           <div className='flex flex-col gap-1 items-start'>
-            {/* <button className='inline-flex items-center px-0 gap-2 right-2'>
+            <button className='inline-flex items-center px-0 gap-2 right-2'>
               <MdSupervisorAccount /> Accounts
             </button>
             <ul className='flex flex-col gap-1 items-start  divide-y w-full divide-black/10'>
@@ -157,7 +137,7 @@ const Menu = (props: any): JSX.Element => {
                   <Link href='/accounts/register'>Register</Link>
                 </button>
               </li>
-            </ul> */}
+            </ul>
           </div>
         ) : null}
       </div>

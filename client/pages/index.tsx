@@ -23,10 +23,12 @@ const Home = () => {
             </div>
 
             <div className='font-bold flex items-center gap-4'>
-              <button className='bg-black text-white px-4 py-2 rounded-md'>
-                <Link href='/guests/upload-file'>Upload</Link>
+                <Link href='/guests/upload-file'>
+              <button type='button' title='Upload' className='bg-black text-white px-4 py-2 rounded-md'>
+                  Upload
               </button>
-              <button className='border border-black px-4 py-2 rounded-md'>
+                  </Link>
+              <button type='button' title='Demo video' className='border border-black px-4 py-2 rounded-md'>
                 Demo video
               </button>
             </div>

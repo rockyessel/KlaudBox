@@ -3,14 +3,17 @@ import { HiPaperAirplane } from 'react-icons/hi';
 import { FileCardInfo, Main } from '@/components';
 import { singleGuestFile } from '@/utils/api-request';
 import { GuestFileProps } from '@/interface';
+import Loader from '@/components/atoms/loader';
 
 const FindFilePage = () => {
   const [code, setCode] = React.useState('');
+  const [codeState, setCodeState] = React.useState(false);
   const [foundFile, setFoundFile] = React.useState<GuestFileProps>();
 
   const handleFindFileWithCode = async (event: React.SyntheticEvent) => {
     try {
       event.preventDefault();
+      setCodeState(true);
 
       if (!code || code === '') return;
 
@@ -18,10 +21,13 @@ const FindFilePage = () => {
 
       setFoundFile(found_file);
       setCode('');
+      setCodeState(false);
     } catch (error) {
       console.log(error);
     }
   };
+
+  if (codeState) return <Loader />;
 
   return (
     <Main>

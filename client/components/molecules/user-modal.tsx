@@ -17,7 +17,7 @@ const UserModal = () => {
   const [urlValue, setUrlValue] = React.useState('');
   const dispatch: AppDispatch = useDispatch();
 
-  const { handleModalState } = useUserContext();
+  const { handleModalState,fileCaching, setFileCaching } = useUserContext();
 
   const handleRemoveFile = (name: string) => {
     const removed_file = arrFiles.filter((file) => file.name !== name);
@@ -42,9 +42,11 @@ const UserModal = () => {
       arrFiles.forEach((file) => {
         data.append(`files`, file);
       });
-      await dispatch(post_files({ data, setProgress }));
-
-      handleModalState();
+      const file_ = await dispatch(post_files({ data, setProgress }));
+      const addFilesExisting = [...fileCaching, ...file_?.payload?.result]
+      setFileCaching(addFilesExisting)
+      localStorage.setItem('cachingUserFiles', JSON.stringify(addFilesExisting))
+      
     } catch (error) {
       console.log(error);
     }

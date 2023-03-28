@@ -7,6 +7,11 @@ import { Provider } from 'react-redux';
 import { store } from '@/reduxtoolkit/app/store';
 import { useRouter } from 'next/router';
 import NextNProgress from 'nextjs-progressbar';
+import { Rubik } from '@next/font/google';
+
+const rubik = Rubik({
+  subsets: ['latin'],
+})
 
 export default function App({ Component, pageProps }: AppProps) {
   const router = useRouter();
@@ -20,8 +25,10 @@ export default function App({ Component, pageProps }: AppProps) {
       <UserContextProvider>
         <Provider store={store}>
           <NextNProgress color={'#000'} />
+          <main className={rubik.className}>
           {state ? null : <Navbar />}
           <Component {...pageProps} />
+          </main>
         </Provider>
       </UserContextProvider>
     </GuestContextProvider>

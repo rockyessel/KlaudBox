@@ -38,18 +38,18 @@ const TableList = ({ guestData }: { guestData: GuestFileModelProps[] }) => {
     >
       <div className='flex items-center gap-5'>
         {selectedItems && selectedItems.length !== 0 ? (
-          <button className='bg-[#212121] btn px-4 py-2 rounded-lg w-fit'>
+          <button className='bg-[#212121] btn px-4 py-2 rounded-sm w-fit'>
             {selectedItems?.length}/{fileLength} is selected
           </button>
         ) : (
-          <button className='bg-[#212121] btn px-4 py-2 rounded-lg w-fit'>
+          <button className='bg-[#212121] btn px-4 py-2 rounded-sm w-fit'>
             {fileLength} files
           </button>
         )}
 
         {selectedItems && selectedItems.length !== 0 ? (
           <button
-            className='bg-rose-700 btn px-4 py-2 rounded-lg w-fit'
+            className='bg-rose-700 btn px-4 py-2 rounded-sm w-fit'
             type='button'
             onClick={() =>
               BulkDeleteFiles(

@@ -17,13 +17,12 @@ const UserModal = () => {
   const [urlValue, setUrlValue] = React.useState('');
   const dispatch: AppDispatch = useDispatch();
 
-  const { handleModalState,fileCaching, setFileCaching } = useUserContext();
+  const { handleModalState, fileCaching, setFileCaching } = useUserContext();
 
   const handleRemoveFile = (name: string) => {
     const removed_file = arrFiles.filter((file) => file.name !== name);
     setArrFiles(removed_file);
   };
-
 
   const handleFile = (event: any) => {
     const file: File[] = event.target.files;
@@ -43,10 +42,12 @@ const UserModal = () => {
         data.append(`files`, file);
       });
       const file_ = await dispatch(post_files({ data, setProgress }));
-      const addFilesExisting = [...fileCaching, ...file_?.payload?.result]
-      setFileCaching(addFilesExisting)
-      localStorage.setItem('cachingUserFiles', JSON.stringify(addFilesExisting))
-      
+      const addFilesExisting = [...fileCaching, ...file_?.payload?.result];
+      setFileCaching(addFilesExisting);
+      localStorage.setItem(
+        'cachingUserFiles',
+        JSON.stringify(addFilesExisting)
+      );
     } catch (error) {
       console.log(error);
     }
@@ -54,14 +55,14 @@ const UserModal = () => {
 
   return (
     <main className='fixed bg-gray-50/90 w-full h-full flex items-center justify-center md:px-10 z-[100]'>
-      <section className='bg-white transition ease-in-out delay-150 shadow-lg rounded-lg px-4 py-10 flex flex-col gap-5 w-full lg:w-[50rem]'>
+      <section className='bg-white transition ease-in-out delay-150 shadow-lg rounded-sm px-4 py-10 flex flex-col gap-5 w-full lg:w-[50rem]'>
         <div className='flex flex-col gap-1'>
           <p className='font-bold'>Import files</p>
           <p>Upload any type of files from local machine</p>
         </div>
 
         {urlValue.length > 0 ? null : (
-          <label className='rounded-lg border-dashed border-2 border-gray-900/50 flex flex-col items-center justify-center p-5'>
+          <label className='rounded-sm border-dashed border-2 border-gray-900/50 flex flex-col items-center justify-center p-5'>
             {arrFiles.length > 0 ? (
               <React.Fragment>
                 <CircleProgressbar percent={allFilesUploadPercent} />
@@ -92,7 +93,7 @@ const UserModal = () => {
         {arrFiles.length > 0 && (
           <React.Fragment>
             <section className='w-full flex justify-end items-center gap-2'>
-              <label className='bg-blue-100 shadow-lg hover:bg-blue-200 text-blue-800 font-medium rounded-md px-2 py-1'>
+              <label className='bg-blue-100 shadow-lg hover:bg-blue-200 text-blue-800 font-medium rounded-sm px-2 py-1'>
                 Add more
                 <input
                   type='file'
@@ -103,7 +104,7 @@ const UserModal = () => {
                 />
               </label>
               <button
-                className='bg-rose-100 shadow-lg hover:bg-rose-200 text-rose-800 font-medium rounded-md px-2 py-1'
+                className='bg-rose-100 shadow-lg hover:bg-rose-200 text-rose-800 font-medium rounded-sm px-2 py-1'
                 type='button'
                 title='Clear'
                 onClick={handleClear}
@@ -132,7 +133,7 @@ const UserModal = () => {
         {!arrFiles.length && (
           <section className='flex flex-col gap-2'>
             <p className='font-bold'>Upload from URL</p>
-            <div className='rounded-md border-[1px] border-gray-500/30 flex items-center justify-between'>
+            <div className='rounded-sm border-[1px] border-gray-500/30 flex items-center justify-between'>
               <span className='border-r-[1px] border-gray-500/30 h-full p-2.5'>
                 https://
               </span>
@@ -143,7 +144,7 @@ const UserModal = () => {
                 onChange={(event) => setUrlValue(event.target.value)}
                 className='outline-none border-none bg-transparent w-full px-2.5'
               />
-              <button className='p-1.5 mr-1 border-[1px] border-gray-500/30 rounded-md text-sm font-medium'>
+              <button className='p-1.5 mr-1 border-[1px] border-gray-500/30 rounded-sm text-sm font-medium'>
                 Upload
               </button>
             </div>
@@ -159,7 +160,7 @@ const UserModal = () => {
               type='button'
               title='Discard'
               onClick={handleModalState}
-              className='border-[1px] border-gray-500/50 px-2 py-1 rounded-md'
+              className='border-[1px] border-gray-500/50 px-2 py-1 rounded-sm'
             >
               Discard
             </button>
@@ -168,7 +169,7 @@ const UserModal = () => {
               type='button'
               title='Import'
               onClick={handleSubmission}
-              className={`bg-pink-800 text-white rounded-md px-2 py-1 ${
+              className={`bg-pink-800 text-white rounded-sm px-2 py-1 ${
                 !arrFiles.length ? 'bg-pink-200 cursor-not-allowed' : ''
               }`}
             >

@@ -1,9 +1,8 @@
 import { GuestFileModelProps } from '@/interface';
 import https from 'https';
-import axios from 'axios';
+import axios, { AxiosError } from 'axios';
 import { next_day } from './functions';
 import { useGuestContext } from '@/context/guest-context';
-
 
 export const API_URI = process.env.NEXT_PUBLIC_API_URI;
 
@@ -51,7 +50,8 @@ export const GuestFileUploadPost = async (
 
     return data_;
   } catch (error) {
-    console.log(error);
+    const err = error as AxiosError;
+    return err;
   }
 };
 
@@ -63,7 +63,8 @@ export const singleGuestFile = async (file_code: string) => {
 
     return data_;
   } catch (error) {
-    console.log(error);
+    const err = error as AxiosError;
+    return err;
   }
 };
 
@@ -75,7 +76,8 @@ export const GuestFileSlug = async (path: string) => {
 
     return data_;
   } catch (error) {
-    console.log(error);
+    const err = error as AxiosError;
+    return err;
   }
 };
 
@@ -87,7 +89,8 @@ export const GetAllFiles = async () => {
 
     return data_;
   } catch (error) {
-    console.log(error);
+    const err = error as AxiosError;
+    return err;
   }
 };
 
@@ -103,7 +106,8 @@ export const DeleteGuestFile = async (identifier: string) => {
 
     return data_;
   } catch (error) {
-    console.log(error);
+    const err = error as AxiosError;
+    return err;
   }
 };
 
@@ -133,11 +137,11 @@ export const BulkDeleteFiles = async (
 
     return delete_response;
   } catch (error) {
-    console.log(error);
+    const err = error as AxiosError;
+    return err;
   }
 };
 
 export const logout = () => {
   window.localStorage.removeItem('user');
 };
-

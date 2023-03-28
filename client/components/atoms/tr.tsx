@@ -65,18 +65,27 @@ const TableRow = ({ data }: { data: GuestFileModelProps }): JSX.Element => {
         <span className='inline-flex flex-col'>
           <span className='text-rose-500 inline-flex items-center gap-1'>
             {data?.secure === 'public' && (
-              <Link target={`_blank`} href={`/guests/files/${data?.cms_id}`}>
+              <Link
+                className='tooltip'
+                target={`_blank`}
+                href={`/guests/files/${data?.cms_id}`}
+              >
                 <span className='inline-flex items-center gap-1'>
-                  File Info
+                  View File
                   <HiOutlineExternalLink className='text-xl' />
                 </span>
               </Link>
             )}
             {data?.secure === 'private' && (
-              <span className='inline-flex items-center gap-1'>
-                <Link href='/guests/find-file'>This file is private</Link>
-                <HiOutlineExternalLink className='text-xl' />
-              </span>
+              <Link
+                target={`_blank`}
+                href={`/guests/find-file?code=${data?.identifier}`}
+              >
+                <span className='inline-flex items-center gap-1'>
+                  Find with code
+                  <HiOutlineExternalLink className='text-xl' />
+                </span>
+              </Link>
             )}
           </span>
         </span>
@@ -109,11 +118,17 @@ const TableRow = ({ data }: { data: GuestFileModelProps }): JSX.Element => {
         <span className='inline-flex items-center gap-2'>
           <span>
             {data?.secure === 'public' ? (
-              <span className='text-green-500 inline-flex items-center gap-1'>
+              <span
+                className='text-green-500 inline-flex items-center gap-1 tooltip'
+                data-tip='Everyone with the file URL or code have access to the file.'
+              >
                 Everyone <MdPublic />
               </span>
             ) : (
-              <span className='text-rose-500 inline-flex items-center gap-1'>
+              <span
+                className='text-rose-500 inline-flex items-center gap-1 tooltip'
+                data-tip='Anyone with the file URL cannot access the file, but can access it with the file code. So keep it safe.'
+              >
                 Private <MdVpnLock />
               </span>
             )}
@@ -133,12 +148,6 @@ const TableRow = ({ data }: { data: GuestFileModelProps }): JSX.Element => {
             <span> Delete</span>
             <AiTwotoneDelete />
           </button>
-          <Link href={`/guests/files/${data?.cms_id}`}>
-            <span className='inline-flex items-center gap-1'>
-              <span className=''> View</span>
-              <AiFillEye />
-            </span>
-          </Link>
         </span>
       </td>
     </tr>

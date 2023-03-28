@@ -13,7 +13,7 @@ const Navbar = (): JSX.Element => {
   if (isLoading) return <Loader />;
 
   return (
-    <header className='bg-gray-50 flex justify-between items-center py-3 px-3 sticky w-full top-0 border-b-[1px] border-black/30'>
+    <header className='bg-gray-50 flex justify-between items-center py-3  px-6 lg:px-10 xl:px-20  sticky w-full top-0 border-b-[1px] border-black/30'>
       <section className='font-bold flex items-center gap-5'>
         <Link href='/'>
           <span className='font-catamaran text-xl md:text-3xl lg:text-5xl'>
@@ -23,43 +23,53 @@ const Navbar = (): JSX.Element => {
 
         <nav className='hidden lg:block'>
           <ul className='flex gap-2 justify-center items-center'>
-            <Link href='/'>
+            {/* <Link href='/'>
               <li className='px-2 py-1 font-medium'>Home</li>
-            </Link>
-            <Link href='/guests/find-file'>
+            </Link> */}
+            {/* <Link href='/guests/find-file'>
               <li className='px-2 py-1 font-medium'>Find File</li>
-            </Link>
+            </Link> */}
+            {/* <Link href='/guests/upload-file'>
+              <li className='bg-rose-700 text-white rounded-sm w-fit px-2 py-1.5 inline-flex items-center gap-1 font-medium'>
+                Upload
+              </li>
+            </Link> */}
           </ul>
         </nav>
       </section>
 
       {!user ? (
         <nav className='hidden lg:block'>
-          <span className='flex items-center gap-5'>
-            <span className='border group border-black/60 rounded-md px-2 py-1 font-medium relative'>
-              <span>Accounts</span>
+          <ul className='flex items-center gap-5'>
+            {/* <Link href='/accounts/login'>
+              <li>
+                <span className='px-2 py-1 font-medium'>Login</span>
+              </li>
+            </Link> */}
 
-              <span className='bg-white hidden text-[1rem] max-w-[10rem] drop-shadow-lg absolute top-8 left-0 px-2 group-hover:flex flex-col items-center py-2 rounded-md divide-y divide-black/20'>
-                <Link href='/accounts/login'>
-                  <span className='px-2 py-1 font-medium'>Login</span>
-                </Link>
-                <Link href='/accounts/register'>
-                  <span className='px-2 py-1 font-medium'>Register</span>
-                </Link>
-              </span>
-            </span>
-            <Link href='/guests/upload-file'>
-              <span className='bg-white text-black rounded-md px-2 py-1 font-medium'>
-                Upload
-              </span>
+            <Link href='/accounts/register'>
+              <li className='rounded-sm w-fit px-2 py-1.5 border-[1px] hover:bg-black hover:text-white'>
+                <span className='font-medium'>Register</span>
+              </li>
             </Link>
-          </span>
+            <Link href='/guests/find-file'>
+              <li className='rounded-sm w-fit px-2 py-1.5 border-[1px] hover:bg-black hover:text-white'>
+                Find File
+              </li>
+            </Link>
+
+            <Link href='/guests/upload-file'>
+              <li className='bg-rose-700 text-white rounded-sm w-fit px-2 py-1.5 inline-flex items-center gap-1 font-medium'>
+                Upload
+              </li>
+            </Link>
+          </ul>
         </nav>
       ) : (
         <nav className='hidden lg:block'>
           <span className='flex items-center gap-5'>
             <Link href='/dashboard/'>
-              <span className='bg-rose-800 text-white rounded-md px-2 py-1 font-medium'>
+              <span className='bg-rose-800 text-white rounded-sm px-2 py-1 font-medium'>
                 Dashboard
               </span>
             </Link>
@@ -80,13 +90,21 @@ const Navbar = (): JSX.Element => {
       <section className='flex items-center gap-1 lg:hidden'>
         {!user ? (
           <Link href='/guests/upload-file'>
-            <button type='button' title='Upload' className='bg-white lg:hidden block text-black rounded-md px-2 py-1 font-medium'>
+            <button
+              type='button'
+              title='Upload'
+              className='bg-rose-700 text-white rounded-sm w-fit px-2 py-1.5 inline-flex items-center gap-1 font-medium'
+            >
               Upload
             </button>
           </Link>
         ) : (
           <Link href='/dashboard/'>
-            <button type='button' title='Dashboard' className='bg-rose-800 hidden sm:block text-white rounded-md px-2 py-1 font-medium'>
+            <button
+              type='button'
+              title='Dashboard'
+              className='bg-rose-800 hidden sm:block text-white rounded-sm px-2 py-1 font-medium'
+            >
               Dashboard
             </button>
           </Link>
@@ -97,7 +115,7 @@ const Navbar = (): JSX.Element => {
             title='menu button'
             type='button'
             onClick={handleMenuState}
-            className='bg-white/20 text-lg p-3 relative rounded-md'
+            className='bg-white/20 text-lg p-3 relative rounded-sm'
           >
             {showMenu ? <FaTimes /> : <FaBars />}
 

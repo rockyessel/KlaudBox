@@ -53,37 +53,39 @@ const Modal = () => {
         modalState ? 'block' : 'hidden'
       }`}
     >
-      <section className='w-[50rem] p-10 py-4 rounded-md flex flex-col gap-5 bg-gray-50 shadow-lg'>
-        <div className=' border-dashed  h-40 rounded-xl border-4 border-gray-200 flex flex-col justify-center items-center outline-none mt-10 w-full p-10 cursor-pointer hover:border-gray-300'>
-          <form onSubmit={handleSubmission}>
-            <label className='cursor-pointer'>
-              <div className='flex flex-col items-center justify-center h-full'>
-                <div className='flex flex-col justify-center items-center'>
-                  <p className='font-bold text-xl'>
-                    <BsFillCloudUploadFill className='text-gray-300 text-6xl' />
+      <section className='w-[50rem] p-10 py-4 rounded-sm flex flex-col gap-5 bg-gray-50 shadow-lg'>
+        {!isFileSelected ? null : (
+          <div className=' border-dashed  h-40 rounded-xl border-4 border-gray-200 flex flex-col justify-center items-center outline-none mt-10 w-full p-10 cursor-pointer hover:border-gray-300'>
+            <form onSubmit={handleSubmission}>
+              <label className='cursor-pointer'>
+                <div className='flex flex-col items-center justify-center h-full'>
+                  <div className='flex flex-col justify-center items-center'>
+                    <p className='font-bold text-xl'>
+                      <BsFillCloudUploadFill className='text-gray-300 text-6xl' />
+                    </p>
+                  </div>
+
+                  <p className='text-gray-400 text-center text-sm leading-none inline-flex flex-col font-medium'>
+                    <span className='underline'>Click to upload</span>
+                    <span>Maximum file size 2 GB</span>
                   </p>
                 </div>
 
-                <p className='text-gray-400 text-center text-sm leading-none inline-flex flex-col font-medium'>
-                  <span className='underline'>Click to upload</span>
-                  <span>Maximum file size 2 GB</span>
-                </p>
-              </div>
-
-              <input
-                type='file'
-                onChange={fileUpdates}
-                name='file'
-                className='w-0 h-0'
-              />
-            </label>
-          </form>
-        </div>
+                <input
+                  type='file'
+                  onChange={fileUpdates}
+                  name='file'
+                  className='w-0 h-0'
+                />
+              </label>
+            </form>
+          </div>
+        )}
 
         {!isFileSelected && (
           <div className='flex flex-col gap-3'>
             <div className='flex flex-col gap-5'>
-              <div className='border border-[#515151] rounded-lg w-auto p-5 flex flex-col gap-5'>
+              <div className='border border-[#515151] rounded-sm w-auto p-5 flex flex-col gap-5'>
                 <div className='w-full flex justify-between'>
                   <div className='flex items-center gap-2.5'>
                     <TypeSwitcher class='text-7xl' extension={`${extension}`} />
@@ -103,7 +105,7 @@ const Modal = () => {
 
                 <div className='relative pt-1'>
                   <div className='flex mb-2 items-center justify-between'>
-                    <div className='w-full flex items-center justify-between'>
+                    <div className='w-full flex flex-col sm:flex-row items-center justify-between'>
                       <span className='animate-pulse text-xs font-semibold inline-block py-1 px-2 uppercase rounded-full text-pink-600 bg-pink-200'>
                         {progress === 100
                           ? 'Upload completed'
@@ -136,10 +138,10 @@ const Modal = () => {
             <div className='flex flex-col gap-2 w-full'>
               {/* Sub Navbar */}
               <nav className='w-full flex items-center justify-between'>
-                <ul className='flex items-center gap-4 font-medium'>
+                <ul className='w-full flex items-center justify-between gap-4 font-medium'>
                   <li
                     onClick={() => setShowDropdown((previous) => !previous)}
-                    className='w-auto relative cursor-pointer'
+                    className='w-full relative cursor-pointer'
                   >
                     <span className='inline-flex items-center gap-1'>
                       Secure
@@ -155,7 +157,7 @@ const Modal = () => {
                     </span>
 
                     {showDropdown && (
-                      <ul className='bg-white shadow-lg absolute px-2 flex flex-col items-center py-2 rounded-md divide-y divide-white/20'>
+                      <ul className='bg-white shadow-lg absolute px-2 flex flex-col items-center py-2 rounded-sm divide-y divide-white/20'>
                         <li
                           onClick={() => setShowDropdownValue('public')}
                           className='w-full inline-flex items-center gap-2 py-1 px-2'
@@ -174,29 +176,25 @@ const Modal = () => {
 
                   <li
                     onClick={() => setDeleteAfterState((previous) => !previous)}
-                    className='w-auto relative cursor-pointer'
+                    className='w-full relative cursor-pointer'
                   >
                     <span className='inline-flex items-center gap-1'>
-                      Delete after:{` `}
-                      {deleteAfter === '0'
-                        ? null
-                        : deleteAfter === '1'
-                        ? '1 day'
-                        : `${deleteAfter} days`}
+                      Delete:{` `}
+                      {deleteAfter}
                       <RiArrowDownSFill
                         className={`${showDropdown ? 'rotate-180' : ''}`}
                       />
                     </span>
 
                     {deleteAfterState && (
-                      <ul className='bg-white shadow-lg absolute right-5 px-2 flex flex-col items-center py-2 rounded-md divide-y divide-white/20 h-32 overflow-y-auto'>
+                      <ul className='bg-white shadow-lg absolute right-0 px-2 flex flex-col items-center py-2 rounded-sm divide-y divide-white/20 h-32 overflow-y-auto'>
                         {numbers?.map((num, index) => (
                           <li
                             key={index}
                             onClick={() => setDeleteAfter(`${num}`)}
-                            className='w-full inline-flex items-center gap-2 py-1 px-2'
+                            className='w-[10rem] inline-flex items-center gap-2 py-1 px-2'
                           >
-                            {num}
+                            After {num} {num === 1 ? 'day' : 'days'}
                           </li>
                         ))}
                       </ul>
@@ -216,7 +214,7 @@ const Modal = () => {
                     name='title'
                     type='text'
                     onChange={handleModalForm}
-                    className='border-[1px] border-gray-500/30 px-4 py-2 w-full text-black rounded-md outline-none focus:ring-2 focus:ring-rose-800 hover:ring-2 hover:ring-rose-500'
+                    className='border-[1px] border-gray-500/30 px-4 py-2 w-full text-black rounded-sm outline-none focus:ring-2 focus:ring-rose-800 hover:ring-2 hover:ring-rose-500'
                   />
                 </div>
                 <div className='flex flex-col gap-1'>
@@ -227,7 +225,7 @@ const Modal = () => {
                     name='description'
                     type='text'
                     onChange={handleModalForm}
-                    className='border-[1px] border-gray-500/30 px-4 py-2 w-full text-black rounded-md outline-none focus:ring-2 focus:ring-rose-800 hover:ring-2 hover:ring-rose-500'
+                    className='border-[1px] border-gray-500/30 px-4 py-2 w-full text-black rounded-sm outline-none focus:ring-2 focus:ring-rose-800 hover:ring-2 hover:ring-rose-500'
                   />
                 </div>
               </div>
@@ -240,7 +238,7 @@ const Modal = () => {
             type='button'
             disabled={isFileStarted}
             onClick={handleClose}
-            className={`bg-rose-800 px-6 py-2 rounded-md w-full ${
+            className={`bg-rose-800 px-6 py-2 rounded-sm w-full ${
               isFileStarted
                 ? 'cursor-not-allowed bg-opacity-20 text-gray-700'
                 : ''
@@ -252,7 +250,7 @@ const Modal = () => {
             disabled={state}
             type='submit'
             onClick={handleSubmission}
-            className={`bg-blue-800 px-6 py-2 rounded-md w-full ${
+            className={`bg-blue-800 px-6 py-2 rounded-sm w-full ${
               state ? 'cursor-not-allowed bg-opacity-20 text-gray-700' : ''
             }`}
           >

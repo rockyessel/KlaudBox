@@ -12,6 +12,7 @@ module.exports = {
     extend: {
       fontFamily: {
         catamaran: ['Catamaran'],
+        rubik: ['Rubik'],
       },
     },
   },

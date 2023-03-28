@@ -4,30 +4,39 @@ import { downloadFile, formatFileSize, next_day } from '@/utils/functions';
 import { format } from 'date-fns';
 import { GuestFileProps } from '@/interface';
 import { useGuestContext } from '@/context/guest-context';
+import { AiFillCopy, AiOutlineCopy } from 'react-icons/ai';
 
 const FileCardInfo = ({ data }: { data: GuestFileProps }) => {
   const { handleDeleteFile } = useGuestContext();
+  const [isCopied, setIsCopied] = React.useState(false);
+
+  const handleCopy = (url: string) => {
+    navigator.clipboard.writeText(url);
+    if (isCopied !== true) {
+      setIsCopied(true);
+    }
+  };
   return (
-    <section className='w-full p-6 bg-white shadow-lg rounded-lg flex flex-col pb-10'>
-      <div className='flex flex-col flex-wrap gap-16'>
+    <section className='w-full p-6 bg-white shadow-lg rounded-sm flex flex-col pb-10'>
+      <div className='flex flex-wrap gap-16'>
         <div>
           <span className='text-xl font-bold'>
             {data?.file?.originalFilename}
           </span>
           <div>
             <TypeSwitcher
-              class={`text-[15rem]`}
+              class={` text-5xl sm:text-[15rem]`}
               extension={data?.file?.extension}
             />
           </div>
         </div>
 
         <div className='flex flex-col gap-10'>
-          <div className='flex flex-col gap-2 md:grid md:grid-cols-6 md:gap-5'>
-            <div className='flex flex-col gap-2'>
+          <div className='flex flex-wrap gap-2 md:grid md:grid-cols-3 md:gap-5'>
+            {/* <div className='flex flex-col gap-2'>
               <span className='text-lg'>File Type</span>
               <span className='text-sm font-medium'>Google Docs</span>
-            </div>
+            </div> */}
             <div className='flex flex-col gap-2'>
               <span className='text-lg'>File Size</span>
               <span className='text-sm font-medium'>
@@ -61,13 +70,15 @@ const FileCardInfo = ({ data }: { data: GuestFileProps }) => {
                   )}
               </span>
             </div>
-            <div className='flex flex-col gap-2'>
+            {/* <div className='flex flex-col gap-2'>
               <span className='text-lg'>Download Status</span>
               <span className='text-sm font-medium'>Available</span>
-            </div>
+            </div> */}
             <div className='flex flex-col gap-2'>
               <span className='text-lg'>File Privacy</span>
-              <span className='text-sm font-medium'>{data?.file?.secure}</span>
+              <span className='text-sm font-medium'>
+                {data?.file?.secure.toUpperCase()}
+              </span>
             </div>
             <div className='flex flex-col gap-2'>
               <span className='text-lg'>File Extension</span>
@@ -77,12 +88,21 @@ const FileCardInfo = ({ data }: { data: GuestFileProps }) => {
             </div>
             <div className='flex flex-col gap-2'>
               <span className='text-lg'>Share link</span>
-              <span className='text-sm font-medium'>mp4</span>
+              <span
+                onClick={() =>
+                  handleCopy(
+                    `https://klaudbox.vercel.app/guests/files/${data?.file?.cms_id}`
+                  )
+                }
+                className='text-xl font-medium cursor-pointer'
+              >
+                {isCopied ? <AiFillCopy /> : <AiOutlineCopy />}
+              </span>
             </div>
-            <div className='flex flex-col gap-2'>
+            {/* <div className='flex flex-col gap-2'>
               <span className='text-lg'>File Source</span>
               <span className='text-sm font-medium'>Windows 11 Pro</span>
-            </div>
+            </div> */}
           </div>
 
           <div className='flex flex-col gap-1'>
@@ -96,7 +116,7 @@ const FileCardInfo = ({ data }: { data: GuestFileProps }) => {
       <div className='flex flex-col md:flex-row items-center gap-5'>
         <button
           title='Download File'
-          className='px-4 py-2 rounded-lg bg-blue-500'
+          className='px-4 py-2 rounded-sm bg-blue-500'
           type={'button'}
           onClick={() => downloadFile(data?.file?.url, data?.file?.title)}
         >
@@ -105,7 +125,7 @@ const FileCardInfo = ({ data }: { data: GuestFileProps }) => {
         <button
           type='button'
           onClick={() => handleDeleteFile(`${data?.file?.identifier}`)}
-          className='px-4 py-2 rounded-lg bg-rose-500'
+          className='px-4 py-2 rounded-sm bg-rose-500'
         >
           Delete File
         </button>

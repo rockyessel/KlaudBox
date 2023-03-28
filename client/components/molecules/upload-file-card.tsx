@@ -9,7 +9,7 @@ const UploadFileCard = (props: any) => {
   return (
     <li
       onClick={() => props.handleRemoveFile(props?.file?.name)}
-      className='rounded-lg p-2 border-[1px] border-gray-500/50 transition ease-in-out delay-150'
+      className='rounded-sm p-2 border-[1px] border-gray-500/50 transition ease-in-out delay-150'
     >
       <button
         type={`button`}
@@ -19,7 +19,7 @@ const UploadFileCard = (props: any) => {
         <IoIosRemoveCircleOutline className='text-xl text-red-700' />
       </button>
       <div className='flex items-center gap-2'>
-        <div className='border-[1px] border-gray-500/50 rounded-md p-1'>
+        <div className='border-[1px] border-gray-500/50 rounded-sm p-1'>
           <FileExtensionSwitcher class='text-2xl' extension={extension} />
         </div>
 

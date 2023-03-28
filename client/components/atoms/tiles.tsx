@@ -23,20 +23,20 @@ const Tiles = ({ guestData }: { guestData: GuestFileModelProps[] }) => {
   };
   return (
     <>
-      <div className='flex items-center gap-5'>
+      <div className='flex items-center text-white gap-5'>
         {selectedItems && selectedItems.length !== 0 ? (
-          <p className='bg-[#212121] px-4 py-2 rounded-lg w-fit'>
+          <p className='bg-[#212121] px-4 py-2 rounded-sm w-fit'>
             {selectedItems?.length}/{fileLength} is selected
           </p>
         ) : (
-          <p className='bg-[#212121] px-4 py-2 rounded-lg w-fit'>
+          <p className='bg-[#212121] px-4 py-2 rounded-sm w-fit'>
             {fileLength} files
           </p>
         )}
 
         {selectedItems && selectedItems.length !== 0 ? (
           <button
-            className='bg-rose-700 px-4 py-2 rounded-lg w-fit'
+            className='bg-rose-700 px-4 py-2 rounded-sm w-fit'
             type='button'
             onClick={() =>
               BulkDeleteFiles(
@@ -48,9 +48,7 @@ const Tiles = ({ guestData }: { guestData: GuestFileModelProps[] }) => {
           >
             Bulk Delete
           </button>
-        ) : (
-          <p></p>
-        )}
+        ) : null}
       </div>
       <ul className='flex flex-wrap'>
         {guestData
@@ -62,7 +60,7 @@ const Tiles = ({ guestData }: { guestData: GuestFileModelProps[] }) => {
           ?.map((data, index) => (
             <li
               key={index}
-              className='flex relative flex-col items-center hover:bg-gray-600/60 cursor-pointer rounded-lg p-5'
+              className='flex relative flex-col items-center hover:bg-gray-600/60 cursor-pointer rounded-sm p-5'
             >
               <input
                 className='checkbox checkbox-error absolute top-3 left-3'

@@ -26,8 +26,10 @@ const authSlice = createSlice({
     // register user
     builder
       .addCase(register.pending, (state) => {
-        state.isLoading = true;
-        state.error = '';
+         state.isLoading = true;
+         state.user = null;
+         state.error = '';
+         state.success = false;
       })
       .addCase(register.fulfilled, (state, action) => {
         state.isLoading = false;
@@ -42,9 +44,10 @@ const authSlice = createSlice({
 
       // login user
       .addCase(login.pending, (state) => {
-        state.isLoading = true;
-        state.success = false;
-        state.error = '';
+          state.isLoading = true;
+          state.user = null;
+          state.error = '';
+          state.success = false;
       })
       .addCase(login.fulfilled, (state, action) => {
         state.isLoading = false;

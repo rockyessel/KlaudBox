@@ -78,14 +78,14 @@ const AudioPlayer = ({ url }: { url: UserFilesProps }) => {
   return (
     <div className='flex flex-col justify-self-stretch'>
       {metadata && metadata.picture && metadata.picture.data ? (
-        <div className='w-full md:w-[12rem] h-full md:h-[12rem] bg-gray-100 rounded-md shadow-lg relative my-1'>
+        <div className='w-full md:w-[12rem] h-full md:h-[12rem] bg-gray-100 rounded-sm shadow-lg relative my-1'>
           <Image
             src={`data:${metadata?.picture?.format};base64,${btoa(
               Array.from(metadata?.picture?.data)
                 .map((byte) => String.fromCharCode(byte))
                 .join('')
             )}`}
-            className='w-full h-full rounded-md object-cover object-center'
+            className='w-full h-full rounded-sm object-cover object-center'
             width={1000}
             height={1000}
             alt={
@@ -97,7 +97,7 @@ const AudioPlayer = ({ url }: { url: UserFilesProps }) => {
           </span>
         </div>
       ) : (
-        <div className='w-full md:w-[12rem] h-full md:h-[12rem] flex justify-center items-center bg-gray-100 rounded-md shadow-lg mb-5 relative my-1'>
+        <div className='w-full md:w-[12rem] h-full md:h-[12rem] flex justify-center items-center bg-gray-100 rounded-sm shadow-lg mb-5 relative my-1'>
           <CgMusicNote className='text-[7rem]' />
           <span className='absolute top-1 left-1 z-20'>
             <input title='checkbox' type='checkbox' className='checkbox' />

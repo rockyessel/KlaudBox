@@ -28,52 +28,21 @@ const DashboardNavbar = () => {
       </Link>
 
       <div className='flex items-center gap-5 divide-x divide-gray-500/10'>
-        <ul className='lg:flex items-center gap-2 text-sm hidden'>
-          <li
-            onClick={()=>handleModalType('user-modal')}
-            className='bg-rose-800 text-white font-medium rounded-md shadow-md p-2'
-          >
-            Add file
-          </li>
-          {/* <li className='bg-rose-800 text-white font-medium rounded-md shadow-md p-2'>;
-            Create Folder;
-          </li>
-          <li className='bg-rose-800 text-white font-medium rounded-md shadow-md p-2'>;
-            Add Type;
-          </li> */}
-        </ul>
-        <ul className='flex items-center text-xl gap-2 pl-5'>
+        <ul className='flex items-center gap-2 pl-5'>
           <li
             onClick={() => handleChangeRouter('storage')}
-            className='border-[1px] border-black/10 px-2 py-1 hidden rounded-md cursor-pointer lg:flex items-center gap-1 text-sm'
+            className='border-[1px] border-black/10 px-2 py-1 hidden rounded-sm cursor-pointer lg:flex items-center gap-1 text-sm'
           >
             <span className='text-rose-800 inline-flex items-center'>
               <TiCloudStorageOutline /> 10/50 GB
             </span>
             <span> Storage usage</span>
           </li>
-          <li className='hidden lg:block'>
-            <input title='checkbox' type='checkbox' className='toggle' />
-          </li>
-          <li className='hidden lg:block'>
-            <RiSearchLine />
-          </li>
-          <li className='hidden lg:block'>
-            <RiSettings5Line />
-          </li>
-          <li className='hidden lg:block'>
-            <RiNotification2Line />
-          </li>
-          <li onClick={handleMenuState} className='w-12 h-12 rounded-full'>
-            <Image
-              src='/f.png'
-              className='w-12 h-12 rounded-full'
-              alt=''
-              height={100}
-              width={100}
-            />
-
-            {showMenu && <Menu css='right-2' />}
+           <li
+            onClick={()=>handleModalType('user-modal')}
+            className='bg-rose-800 text-white rounded-sm shadow-md px-2 py-1.5'
+          >
+            Add file
           </li>
         </ul>
       </div>

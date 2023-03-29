@@ -86,13 +86,13 @@ const LoginPage = () => {
   };
 
   React.useEffect(() => {
-    user ? router.push('/dashboard') : null;
-    if (!user) console.log('you need to login');
+    if (success) {
+      router.push('/dashboard');
+    }
     dispatch(reset());
-  }, [dispatch, router, success, user]);
+  }, [dispatch, isLoading, router, success, user]);
 
   if (isLoading) {
-    router.push('/dashboard');
     return <Loader />;
   }
   return (
@@ -145,12 +145,12 @@ const LoginPage = () => {
                 {showState ? (
                   <AiFillEyeInvisible
                     onClick={handleShowPassword}
-                    className='text-4xl p-1 hover:bg-black hover:text-white rounded-md'
+                    className='text-4xl p-1 hover:bg-black hover:text-white '
                   />
                 ) : (
                   <AiFillEye
                     onClick={handleShowPassword}
-                    className='text-4xl p-1 hover:bg-black hover:text-white rounded-md'
+                    className='text-4xl p-1 hover:bg-black hover:text-white '
                   />
                 )}
               </div>

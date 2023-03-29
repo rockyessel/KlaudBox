@@ -15,7 +15,6 @@ import { useRouter } from 'next/router';
 import Loader from './loader';
 import { logout } from '@/reduxtoolkit/features/auth/auth-request';
 
-
 export interface MenuProps {
   css?: string;
 }
@@ -31,12 +30,12 @@ const Menu = (props: any): JSX.Element => {
     dispatch(reset());
     router.replace(router.asPath);
   };
-  
+
   if (isLoading) return <Loader />;
 
   return (
     <div
-      className={`bg-white text-black rounded-md shadow-lg w-[280px] absolute ${props.css} top-14 p-5 z-[10000]`}
+      className={`bg-white text-black rounded-sm shadow-lg w-[280px] absolute ${props.css} top-14 p-5 z-[10000]`}
     >
       <div
         id={'menu'}

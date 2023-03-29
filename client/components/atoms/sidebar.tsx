@@ -23,20 +23,20 @@ const Sidebar = () => {
   const [showSidebar, setShowSidebar] = React.useState<boolean>(true);
   const { handleChangeRouter } = useUserContext();
 
-  const normalLink = `flex items-center gap-1 hover:bg-gray-500 p-2 justify-center xl:justify-start cursor-pointer font-semibold rounded-md`;
+  const normalLink = `flex items-center gap-1 hover:bg-gray-500 p-2 justify-center xl:justify-start cursor-pointer font-semibold rounded-sm`;
 
-    const { isLoading, user } = useSelector((state: RootState) => state.auth);
-    const dispatch: AppDispatch = useDispatch();
-    const router = useRouter();
-    const handleLogout = () => {
-      router.pathname === '/dashboard' ? router.push('/accounts/login') : null;
-      localStorage.removeItem('cachingUserFiles');
-      dispatch(logout());
-      dispatch(reset());
-      router.replace(router.asPath);
-    };
+  const { isLoading, user } = useSelector((state: RootState) => state.auth);
+  const dispatch: AppDispatch = useDispatch();
+  const router = useRouter();
+  const handleLogout = () => {
+    router.pathname === '/dashboard' ? router.push('/accounts/login') : null;
+    localStorage.removeItem('cachingUserFiles');
+    dispatch(logout());
+    dispatch(reset());
+    router.replace(router.asPath);
+  };
 
-    if (isLoading) return <Loader />;
+  if (isLoading) return <Loader />;
 
   return (
     <section className='flex flex-col gap-2 justify-center w-full'>

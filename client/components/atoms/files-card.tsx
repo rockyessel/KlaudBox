@@ -14,7 +14,7 @@ const FilesCard = ({ file }: any) => {
     <div className='relative my-1 flex flex-col'>
       <FileExtensionSwitcher
         extension={file.extension}
-        class={`text-[7rem] w-full md:w-[12rem] h-full md:h-[12rem] flex justify-center items-center bg-gray-100 rounded-md shadow-lg mb-5 `}
+        class={`text-[7rem] w-full md:w-[12rem] h-full md:h-[12rem] flex justify-center items-center bg-gray-100 rounded-sm shadow-lg mb-5 `}
       />
       <p className='text-sm text-center font-semibold'>{fileName}</p>
       <span className='absolute top-1 left-1 z-20'>

@@ -142,12 +142,12 @@ const RegisterPage = () => {
                 {showState ? (
                   <AiFillEyeInvisible
                     onClick={handleShowPassword}
-                    className='text-4xl p-1 hover:bg-black hover:text-white rounded-md'
+                    className='text-4xl p-1 hover:bg-black hover:text-white rounded-sm'
                   />
                 ) : (
                   <AiFillEye
                     onClick={handleShowPassword}
-                    className='text-4xl p-1 hover:bg-black hover:text-white rounded-md'
+                    className='text-4xl p-1 hover:bg-black hover:text-white rounded-sm'
                   />
                 )}
               </div>

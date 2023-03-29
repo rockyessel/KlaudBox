@@ -56,7 +56,7 @@ const ApplicationCard = ({ file }: { file: UserFilesProps }) => {
 
   return applications ? (
     <div className=' flex flex-col justify-center items-center gap-3 relative my-1'>
-      <AiFillAppstore className='text-[10rem]w-full md:w-[12rem] h-full md:h-[12rem] bg-gray-100 rounded-md shadow-lg p-10' />
+      <AiFillAppstore className='text-[10rem]w-full md:w-[12rem] h-full md:h-[12rem] bg-gray-100 rounded-sm shadow-lg p-10' />
       <p className='text-sm text-center font-semibold'>{fileName}</p>
       <span className='absolute top-1 left-1'>
         <input title='checkbox' type='checkbox' className='checkbox' />

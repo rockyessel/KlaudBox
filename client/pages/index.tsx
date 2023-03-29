@@ -3,7 +3,6 @@ import Image from 'next/image';
 import Link from 'next/link';
 
 const Home = () => {
- 
   return (
     <React.Fragment>
       <section className='px-6 lg:px-20 w-full py-20 flex items-center justify-center'>
@@ -23,12 +22,20 @@ const Home = () => {
             </div>
 
             <div className='font-bold flex items-center gap-4'>
-                <Link href='/guests/upload-file'>
-              <button type='button' title='Upload' className='bg-black text-white px-4 py-2 rounded-md'>
+              <Link href='/guests/upload-file'>
+                <button
+                  type='button'
+                  title='Upload'
+                  className='bg-black text-white px-4 py-2 rounded-sm'
+                >
                   Upload
-              </button>
-                  </Link>
-              <button type='button' title='Demo video' className='border border-black px-4 py-2 rounded-md'>
+                </button>
+              </Link>
+              <button
+                type='button'
+                title='Demo video'
+                className='border border-black px-4 py-2 rounded-sm'
+              >
                 Demo video
               </button>
             </div>
